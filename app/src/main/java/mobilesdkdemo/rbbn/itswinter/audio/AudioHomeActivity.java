@@ -16,7 +16,7 @@ public class AudioHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio_home);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("Audio");
+        actionBar.setTitle("Audio API");
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
