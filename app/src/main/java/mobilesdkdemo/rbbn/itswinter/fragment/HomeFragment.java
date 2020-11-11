@@ -5,18 +5,17 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import mobilesdkdemo.rbbn.itswinter.AudioHomeActivity;
-import mobilesdkdemo.rbbn.itswinter.CovidHomeActivity;
-import mobilesdkdemo.rbbn.itswinter.EventHomeActivity;
+import mobilesdkdemo.rbbn.itswinter.audio.AudioHomeActivity;
+import mobilesdkdemo.rbbn.itswinter.covid.CovidHomeActivity;
+import mobilesdkdemo.rbbn.itswinter.event.EventHomeActivity;
 import mobilesdkdemo.rbbn.itswinter.R;
-import mobilesdkdemo.rbbn.itswinter.RecipeHomeActivity;
+import mobilesdkdemo.rbbn.itswinter.recipe.RecipeHomeActivity;
 
 /**
  * A simple {@link Fragment} subclass.

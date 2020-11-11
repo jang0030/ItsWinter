@@ -1,4 +1,4 @@
-package mobilesdkdemo.rbbn.itswinter;
+package mobilesdkdemo.rbbn.itswinter.recipe;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -7,14 +7,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-public class AudioHomeActivity extends AppCompatActivity {
+import mobilesdkdemo.rbbn.itswinter.R;
+
+public class RecipeHomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_audio_home);
+        setContentView(R.layout.activity_recipe_home);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("Audio");
+        actionBar.setTitle("Recipe Cook");
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
@@ -22,11 +24,12 @@ public class AudioHomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                AudioHomeActivity.this.finish();
+                RecipeHomeActivity.this.finish();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

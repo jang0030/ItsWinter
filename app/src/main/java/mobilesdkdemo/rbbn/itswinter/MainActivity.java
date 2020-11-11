@@ -18,6 +18,11 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import mobilesdkdemo.rbbn.itswinter.audio.AudioHomeActivity;
+import mobilesdkdemo.rbbn.itswinter.covid.CovidHomeActivity;
+import mobilesdkdemo.rbbn.itswinter.event.EventHomeActivity;
+import mobilesdkdemo.rbbn.itswinter.recipe.RecipeHomeActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;

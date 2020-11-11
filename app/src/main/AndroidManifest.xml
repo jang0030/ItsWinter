@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".HelpActivity"></activity>
-        <activity android:name=".EventHomeActivity" />
-        <activity android:name=".RecipeHomeActivity" />
-        <activity android:name=".CovidHomeActivity" />
-        <activity android:name=".AudioHomeActivity" />
+        <activity android:name=".event.EventHomeActivity" />
+        <activity android:name=".recipe.RecipeHomeActivity" />
+        <activity android:name=".covid.CovidHomeActivity" />
+        <activity android:name=".audio.AudioHomeActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

@@ -1,4 +1,4 @@
-package mobilesdkdemo.rbbn.itswinter;
+package mobilesdkdemo.rbbn.itswinter.covid;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -7,14 +7,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-public class EventHomeActivity extends AppCompatActivity {
+import mobilesdkdemo.rbbn.itswinter.R;
+
+public class CovidHomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_home);
+        setContentView(R.layout.activity_covid_home);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("Event Schedule");
+        actionBar.setTitle("Covid");
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
@@ -22,7 +24,7 @@ public class EventHomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                EventHomeActivity.this.finish();
+                CovidHomeActivity.this.finish();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
