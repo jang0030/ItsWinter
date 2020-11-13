@@ -4,21 +4,40 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+
+import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
+import mobilesdkdemo.rbbn.itswinter.audio.data.AudioRepository;
 import mobilesdkdemo.rbbn.itswinter.audio.fragment.AlbumListFrag;
+import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
+import mobilesdkdemo.rbbn.itswinter.audio.model.Wrapper;
+import mobilesdkdemo.rbbn.itswinter.utility.PreferenceManager;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class AudioHomeActivity extends AppCompatActivity {
+public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter.AlbumItemClicked {
 
-    FragmentManager fragmentManager;
-    AlbumListFrag listFrag;
-    EditText etKeyword;
-    Button btnSearch;
+    private static final String TAG="AudioHomeActivity";
+
+
+//    FragmentManager fragmentManager;
+//    AlbumListFrag listFrag;
+
+//    EditText etKeyword;
+//    ImageButton btnSearch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,13 +46,8 @@ public class AudioHomeActivity extends AppCompatActivity {
         actionBar.setTitle("Audio API");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        fragmentManager=getSupportFragmentManager();
-        listFrag= (AlbumListFrag) fragmentManager.findFragmentById(R.id.rvAlbumList);
-        btnSearch=findViewById(R.id.btnSearch);
-        etKeyword=findViewById(R.id.etKeyword);
-
-
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -45,5 +59,11 @@ public class AudioHomeActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onAlbumItemClicked(Album item) {
+      // Intent intent=new Intent(AudioHomeActivity.this, TrackActivity.class);
+
     }
 }

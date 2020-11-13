@@ -21,11 +21,17 @@ import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
 
-    private Context context;
+
+
+    private AlbumItemClicked context;
     private ArrayList<Album> list;
 
+    interface AlbumItemClicked{
+      void onAlbumItemClicked(Album item);
+    }
+
     public AlbumAdapter(Context context, ArrayList<Album> list) {
-        this.context = context;
+        this.context = (AlbumItemClicked) context;
         this.list = list;
     }
 
@@ -37,14 +43,21 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
             super(itemView);
             ivPoster=itemView.findViewById(R.id.ivPoster);
             tvTitle=itemView.findViewById(R.id.tvTitle);
+            tvArtist=itemView.findViewById(R.id.tvArtist);
             tvGenre=itemView.findViewById(R.id.tvGenre);
             tvYear=itemView.findViewById(R.id.tvYear);
+
+            itemView.setOnClickListener(v->{
+                    Album album= (Album) itemView.getTag();
+                    context.onAlbumItemClicked(album);
+            });
         }
         public void setItem(Album item){
             tvTitle.setText(item.getStrAlbum());
             tvArtist.setText(item.getStrArtist());
-            tvGenre.setText(item.getStrGenre());
-            tvYear.setText(item.getIntYearReleased());
+            tvGenre.setText("Genre:"+item.getStrGenre());
+//            tvYear.setText(item.getIntYearReleased());
+            tvYear.setText("Released:"+item.getIntYearReleased());
 
             if (item.getStrAlbumThumb() == null) {
                 ivPoster.setImageDrawable(ContextCompat.getDrawable((Context) context,

@@ -10,8 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="2dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="3dp"
         android:layout_marginRight="2dp"
+        android:layout_marginBottom="3dp"
         app:cardCornerRadius="5dp"
         app:cardElevation="5dp">
 
@@ -23,23 +24,23 @@
 
             <ImageView
                 android:id="@+id/ivPoster"
-                android:layout_width="100dp"
-                android:layout_height="150dp"
+                android:layout_width="60dp"
+                android:layout_height="90dp"
                 app:srcCompat="@drawable/ic_audio" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:padding="5dp">
+                android:layout_marginLeft="5dp"
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/tvTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/alike"
+                    android:layout_alignParentTop="true"
                     android:textColor="#000000"
+                    android:layout_marginTop="10dp"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     tools:text="Title" />
@@ -49,24 +50,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:textSize="16sp"
+                    android:layout_below="@+id/tvTitle"
+                    android:textSize="14sp"
                     tools:text="Artist" />
                 <TextView
                     android:id="@+id/tvGenre"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:textSize="16sp"
+                    android:layout_below="@id/tvArtist"
+                    android:textSize="12sp"
                     tools:text="Genre" />
                 <TextView
                     android:id="@+id/tvYear"
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:textSize="16sp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_below="@id/tvArtist"
+                    android:layout_toRightOf="@+id/tvGenre"
+                    android:textSize="12sp"
                     tools:text="Year" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
