@@ -11,13 +11,13 @@
     <string name="menu_home">홈</string>
     <string name="menu_gallery">갤러리</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="covid">Covid</string>
-    <string name="event">Event</string>
-    <string name="audio">Audio</string>
-    <string name="receipt">Receipt</string>
+    <string name="covid">Covid-19</string>
+    <string name="event">티켓 이벤트</string>
+    <string name="audio">앨범 API</string>
+    <string name="receipt">요리 방법</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="welcome_to_our_app">Welcome To Our App</string>
-    <string name="help">Help</string>
+    <string name="welcome_to_our_app">환영합니다</string>
+    <string name="help">도움말</string>
 </resources>

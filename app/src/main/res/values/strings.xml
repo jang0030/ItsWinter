@@ -10,10 +10,10 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="covid">Covid</string>
-    <string name="event">Event Schedule</string>
-    <string name="audio">Audio</string>
-    <string name="receipt">Receipt</string>
+    <string name="covid">Covid-19</string>
+    <string name="event">Ticket Event</string>
+    <string name="audio">Audio API</string>
+    <string name="receipt">Recipe Cook</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello fragment</string>
     <string name="drawer_open">Open</string>
