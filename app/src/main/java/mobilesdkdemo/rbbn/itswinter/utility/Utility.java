@@ -1,4 +1,4 @@
-package mobilesdkdemo.rbbn.itswinter.utils;
+package mobilesdkdemo.rbbn.itswinter.utility;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
