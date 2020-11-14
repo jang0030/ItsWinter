@@ -7,8 +7,12 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -48,7 +52,13 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
                     .load(album.getStrAlbumThumb())
                     .into(binding.ivPoster);
         }
-        binding.tvDescription.setText("Album Description\n"+album.getStrDescriptionEN());
+        String summary=album.getStrDescriptionEN()!=null&& album.getStrDescriptionEN().length()>100?
+                album.getStrDescriptionEN().substring(0,100)+"...":album.getStrDescriptionEN();
+        binding.tvDescription.setText("Album Description\n"+summary);
+        binding.tvDescription.setOnClickListener(v->{
+            if(album.getStrDescriptionEN()!=null&& album.getStrDescriptionEN().length()>100)
+            Toast.makeText(this, album.getStrDescriptionEN(), Toast.LENGTH_SHORT).show();
+        });
         binding.tvGenre.setText("Genre:"+album.getStrGenre());
         binding.tvScore.setText("Score:"+album.getIntScore());
         trackListFrag=new TrackListFrag();
@@ -60,6 +70,12 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
                 .replace(R.id.fragmentLocation, trackListFrag) //Add the fragment in FrameLayout
                 .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.album_detail, menu);
+        return true;
     }
 
     @Override
@@ -74,6 +90,7 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
 
     @Override
     public void onTrackItemClicked(Track item) {
-
+        Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("http://www.google.com/search?q=%s+ARTIST+NAME",item.getStrArtist())));
+        startActivity(intent);
     }
 }

@@ -37,6 +37,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolder> 
             tvDuration=itemView.findViewById(R.id.tvDuration);
             itemView.setOnClickListener(v->{
                 Track item= (Track) itemView.getTag();
+                context.onTrackItemClicked(item);
 
             });
         }

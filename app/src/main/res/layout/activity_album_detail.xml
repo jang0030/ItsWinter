@@ -82,6 +82,7 @@
             android:layout_width="0dp"
             android:layout_height="130dp"
             android:layout_weight="1"
+            android:layout_marginStart="5dp"
             app:srcCompat="@drawable/ic_audio" />
 
         <LinearLayout
@@ -95,19 +96,19 @@
                 android:id="@+id/tvGenre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="3dp"
+                android:layout_marginTop="2dp"
                 android:text="Genre" />
             <TextView
                 android:id="@+id/tvScore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="3dp"
+                android:layout_marginTop="2dp"
                 android:text="Score" />
             <TextView
                 android:id="@+id/tvDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
+                android:layout_marginTop="5dp"
                 android:text="Description" />
 
         </LinearLayout>
