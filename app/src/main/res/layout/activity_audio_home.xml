@@ -30,11 +30,11 @@
     </LinearLayout>
 
     <fragment
-        android:id="@+id/tracksFrag"
-        android:name="mobilesdkdemo.rbbn.itswinter.audio.fragment.TrackListFrag"
+        android:id="@+id/albumsFrag"
+        android:name="mobilesdkdemo.rbbn.itswinter.audio.fragment.AlbumListFrag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_track_list" />
+        tools:layout="@layout/fragment_album_list" />
 
 
     <!--    <androidx.recyclerview.widget.RecyclerView-->

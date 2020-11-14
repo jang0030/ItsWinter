@@ -8,57 +8,70 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".audio.AlbumDetailActivity">
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/layout_bg"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:paddingTop="7dp"
         android:paddingBottom="7dp">
 
-        <TextView
-            android:id="@+id/tvTitle"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="8"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"
 
-            android:layout_alignParentLeft="true"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="3"
-            android:paddingLeft="10dp"
-            android:textColor="@color/black"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            tools:text="Title" />
+                android:textSize="30sp"
+                android:textStyle="bold"
+                tools:text="Title" />
 
-        <TextView
-            android:id="@+id/tvArtist"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvTitle"
-            android:layout_alignParentLeft="true"
-            android:textSize="24sp"
-            android:paddingHorizontal="20dp"
-            tools:text="Artist" />
-        <TextView
-            android:id="@+id/tvYear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvTitle"
-            android:layout_toRightOf="@id/tvArtist"
+            <ImageButton
+                android:id="@+id/ivSave"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#00FFFFFF"
+                android:layout_gravity="center"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic__favorite_red" />
+        </LinearLayout>
 
-            android:paddingHorizontal="20dp"
-            tools:text="Year" />
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+           <TextView
+               android:id="@+id/tvArtist"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_weight="4"
+               android:layout_marginLeft="15dp"
+               android:textSize="20sp"
+               tools:text="Artist" />
+           <TextView
+               android:id="@+id/tvYear"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               tools:text="Year" />
 
-        <TextView
-            android:id="@+id/tvStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvTitle"
-            android:layout_toRightOf="@id/tvYear"
-            android:layout_alignParentRight="true"
-            android:paddingHorizontal="20dp"
-            tools:text="status" />
-    </RelativeLayout>
+           <TextView
+               android:id="@+id/tvStatus"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:layout_marginRight="5dp"
+               tools:text="status" />
+       </LinearLayout>
+
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,7 +80,7 @@
         <ImageView
             android:id="@+id/ivPoster"
             android:layout_width="0dp"
-            android:layout_height="180dp"
+            android:layout_height="130dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_audio" />
 
@@ -77,12 +90,7 @@
             android:layout_weight="2"
             android:orientation="vertical"
             android:paddingHorizontal="5dp">
-            <TextView
-                android:id="@+id/tvDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:text="Description" />
+
             <TextView
                 android:id="@+id/tvGenre"
                 android:layout_width="match_parent"
@@ -95,16 +103,19 @@
                 android:layout_height="wrap_content"
                 android:padding="3dp"
                 android:text="Score" />
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="Description" />
 
         </LinearLayout>
     </LinearLayout>
 
-    <fragment
-        android:id="@+id/tracksFrag"
-        android:name="mobilesdkdemo.rbbn.itswinter.audio.fragment.TrackListFrag"
+    <FrameLayout
+        android:id="@+id/fragmentLocation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_track_list" />
-
+        android:layout_height="match_parent" />
 </LinearLayout>
 </layout>

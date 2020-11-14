@@ -46,7 +46,7 @@ public class TrackListFrag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         dataFromActivity = getArguments();
-        id = dataFromActivity.getInt("AlbumId");
+        id = dataFromActivity.getInt("albumId");
         v= inflater.inflate(R.layout.fragment_track_list, container, false);
         return v;
     }

@@ -16,11 +16,14 @@ import mobilesdkdemo.rbbn.itswinter.audio.model.Track;
 
 public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolder> {
 
-    private Context context;
+    public interface TrackItemClicked{
+        void onTrackItemClicked(Track item);
+    }
+    private TrackItemClicked context;
     private List<Track> list;
     View v;
     public TrackAdapter(Context context, List<Track> list) {
-        this.context = context;
+        this.context = (TrackItemClicked) context;
         this.list = list;
     }
 
@@ -40,7 +43,7 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolder> 
         public void setItem(Track item){
             tvTrackNum.setText(String.format("%d)",item.getIntTrackNumber()));
             tvTrackName.setText(item.getStrTrack());
-            tvDuration.setText(String.format("%d:%d",(int)item.getIntDuration()/60000,(int)item.getIntDuration()%60000));
+            tvDuration.setText(String.format("%d:%d",(int)item.getIntDuration()/60000,(int)(item.getIntDuration()/1000)%60));
         }
     }
     @NonNull
