@@ -20,4 +20,6 @@
     <string name="drawer_close">Close</string>
     <string name="welcome_to_our_app">Welcome To Our App</string>
     <string name="help">Help</string>
+    <string name="e_searchButtonString">Search</string>
+    <string name="e_searchBarHint">Enter search term</string>
 </resources>
