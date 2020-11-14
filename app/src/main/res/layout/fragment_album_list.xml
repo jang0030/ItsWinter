@@ -25,6 +25,13 @@
             android:layout_weight="1"
             android:src="@drawable/ic_search" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_bg"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAlbumList"
         android:layout_width="match_parent"

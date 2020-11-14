@@ -3,30 +3,14 @@ package mobilesdkdemo.rbbn.itswinter.audio;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-
-import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
-import mobilesdkdemo.rbbn.itswinter.audio.data.AudioRepository;
-import mobilesdkdemo.rbbn.itswinter.audio.fragment.AlbumListFrag;
+import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
-import mobilesdkdemo.rbbn.itswinter.audio.model.Wrapper;
-import mobilesdkdemo.rbbn.itswinter.utility.PreferenceManager;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter.AlbumItemClicked {
 
@@ -63,7 +47,9 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
 
     @Override
     public void onAlbumItemClicked(Album item) {
-      // Intent intent=new Intent(AudioHomeActivity.this, TrackActivity.class);
+      Intent intent=new Intent(AudioHomeActivity.this, AlbumDetailActivity.class);
+      intent.putExtra("album", item);
+      startActivity(intent);
 
     }
 }

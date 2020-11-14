@@ -1,6 +1,9 @@
 package mobilesdkdemo.rbbn.itswinter.audio.model;
 
-public class Album {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Album implements Parcelable {
     private int idAlbum;
     private int idArtist;
     private int idLabel;
@@ -13,32 +16,78 @@ public class Album {
     private String strReleaseFormat;
     private int intSales;
     private String strAlbumThumb;
-//    private String strAlbumThumbHQ;
-//    private String strAlbumThumbBack;
-//    private String strDescriptionEN;
-//    private String strDescriptionFR;
-//    private int intLoved;
-//    private double intScore;
-//    private int intScoreVotes;
-//    private String strReview;
-//    private String strMood;
-//    private String strTheme;
-//    private String strSpeed;
-//    private String strLocation;
-//    private String strMusicBrainzID;
-//    private String strMusicBrainzArtistID;
-//    private String strAllMusicID;
-//    private String strBBCReviewID;
-//    private String strRateYourMusicID;
-//    private int strDiscogsID;
-//    private String strWikidataID;
-//    private String strWikipediaID;
-//    private String strGeniusID;
-//    private String strLyricWikiID;
-//    private String strMusicMozID;
-//    private String strItunesID;
-//    private String strAmazonID;
-//    private String strLocked;
+    private String strDescriptionEN;
+    private String strDescriptionFR;
+    private int intLoved;
+    private double intScore;
+    private int intScoreVotes;
+    private String strReview;
+    private String strMood;
+    private String strLocked;
+
+    protected Album(Parcel in) {
+        idAlbum = in.readInt();
+        idArtist = in.readInt();
+        idLabel = in.readInt();
+        strAlbum = in.readString();
+        strArtist = in.readString();
+        intYearReleased = in.readInt();
+        strStyle = in.readString();
+        strGenre = in.readString();
+        strLabel = in.readString();
+        strReleaseFormat = in.readString();
+        intSales = in.readInt();
+        strAlbumThumb = in.readString();
+        strDescriptionEN = in.readString();
+        strDescriptionFR = in.readString();
+        intLoved = in.readInt();
+        intScore = in.readDouble();
+        intScoreVotes = in.readInt();
+        strReview = in.readString();
+        strMood = in.readString();
+        strLocked = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(idAlbum);
+        dest.writeInt(idArtist);
+        dest.writeInt(idLabel);
+        dest.writeString(strAlbum);
+        dest.writeString(strArtist);
+        dest.writeInt(intYearReleased);
+        dest.writeString(strStyle);
+        dest.writeString(strGenre);
+        dest.writeString(strLabel);
+        dest.writeString(strReleaseFormat);
+        dest.writeInt(intSales);
+        dest.writeString(strAlbumThumb);
+        dest.writeString(strDescriptionEN);
+        dest.writeString(strDescriptionFR);
+        dest.writeInt(intLoved);
+        dest.writeDouble(intScore);
+        dest.writeInt(intScoreVotes);
+        dest.writeString(strReview);
+        dest.writeString(strMood);
+        dest.writeString(strLocked);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Album> CREATOR = new Creator<Album>() {
+        @Override
+        public Album createFromParcel(Parcel in) {
+            return new Album(in);
+        }
+
+        @Override
+        public Album[] newArray(int size) {
+            return new Album[size];
+        }
+    };
 
     public int getIdAlbum() {
         return idAlbum;
@@ -135,212 +184,68 @@ public class Album {
     public void setStrAlbumThumb(String strAlbumThumb) {
         this.strAlbumThumb = strAlbumThumb;
     }
-//
-//    public String getStrAlbumThumbHQ() {
-//        return strAlbumThumbHQ;
-//    }
-//
-//    public void setStrAlbumThumbHQ(String strAlbumThumbHQ) {
-//        this.strAlbumThumbHQ = strAlbumThumbHQ;
-//    }
-//
-//    public String getStrAlbumThumbBack() {
-//        return strAlbumThumbBack;
-//    }
-//
-//    public void setStrAlbumThumbBack(String strAlbumThumbBack) {
-//        this.strAlbumThumbBack = strAlbumThumbBack;
-//    }
-//
-//    public String getStrDescriptionEN() {
-//        return strDescriptionEN;
-//    }
-//
-//    public void setStrDescriptionEN(String strDescriptionEN) {
-//        this.strDescriptionEN = strDescriptionEN;
-//    }
-//
-//    public String getStrDescriptionFR() {
-//        return strDescriptionFR;
-//    }
-//
-//    public void setStrDescriptionFR(String strDescriptionFR) {
-//        this.strDescriptionFR = strDescriptionFR;
-//    }
-//
-//    public int getIntLoved() {
-//        return intLoved;
-//    }
-//
-//    public void setIntLoved(int intLoved) {
-//        this.intLoved = intLoved;
-//    }
-//
-//    public double getIntScore() {
-//        return intScore;
-//    }
-//
-//    public void setIntScore(double intScore) {
-//        this.intScore = intScore;
-//    }
-//
-//    public int getIntScoreVotes() {
-//        return intScoreVotes;
-//    }
-//
-//    public void setIntScoreVotes(int intScoreVotes) {
-//        this.intScoreVotes = intScoreVotes;
-//    }
-//
-//    public String getStrReview() {
-//        return strReview;
-//    }
-//
-//    public void setStrReview(String strReview) {
-//        this.strReview = strReview;
-//    }
-//
-//    public String getStrMood() {
-//        return strMood;
-//    }
-//
-//    public void setStrMood(String strMood) {
-//        this.strMood = strMood;
-//    }
-//
-//    public String getStrTheme() {
-//        return strTheme;
-//    }
-//
-//    public void setStrTheme(String strTheme) {
-//        this.strTheme = strTheme;
-//    }
-//
-//    public String getStrSpeed() {
-//        return strSpeed;
-//    }
-//
-//    public void setStrSpeed(String strSpeed) {
-//        this.strSpeed = strSpeed;
-//    }
-//
-//    public String getStrLocation() {
-//        return strLocation;
-//    }
-//
-//    public void setStrLocation(String strLocation) {
-//        this.strLocation = strLocation;
-//    }
-//
-//    public String getStrMusicBrainzID() {
-//        return strMusicBrainzID;
-//    }
-//
-//    public void setStrMusicBrainzID(String strMusicBrainzID) {
-//        this.strMusicBrainzID = strMusicBrainzID;
-//    }
-//
-//    public String getStrMusicBrainzArtistID() {
-//        return strMusicBrainzArtistID;
-//    }
-//
-//    public void setStrMusicBrainzArtistID(String strMusicBrainzArtistID) {
-//        this.strMusicBrainzArtistID = strMusicBrainzArtistID;
-//    }
-//
-//    public String getStrAllMusicID() {
-//        return strAllMusicID;
-//    }
-//
-//    public void setStrAllMusicID(String strAllMusicID) {
-//        this.strAllMusicID = strAllMusicID;
-//    }
-//
-//    public String getStrBBCReviewID() {
-//        return strBBCReviewID;
-//    }
-//
-//    public void setStrBBCReviewID(String strBBCReviewID) {
-//        this.strBBCReviewID = strBBCReviewID;
-//    }
-//
-//    public String getStrRateYourMusicID() {
-//        return strRateYourMusicID;
-//    }
-//
-//    public void setStrRateYourMusicID(String strRateYourMusicID) {
-//        this.strRateYourMusicID = strRateYourMusicID;
-//    }
-//
-//    public int getStrDiscogsID() {
-//        return strDiscogsID;
-//    }
-//
-//    public void setStrDiscogsID(int strDiscogsID) {
-//        this.strDiscogsID = strDiscogsID;
-//    }
-//
-//    public String getStrWikidataID() {
-//        return strWikidataID;
-//    }
-//
-//    public void setStrWikidataID(String strWikidataID) {
-//        this.strWikidataID = strWikidataID;
-//    }
-//
-//    public String getStrWikipediaID() {
-//        return strWikipediaID;
-//    }
-//
-//    public void setStrWikipediaID(String strWikipediaID) {
-//        this.strWikipediaID = strWikipediaID;
-//    }
-//
-//    public String getStrGeniusID() {
-//        return strGeniusID;
-//    }
-//
-//    public void setStrGeniusID(String strGeniusID) {
-//        this.strGeniusID = strGeniusID;
-//    }
-//
-//    public String getStrLyricWikiID() {
-//        return strLyricWikiID;
-//    }
-//
-//    public void setStrLyricWikiID(String strLyricWikiID) {
-//        this.strLyricWikiID = strLyricWikiID;
-//    }
-//
-//    public String getStrMusicMozID() {
-//        return strMusicMozID;
-//    }
-//
-//    public void setStrMusicMozID(String strMusicMozID) {
-//        this.strMusicMozID = strMusicMozID;
-//    }
-//
-//    public String getStrItunesID() {
-//        return strItunesID;
-//    }
-//
-//    public void setStrItunesID(String strItunesID) {
-//        this.strItunesID = strItunesID;
-//    }
-//
-//    public String getStrAmazonID() {
-//        return strAmazonID;
-//    }
-//
-//    public void setStrAmazonID(String strAmazonID) {
-//        this.strAmazonID = strAmazonID;
-//    }
-//
-//    public String getStrLocked() {
-//        return strLocked;
-//    }
-//
-//    public void setStrLocked(String strLocked) {
-//        this.strLocked = strLocked;
-//    }
+
+    public String getStrDescriptionEN() {
+        return strDescriptionEN;
+    }
+
+    public void setStrDescriptionEN(String strDescriptionEN) {
+        this.strDescriptionEN = strDescriptionEN;
+    }
+
+    public String getStrDescriptionFR() {
+        return strDescriptionFR;
+    }
+
+    public void setStrDescriptionFR(String strDescriptionFR) {
+        this.strDescriptionFR = strDescriptionFR;
+    }
+
+    public int getIntLoved() {
+        return intLoved;
+    }
+
+    public void setIntLoved(int intLoved) {
+        this.intLoved = intLoved;
+    }
+
+    public double getIntScore() {
+        return intScore;
+    }
+
+    public void setIntScore(double intScore) {
+        this.intScore = intScore;
+    }
+
+    public int getIntScoreVotes() {
+        return intScoreVotes;
+    }
+
+    public void setIntScoreVotes(int intScoreVotes) {
+        this.intScoreVotes = intScoreVotes;
+    }
+
+    public String getStrReview() {
+        return strReview;
+    }
+
+    public void setStrReview(String strReview) {
+        this.strReview = strReview;
+    }
+
+    public String getStrMood() {
+        return strMood;
+    }
+
+    public void setStrMood(String strMood) {
+        this.strMood = strMood;
+    }
+
+    public String getStrLocked() {
+        return strLocked;
+    }
+
+    public void setStrLocked(String strLocked) {
+        this.strLocked = strLocked;
+    }
 }

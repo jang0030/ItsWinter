@@ -7,20 +7,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
-import mobilesdkdemo.rbbn.itswinter.audio.AlbumAdapter;
+import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
 import mobilesdkdemo.rbbn.itswinter.audio.data.AudioRepository;
 import mobilesdkdemo.rbbn.itswinter.audio.data.IAudioRepository;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
@@ -35,15 +32,15 @@ public class AlbumListFrag extends Fragment {
 
     private static final String TAG="AlbumListFrag";
     private static final String KEYWORD="audio_keyword";
-    View v;
-    RecyclerView rvAlbumList;
-    RecyclerView.LayoutManager layoutManager;
-    RecyclerView.Adapter myAdapter;
-    ArrayList<Album> list;
-    EditText etKeyword;
-    ImageButton btnSearch;
+    private View v;
+    private RecyclerView rvAlbumList;
+    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.Adapter myAdapter;
+    private ArrayList<Album> list;
+    private EditText etKeyword;
+    private ImageButton btnSearch;
     private String albumName;
-
+    private String keyword;
     private IAudioRepository audioRepository;
     public AlbumListFrag() {
         // Required empty public constructor
@@ -64,25 +61,29 @@ public class AlbumListFrag extends Fragment {
         btnSearch=v.findViewById(R.id.btnSearch);
         etKeyword=v.findViewById(R.id.etKeyword);
         audioRepository=new AudioRepository();
-        String keyword= PreferenceManager.getString(getContext(),KEYWORD);
+        keyword= PreferenceManager.getString(getContext(),KEYWORD);
         etKeyword.setText(keyword);
 
         btnSearch.setOnClickListener(v->{
-            retriveList();
+            keyword=etKeyword.getText().toString().trim();
+            if(!keyword.isEmpty()){
+                retriveList();
+                PreferenceManager.setValue(getContext(),KEYWORD,keyword);
+            }else{
+                Toast.makeText(getContext(), "Please enter your keyword", Toast.LENGTH_SHORT).show();
+            }
         });
         initialRecylerView();
-
         retriveList();
-
     }
 
     public void retriveList() {
-        String keyword=etKeyword.getText().toString().trim();
+       //String keyword=etKeyword.getText().toString().trim();
         if(!keyword.isEmpty()){
             audioRepository.getAlbums(keyword, new Callback<Wrapper>() {
                 @Override
                 public void onResponse(Call<Wrapper> call, Response<Wrapper> response) {
-                    if(response.body().getAlbum()!=null) {
+                    if(response.body().getAlbum()!=null && response.body().getAlbum().size()>0) {
                         if(list.size()>0) list.clear();
                         list.addAll(response.body().getAlbum());
                         myAdapter.notifyDataSetChanged();
@@ -96,10 +97,7 @@ public class AlbumListFrag extends Fragment {
                 }
             });
 
-        }else{
-            Toast.makeText(getContext(), "Please Enter your keyword", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     private void initialRecylerView() {

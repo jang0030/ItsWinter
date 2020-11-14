@@ -29,20 +29,13 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_bg"
-        android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"/>
-
     <fragment
-        android:id="@+id/fragment"
-        android:name="mobilesdkdemo.rbbn.itswinter.audio.fragment.AlbumListFrag"
+        android:id="@+id/tracksFrag"
+        android:name="mobilesdkdemo.rbbn.itswinter.audio.fragment.TrackListFrag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_album_list" />
+        tools:layout="@layout/fragment_track_list" />
+
 
     <!--    <androidx.recyclerview.widget.RecyclerView-->
 <!--        android:id="@+id/rvAudios"-->

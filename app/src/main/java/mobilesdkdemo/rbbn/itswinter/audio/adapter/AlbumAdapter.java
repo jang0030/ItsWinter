@@ -1,4 +1,4 @@
-package mobilesdkdemo.rbbn.itswinter.audio;
+package mobilesdkdemo.rbbn.itswinter.audio.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
@@ -26,7 +25,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     private AlbumItemClicked context;
     private ArrayList<Album> list;
 
-    interface AlbumItemClicked{
+    public interface AlbumItemClicked{
       void onAlbumItemClicked(Album item);
     }
 
@@ -72,7 +71,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     }
     @NonNull
     @Override
-    public AlbumAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.album_item, parent, false);
         return new ViewHolder(v);
     }
@@ -80,7 +79,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
 
 
     @Override
-    public void onBindViewHolder(@NonNull AlbumAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Album album=list.get(position);
         holder.itemView.setTag(album);
         holder.setItem(album);
