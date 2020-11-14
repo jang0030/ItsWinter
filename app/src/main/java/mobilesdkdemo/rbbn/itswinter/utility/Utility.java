@@ -1,6 +1,7 @@
 package mobilesdkdemo.rbbn.itswinter.utility;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -59,35 +60,13 @@ public class Utility {
                 .setAction("Action", null).show();
     }
 
-    public static void ShowAlertDialog(Activity from, DialogInterface.OnClickListener clickListener, DialogInterface.OnClickListener cancelListener){
-
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                from);
-
-        // set dialog message
-        alertDialogBuilder.setCancelable(false);
-        alertDialogBuilder.setPositiveButton("OK", clickListener);
-        alertDialogBuilder.setNegativeButton("Cancel", cancelListener);
-        alertDialogBuilder.setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
-
-                });
-        alertDialogBuilder.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
-        alertDialog.show();
+    public static void createAndShowDialog(Context context, String title, String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("title");
+        builder.setMessage("message");
+        builder.setPositiveButton("yes", (DialogInterface.OnClickListener) context);
+        builder.setNeutralButton("cancel", (DialogInterface.OnClickListener) context);
+        builder.setNegativeButton("no", (DialogInterface.OnClickListener) context);
+        builder.create().show();
     }
-
 }
