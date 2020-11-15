@@ -17,12 +17,6 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
 
     private static final String TAG="AudioHomeActivity";
 
-
-//    FragmentManager fragmentManager;
-//    AlbumListFrag listFrag;
-
-//    EditText etKeyword;
-//    ImageButton btnSearch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +24,6 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle("Audio API");
         actionBar.setDisplayHomeAsUpEnabled(true);
-
     }
 
     @Override

@@ -2,11 +2,13 @@ package mobilesdkdemo.rbbn.itswinter.audio;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,27 +24,33 @@ import mobilesdkdemo.rbbn.itswinter.audio.fragment.TrackListFrag;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Track;
 import mobilesdkdemo.rbbn.itswinter.databinding.ActivityAlbumDetailBinding;
+import mobilesdkdemo.rbbn.itswinter.utility.Utility;
+
+import static android.content.DialogInterface.BUTTON_NEGATIVE;
+import static android.content.DialogInterface.BUTTON_NEUTRAL;
+import static android.content.DialogInterface.BUTTON_POSITIVE;
 
 
-public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapter.TrackItemClicked {
+public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapter.TrackItemClicked, AlertDialog.OnClickListener {
 
     private Album album;
     private ActivityAlbumDetailBinding binding;
     TrackListFrag trackListFrag;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_album_detail);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_album_detail);
-        ActionBar actionBar=getSupportActionBar();
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_album_detail);
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Audio API");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        album=getIntent().getParcelableExtra("album");
+        album = getIntent().getParcelableExtra("album");
 
         binding.tvTitle.setText(album.getStrAlbum());
         binding.tvArtist.setText(album.getStrArtist());
-        binding.tvYear.setText(""+album.getIntYearReleased());
+        binding.tvYear.setText("" + album.getIntYearReleased());
         binding.tvStatus.setText(album.getStrLocked());
         if (album.getStrAlbumThumb() == null) {
             binding.ivPoster.setImageResource(R.drawable.ic_audio);
@@ -52,25 +60,26 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
                     .load(album.getStrAlbumThumb())
                     .into(binding.ivPoster);
         }
-        String summary=album.getStrDescriptionEN()!=null&& album.getStrDescriptionEN().length()>100?
-                album.getStrDescriptionEN().substring(0,100)+"...":album.getStrDescriptionEN();
-        binding.tvDescription.setText("Album Description\n"+summary);
-        binding.tvDescription.setOnClickListener(v->{
-            if(album.getStrDescriptionEN()!=null&& album.getStrDescriptionEN().length()>100)
-            Toast.makeText(this, album.getStrDescriptionEN(), Toast.LENGTH_SHORT).show();
+        String summary = album.getStrDescriptionEN() != null && album.getStrDescriptionEN().length() > 100 ?
+                album.getStrDescriptionEN().substring(0, 100) + "..." : album.getStrDescriptionEN();
+        binding.tvDescription.setText("Album Description\n" + summary);
+        binding.tvDescription.setOnClickListener(v -> {
+            if (album.getStrDescriptionEN() != null && album.getStrDescriptionEN().length() > 100)
+                Toast.makeText(this, album.getStrDescriptionEN(), Toast.LENGTH_SHORT).show();
         });
-        binding.tvGenre.setText("Genre:"+album.getStrGenre());
-        binding.tvScore.setText("Score:"+album.getIntScore());
-        trackListFrag=new TrackListFrag();
+        binding.tvGenre.setText("Genre:" + album.getStrGenre());
+        binding.tvScore.setText("Score:" + album.getIntScore());
+        trackListFrag = new TrackListFrag();
         Bundle dataToPass = new Bundle();
-        dataToPass.putInt("albumId",album.getIdAlbum());
-        trackListFrag.setArguments( dataToPass ); //pass it a bundle for information
+        dataToPass.putInt("albumId", album.getIdAlbum());
+        trackListFrag.setArguments(dataToPass); //pass it a bundle for information
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragmentLocation, trackListFrag) //Add the fragment in FrameLayout
                 .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -80,9 +89,12 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case (android.R.id.home):
                 this.finish();
+                break;
+            case (R.id.action_help):
+                Utility.createAndShowDialog(AlbumDetailActivity.this, "title", "msg");
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -90,7 +102,27 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
 
     @Override
     public void onTrackItemClicked(Track item) {
-        Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("http://www.google.com/search?q=%s+ARTIST+NAME",item.getStrArtist())));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("http://www.google.com/search?q=%s+ARTIST+NAME", item.getStrArtist())));
         startActivity(intent);
+
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int i) {
+        switch (i) {
+            case BUTTON_NEGATIVE:
+                // int which = -2
+                dialog.dismiss();
+                break;
+            case BUTTON_NEUTRAL:
+                // int which = -3
+                dialog.dismiss();
+                break;
+            case BUTTON_POSITIVE:
+                // int which = -1
+                AlbumDetailActivity.this.finish();
+                dialog.dismiss();
+                break;
+        }
     }
 }
