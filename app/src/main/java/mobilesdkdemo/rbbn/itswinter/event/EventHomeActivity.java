@@ -24,10 +24,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 
 public class EventHomeActivity extends AppCompatActivity {
+
+    private ArrayList<Event> eventList = new ArrayList();
+    private String name,startDate,tkUrl;
+    private double minPrice,maxPrice;
+    private Bitmap promoImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,33 +103,33 @@ public class EventHomeActivity extends AppCompatActivity {
                     JSONObject object = events.getJSONObject("_embedded").getJSONObject("events").getJSONObject(String.valueOf(i));
 
 //                    gets name, start date and Ticket Master URL
-                    String name = object.getString("name");
-                    String startDate = object.getJSONObject("start").getString("localDate");
-                    String tkUrl = object.getString("url");
+                     name = object.getString("name");
+                     startDate = object.getJSONObject("start").getString("localDate");
+                     tkUrl = object.getString("url");
 
 //                    finds max and min prices
 //                    in testing, no event had more then one type of ticket, but it is set up for if there is more then one
                     JSONArray priceArray = object.getJSONArray("priceRanges");
                     int priceArrayLength = object.getJSONArray("priceRanges").length();
-                    double max = 0;
-                    double min = 0;
+                    maxPrice = 0;
+                    minPrice = 0;
 
 //                    checks if there is more then one ticket type
                     if(priceArrayLength > 1){
                         double current;
                         for (int x = 0; x < priceArrayLength; x++) {
                             current = priceArray.getJSONObject(x).getDouble("min");
-                            if (min > current) {
-                                min = current;
+                            if (minPrice > current) {
+                                minPrice = current;
                             }
                             current = priceArray.getJSONObject(x).getDouble("max");
-                            if (max > current) {
-                                max = current;
+                            if (maxPrice > current) {
+                                maxPrice = current;
                             }
                         }
                     }else{
-                        min = priceArray.getJSONObject(0).getDouble("min");
-                        max = priceArray.getJSONObject(0).getDouble("max");
+                        minPrice = priceArray.getJSONObject(0).getDouble("min");
+                        maxPrice = priceArray.getJSONObject(0).getDouble("max");
                     }
 
 
@@ -145,7 +151,8 @@ public class EventHomeActivity extends AppCompatActivity {
                     promoImgae.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
                     outputStream.flush();
                     outputStream.close();
-
+                    
+                    eventList.add(new Event(name,startDate,tkUrl,minPrice,maxPrice,promoImgae));
                 }//end of loop through events
 
 
