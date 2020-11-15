@@ -16,7 +16,7 @@ public class RecipeHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_home);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("Recipe Cook");
+        actionBar.setTitle("Recipe Search");
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
