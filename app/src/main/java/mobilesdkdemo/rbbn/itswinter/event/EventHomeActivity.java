@@ -10,10 +10,13 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -53,6 +56,9 @@ public class EventHomeActivity extends AppCompatActivity {
 
         EventQuery query = new EventQuery();
         String apiKey = "KiOshiJsVO1WxmGWXYxpwy4Yxd7Cu6r1";
+        /*test link
+            https://app.ticketmaster.com/discovery/v2/events.json?apikey=KiOshiJsVO1WxmGWXYxpwy4Yxd7Cu6r1&city=ottawa&radius=100
+        */
         query.execute("https://app.ticketmaster.com/discovery/v2/events.json?apikey="+apiKey+"&city="+searchTerm+"&radius=100");
 
     }
@@ -64,15 +70,23 @@ public class EventHomeActivity extends AppCompatActivity {
                 URL url = new URL(args[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 InputStream response = urlConnection.getInputStream();
-                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-                factory.setNamespaceAware(false);
-                XmlPullParser xpp = factory.newPullParser();
-                xpp.setInput(response,"UTF-8");
-                String parameter = null;
-                int eventType = xpp.getEventType();
-                while(eventType != XmlPullParser.END_DOCUMENT){
 
+                //Build the entire string response:
+                BufferedReader reader = new BufferedReader(new InputStreamReader(response, "UTF-8"), 8);
+                StringBuilder sb = new StringBuilder();
+
+                String line = null;
+                while ((line = reader.readLine()) != null)
+                {
+                    sb.append(line + "\n");
                 }
+                String result = sb.toString(); //result is the whole string
+
+                // convert string to JSON: Look at slide 27:
+                JSONObject events = new JSONObject(result);
+
+
+
             }catch(Exception e){}
 
             return "Done";
