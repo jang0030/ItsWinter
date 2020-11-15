@@ -16,7 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="4"
             android:autofillHints="@string/enter_album_name"
-            android:hint="@string/enter_album_name" />
+            android:hint="@string/enter_album_name"
+            android:singleLine="true" />
 
         <ImageButton
             android:id="@+id/btnSearch"

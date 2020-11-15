@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.adapter.TrackAdapter;
+import mobilesdkdemo.rbbn.itswinter.audio.db.WinterRepository;
 import mobilesdkdemo.rbbn.itswinter.audio.fragment.TrackListFrag;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Track;
@@ -35,7 +36,8 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
 
     private Album album;
     private ActivityAlbumDetailBinding binding;
-    TrackListFrag trackListFrag;
+    private TrackListFrag trackListFrag;
+    private WinterRepository repo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,7 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
         binding.tvGenre.setText("Genre:" + album.getStrGenre());
         binding.tvScore.setText("Score:" + album.getIntScore());
         trackListFrag = new TrackListFrag();
+        repo=new WinterRepository(this);
         Bundle dataToPass = new Bundle();
         dataToPass.putInt("albumId", album.getIdAlbum());
         trackListFrag.setArguments(dataToPass); //pass it a bundle for information
@@ -77,6 +80,15 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
                 .beginTransaction()
                 .replace(R.id.fragmentLocation, trackListFrag) //Add the fragment in FrameLayout
                 .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
+        binding.ivSave.setOnClickListener(v->{
+            try {
+                repo.insert_Album(album);
+            }catch (Exception e){
+                Toast.makeText(this, "This was already saved.", Toast.LENGTH_SHORT).show();
+            }
+
+            Toast.makeText(this, "It was saved", Toast.LENGTH_SHORT).show();
+        });
 
     }
 

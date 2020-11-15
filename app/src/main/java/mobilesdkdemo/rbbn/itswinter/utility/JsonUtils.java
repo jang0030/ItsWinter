@@ -2,9 +2,7 @@ package mobilesdkdemo.rbbn.itswinter.utility;
 
 import android.util.Log;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
-import com.fasterxml.jackson.databind.type.TypeFactory;
+
 import com.google.gson.Gson;
 
 import org.json.JSONArray;

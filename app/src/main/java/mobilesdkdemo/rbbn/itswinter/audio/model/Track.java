@@ -1,8 +1,8 @@
 package mobilesdkdemo.rbbn.itswinter.audio.model;
 
 public class Track {
-        private int idTrack;
-        private int idAlbum;
+    private int idTrack;
+    private int idAlbum;
     private int idArtist;
     private int idLyric;
     private String idIMVDB;

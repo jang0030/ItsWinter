@@ -3,7 +3,15 @@ package mobilesdkdemo.rbbn.itswinter.audio.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+
+@Entity(tableName = "Album")
 public class Album implements Parcelable {
+    @PrimaryKey(autoGenerate = true)
+    private int albumID;
+
     private int idAlbum;
     private int idArtist;
     private int idLabel;
@@ -25,7 +33,12 @@ public class Album implements Parcelable {
     private String strMood;
     private String strLocked;
 
+    public Album() {
+    }
+
+
     protected Album(Parcel in) {
+        albumID = in.readInt();
         idAlbum = in.readInt();
         idArtist = in.readInt();
         idLabel = in.readInt();
@@ -50,6 +63,7 @@ public class Album implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(albumID);
         dest.writeInt(idAlbum);
         dest.writeInt(idArtist);
         dest.writeInt(idLabel);
@@ -88,6 +102,14 @@ public class Album implements Parcelable {
             return new Album[size];
         }
     };
+
+    public int getAlbumID() {
+        return albumID;
+    }
+
+    public void setAlbumID(int albumID) {
+        this.albumID = albumID;
+    }
 
     public int getIdAlbum() {
         return idAlbum;
@@ -247,5 +269,9 @@ public class Album implements Parcelable {
 
     public void setStrLocked(String strLocked) {
         this.strLocked = strLocked;
+    }
+
+    public AlbumMini createAlbumMini(){
+        return  new AlbumMini(this.idAlbum,this.idArtist,this.strAlbum,this.strArtist,intYearReleased,strGenre);
     }
 }
