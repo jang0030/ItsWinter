@@ -30,6 +30,17 @@ import mobilesdkdemo.rbbn.itswinter.R;
 
 public class EventHomeActivity extends AppCompatActivity {
 
+//    TODO: create layout for event screen
+//    TODO: be able to click event link, take to browser (alert dialog)
+//    TODO: add oLongClick to listView
+//    TODO: add some way for search radius value
+//    TODO: save last search term in shared Preferences
+//    TODO: add favorite feature for event (save to database)(toast)
+//    TODO: add favorites screen (fragment?)
+//    TODO: add favorites search
+//    TODO: add favorites remove (snackbar with revert option)
+
+
     private ArrayList<Event> eventList = new ArrayList();
     private String name,startDate,tkUrl;
     private double minPrice,maxPrice;
@@ -166,7 +177,7 @@ public class EventHomeActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String s){
-            
+//            TODO: Add name to ListView
         }
     }
 }
