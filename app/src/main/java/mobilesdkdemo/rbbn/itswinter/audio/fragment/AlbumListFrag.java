@@ -1,5 +1,6 @@
 package mobilesdkdemo.rbbn.itswinter.audio.fragment;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,25 +23,19 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
 import mobilesdkdemo.rbbn.itswinter.audio.data.AudioRepository;
 import mobilesdkdemo.rbbn.itswinter.audio.data.IAudioRepository;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
-import mobilesdkdemo.rbbn.itswinter.audio.model.Wrapper;
+import mobilesdkdemo.rbbn.itswinter.utility.JsonUtils;
 import mobilesdkdemo.rbbn.itswinter.utility.PreferenceManager;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class AlbumListFrag extends Fragment {
@@ -56,7 +52,7 @@ public class AlbumListFrag extends Fragment {
     private String albumName;
     private String keyword;
     private IAudioRepository audioRepository;
-    private AlbumQuery req;
+
     private String album_url;
     public AlbumListFrag() {
         // Required empty public constructor
@@ -79,9 +75,6 @@ public class AlbumListFrag extends Fragment {
         audioRepository=new AudioRepository();
         keyword= PreferenceManager.getString(getContext(),KEYWORD);
         etKeyword.setText(keyword);
-        album_url="https://www.theaudiodb.com/api/v1/json/1/searchalbum.php?s=";
-         req = new AlbumQuery();
-
 
         btnSearch.setOnClickListener(v->{
             keyword=etKeyword.getText().toString().trim();
@@ -98,25 +91,11 @@ public class AlbumListFrag extends Fragment {
 
     public void retriveList() {
        String keyword=etKeyword.getText().toString().trim();
-//        if(!keyword.isEmpty()){
-////            audioRepository.getAlbums(keyword, new Callback<Wrapper>() {
-////                @Override
-////                public void onResponse(Call<Wrapper> call, Response<Wrapper> response) {
-////                    if(response.body().getAlbum()!=null && response.body().getAlbum().size()>0) {
-////                        if(list.size()>0) list.clear();
-////                        list.addAll(response.body().getAlbum());
-////                        myAdapter.notifyDataSetChanged();
-////                    }else{
-////                        Toast.makeText(getContext(), "There are no results", Toast.LENGTH_SHORT).show();
-////                    }
-////                }
-////                @Override
-////                public void onFailure(Call<Wrapper> call, Throwable t) {
-////                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-////                }
-////            });
-////        }
-        req.execute(keyword);  //Type 1
+        if(!keyword.isEmpty()){
+            AlbumQuery req=new AlbumQuery();
+            req.execute(keyword);
+        }
+
     }
 
     private void initialRecylerView() {
@@ -133,50 +112,34 @@ public class AlbumListFrag extends Fragment {
     }
 
     private class AlbumQuery extends AsyncTask< String, Integer, String>{
+        ArrayList<Album> albums;
+        ProgressDialog dialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog=new ProgressDialog(getContext());
+            dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            dialog.setMax(100);
+            dialog.show();
+            albums=new ArrayList<>();
+        }
 
         @Override
         protected String doInBackground(String... args) {
-            try {
-                 album_url=String.format("https://www.theaudiodb.com/api/v1/json/1/searchalbum.php?s=%s",args[0]);
-                URL url = new URL(album_url);
-
-                //open the connection
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-                //wait for data:
-                InputStream response = urlConnection.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(response, "UTF-8"), 8);
-
-                StringBuilder sb = new StringBuilder();
-
-                String line;
-
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line);
-                }
-
-                JSONObject json = new JSONObject(sb.toString());
-                json.getString("status");
-                JSONArray jsonArray = json.getJSONArray("object");
-                JSONArray jsonArray1 = new JSONArray(json);
-                List<Album> albums = new ArrayList<>();
-               // JSONArray jsonArray = new JSONArray(stringJsonContainArray);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    Album album = new Gson().fromJson(jsonArray.get(i).toString(), Album.class);
-                    albums.add(album);
-                }
-
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
+            String url=String.format("https://www.theaudiodb.com/api/v1/json/1/searchalbum.php?s=%s",args[0]);
+            albums=JsonUtils.getArrayListbyUrl(Album.class,url, "album");
             return null;
         }
 
         @Override
         protected void onPostExecute(String s) {
-            super.onPostExecute(s);
+            Log.i(TAG, "onPostExecute: "+albums.size());
+            if(albums.size()>0){
+                        list.clear();
+                        list.addAll(albums);
+                        myAdapter.notifyDataSetChanged();
+            }
+            dialog.dismiss();
         }
     }
 
