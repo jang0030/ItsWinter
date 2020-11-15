@@ -4,17 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -85,6 +90,63 @@ public class EventHomeActivity extends AppCompatActivity {
                 // convert string to JSON: Look at slide 27:
                 JSONObject events = new JSONObject(result);
 
+//                loops through all events using the value from JSON file
+                for(int i =0; i < events.getJSONObject("page").getInt("size"); i++){
+
+//                    stores the JSONObject so don't have to call the huge line every time we want a value
+                    JSONObject object = events.getJSONObject("_embedded").getJSONObject("events").getJSONObject(String.valueOf(i));
+
+//                    gets name, start date and Ticket Master URL
+                    String name = object.getString("name");
+                    String startDate = object.getJSONObject("start").getString("localDate");
+                    String tkUrl = object.getString("url");
+
+//                    finds max and min prices
+//                    in testing, no event had more then one type of ticket, but it is set up for if there is more then one
+                    JSONArray priceArray = object.getJSONArray("priceRanges");
+                    int priceArrayLength = object.getJSONArray("priceRanges").length();
+                    double max = 0;
+                    double min = 0;
+
+//                    checks if there is more then one ticket type
+                    if(priceArrayLength > 1){
+                        double current;
+                        for (int x = 0; x < priceArrayLength; x++) {
+                            current = priceArray.getJSONObject(x).getDouble("min");
+                            if (min > current) {
+                                min = current;
+                            }
+                            current = priceArray.getJSONObject(x).getDouble("max");
+                            if (max > current) {
+                                max = current;
+                            }
+                        }
+                    }else{
+                        min = priceArray.getJSONObject(0).getDouble("min");
+                        max = priceArray.getJSONObject(0).getDouble("max");
+                    }
+
+
+//                    gets promo image
+//                    while there can be multiple promo images, only one is required
+                    URL promoImageUrl = new URL(object.getJSONArray("images").getJSONObject(0).getString("url"));
+                    HttpURLConnection connection = (HttpURLConnection) promoImageUrl.openConnection();
+                    connection.connect();
+
+                    int responseCode = connection.getResponseCode();
+                    Bitmap promoImgae = null;
+                    if (responseCode == 200) {
+                        promoImgae = BitmapFactory.decodeStream(connection.getInputStream());
+                    }
+                    publishProgress(100);
+
+//                builds the bitmap object
+                    FileOutputStream outputStream = openFileOutput(promoImgae + ".png", Context.MODE_PRIVATE);
+                    promoImgae.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
+                    outputStream.flush();
+                    outputStream.close();
+
+                }//end of loop through events
 
 
             }catch(Exception e){}
