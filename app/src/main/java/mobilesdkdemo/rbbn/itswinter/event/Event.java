@@ -15,4 +15,28 @@ public class Event {
         this.priceMax = priceMax;
         this.promoImage = promoImage;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getTkUrl() {
+        return tkUrl;
+    }
+
+    public double getPriceMin() {
+        return priceMin;
+    }
+
+    public double getPriceMax() {
+        return priceMax;
+    }
+
+    public Bitmap getPromoImage() {
+        return promoImage;
+    }
 }

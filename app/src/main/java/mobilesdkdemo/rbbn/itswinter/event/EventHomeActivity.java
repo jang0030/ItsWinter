@@ -151,7 +151,7 @@ public class EventHomeActivity extends AppCompatActivity {
                     promoImgae.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
                     outputStream.flush();
                     outputStream.close();
-                    
+
                     eventList.add(new Event(name,startDate,tkUrl,minPrice,maxPrice,promoImgae));
                 }//end of loop through events
 
@@ -166,7 +166,7 @@ public class EventHomeActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String s){
-
+            
         }
     }
 }
