@@ -13,7 +13,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".audio.MyAlbumActivity"></activity>
         <activity android:name=".audio.AlbumDetailActivity" />
-        <activity android:name=".HelpActivity" />
         <activity android:name=".event.EventHomeActivity" />
         <activity android:name=".recipe.RecipeHomeActivity" />
         <activity android:name=".covid.CovidHomeActivity" />
