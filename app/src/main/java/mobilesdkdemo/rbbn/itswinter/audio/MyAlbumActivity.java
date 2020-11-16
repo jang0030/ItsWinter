@@ -5,7 +5,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,11 +15,6 @@ import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
 import mobilesdkdemo.rbbn.itswinter.audio.fragment.MyAlbumFrag;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
-import mobilesdkdemo.rbbn.itswinter.utility.Utility;
-
-import static android.content.DialogInterface.BUTTON_NEGATIVE;
-import static android.content.DialogInterface.BUTTON_NEUTRAL;
-import static android.content.DialogInterface.BUTTON_POSITIVE;
 
 public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.AlbumItemClicked{
 
@@ -51,7 +45,14 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
                 this.finish();
                 break;
             case (R.id.action_help):
-                Utility.createAndShowDialog(MyAlbumActivity.this, "title", "msg");
+                new AlertDialog.Builder(this).setTitle("Help")
+                        .setMessage("This Page is my storage box for my albums.\n" +
+                                "When you click each item, you can access detail ablum infomations with their tracks.\n" +
+                                "When you click each item for more long time, you can delete to the item in your storage. ")
+                        .setPositiveButton(R.string.yes,(click, arg) -> {
+
+                        } )
+                        .create().show();
                 break;
             case (R.id.action_home):
                 startActivity(new Intent(MyAlbumActivity.this, AudioHomeActivity.class));

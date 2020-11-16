@@ -24,4 +24,5 @@
     <string name="search">Search</string>
     <string name="album">Album</string>
     <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
