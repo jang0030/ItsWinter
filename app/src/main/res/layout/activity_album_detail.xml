@@ -41,7 +41,7 @@
                 android:background="#00FFFFFF"
                 android:layout_gravity="center"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/ic__favorite_red" />
+                android:src="@drawable/ic_add" />
         </LinearLayout>
 
        <LinearLayout

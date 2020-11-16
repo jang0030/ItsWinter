@@ -81,13 +81,7 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
                 .replace(R.id.fragmentLocation, trackListFrag) //Add the fragment in FrameLayout
                 .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
         binding.ivSave.setOnClickListener(v->{
-            try {
-                repo.insert_Album(album);
-            }catch (Exception e){
-                Toast.makeText(this, "This was already saved.", Toast.LENGTH_SHORT).show();
-            }
-
-            Toast.makeText(this, "It was saved", Toast.LENGTH_SHORT).show();
+            repo.insert_Album(album);
         });
 
     }
@@ -107,6 +101,12 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
                 break;
             case (R.id.action_help):
                 Utility.createAndShowDialog(AlbumDetailActivity.this, "title", "msg");
+                break;
+            case (R.id.action_home):
+                startActivity(new Intent(AlbumDetailActivity.this, AudioHomeActivity.class));
+                break;
+            case (R.id.action_mine):
+                startActivity(new Intent(AlbumDetailActivity.this, MyAlbumActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

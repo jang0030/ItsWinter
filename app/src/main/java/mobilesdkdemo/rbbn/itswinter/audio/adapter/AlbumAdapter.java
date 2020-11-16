@@ -27,6 +27,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
 
     public interface AlbumItemClicked{
       void onAlbumItemClicked(Album item);
+      void onAlbumItemLongClicked(Album item);
     }
 
     public AlbumAdapter(Context context, ArrayList<Album> list) {
@@ -47,8 +48,12 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
             tvYear=itemView.findViewById(R.id.tvYear);
 
             itemView.setOnClickListener(v->{
-                    Album album= (Album) itemView.getTag();
-                    context.onAlbumItemClicked(album);
+                context.onAlbumItemClicked((Album) itemView.getTag());
+            });
+
+            itemView.setOnLongClickListener(v->{
+                context.onAlbumItemLongClicked((Album) itemView.getTag());
+                return false;
             });
         }
         public void setItem(Album item){

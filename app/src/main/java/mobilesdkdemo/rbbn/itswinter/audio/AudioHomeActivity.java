@@ -38,6 +38,9 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
             case android.R.id.home:
                 AudioHomeActivity.this.finish();
                 break;
+            case (R.id.action_mine):
+                startActivity(new Intent(AudioHomeActivity.this, MyAlbumActivity.class));
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -49,6 +52,11 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
       Intent intent=new Intent(AudioHomeActivity.this, AlbumDetailActivity.class);
       intent.putExtra("album", item);
       startActivity(intent);
+
+    }
+
+    @Override
+    public void onAlbumItemLongClicked(Album item) {
 
     }
 }
