@@ -21,10 +21,11 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="3"
             android:paddingLeft="10dp"
-            android:text="Album"
+            android:text="@string/album"
             android:textColor="#000000"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:id="@+id/tvHeader"/>
 
 
     </LinearLayout>

@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
     ImageButton btnSearch;
     EditText etKeyword;
     String keyword;
+    TextView tvHeader;
     private ArrayList<Album> list;
 
     private ListMultiFrag listFra;
@@ -51,8 +53,16 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
 
         @Override
         protected String doInBackground(String... args) {
+            try {
+                Thread.sleep(300);
+                dialog.setProgress(20);
+            } catch (InterruptedException e) {
+                Log.d(TAG, "onPostExecute: "+e.getMessage());
+            }
+
             String url=String.format("https://www.theaudiodb.com/api/v1/json/1/searchalbum.php?s=%s",args[0]);
             albums= JsonUtils.getArrayListbyUrl(Album.class,url, "album");
+            dialog.setProgress(80);
             return null;
         }
 
@@ -60,6 +70,14 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
         protected void onPostExecute(String s) {
             Log.i(TAG, "onPostExecute: "+albums.size());
             listFra.retriveList(albums);
+            tvHeader.setText(String.format("Album List(%d)",albums.size()));
+            try {
+                Thread.sleep(300);
+                dialog.setProgress(100);
+            } catch (InterruptedException e) {
+                Log.d(TAG, "onPostExecute: "+e.getMessage());
+            }
+
             dialog.dismiss();
         }
     }
@@ -75,6 +93,7 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
         listFra= ListMultiFrag.newInstance(new AlbumAdapter(this, list),R.layout.fragment_album_list);
         btnSearch=findViewById(R.id.btnSearch);
         etKeyword=findViewById(R.id.etKeyword);
+        tvHeader=findViewById(R.id.tvHeader);
         keyword= PreferenceManager.getString(this,KEYWORD);
         etKeyword.setText(keyword);
 

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.adapter.MyRecyclerAdapter;
+import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 
 
 public class ListMultiFrag<T> extends Fragment {
@@ -24,7 +25,7 @@ public class ListMultiFrag<T> extends Fragment {
     private RecyclerView rvList;
     private RecyclerView.LayoutManager layoutManager;
     private static MyRecyclerAdapter myAdapter;
-    private ArrayList<T> list;
+    //private ArrayList<T> list;
     private static int resource;
     public ListMultiFrag() {
         // Required empty public constructor
@@ -46,7 +47,7 @@ public class ListMultiFrag<T> extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        list=new ArrayList<>();
+      //  list=new ArrayList<>();
         initialRecylerView();
     }
 
@@ -69,6 +70,8 @@ public class ListMultiFrag<T> extends Fragment {
         if(myAdapter!=null) myAdapter.notifyDataSetChanged();
     }
 
-
+    public boolean removeItem(T item){
+        return myAdapter.removeItem(item);
+    }
 
 }

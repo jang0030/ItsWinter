@@ -18,6 +18,10 @@ public interface AlbumDao {
     @Query("Select * from album")
     LiveData<List<Album>> getList_Album();
 
+    @Query("SELECT * FROM album WHERE strAlbum LIKE '%' || :keyword || '%'" +
+            "OR myMemo LIKE '%' || :keyword || '%'" +
+            "OR strArtist LIKE '%' || :keyword || '%'")
+    LiveData<List<Album>> getList_Album_filter(String keyword);
     @Insert
     long[] insert_Album(Album... albums);
 

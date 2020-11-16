@@ -38,4 +38,10 @@ public abstract class MyRecyclerAdapter<T, V extends ViewHolder> extends Recycle
             this.notifyDataSetChanged();
         }
     }
+
+    public boolean removeItem(T item){
+        boolean result= list.remove(item);
+        this.notifyDataSetChanged();
+        return result;
+    }
 }
