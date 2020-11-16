@@ -20,4 +20,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="welcome_to_our_app">환영합니다</string>
     <string name="help">도움말</string>
+    <string name="enter_album_name">Enter Album name</string>
+    <string name="search">Search</string>
+    <string name="album">Album</string>
+    <string name="yes">Yes</string>
 </resources>

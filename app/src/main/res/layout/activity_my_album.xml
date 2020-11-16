@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".audio.AudioHomeActivity">
+    tools:context=".audio.MyAlbumActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="3"
             android:paddingLeft="10dp"
-            android:text="Album"
+            android:text="My Album List"
             android:textColor="#000000"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -30,11 +30,11 @@
     </LinearLayout>
 
     <fragment
-        android:id="@+id/albumsFrag"
-        android:name="mobilesdkdemo.rbbn.itswinter.audio.fragment.AlbumListFrag"
+        android:id="@+id/myAlbumFrag"
+        android:name="mobilesdkdemo.rbbn.itswinter.audio.fragment.MyAlbumFrag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_album_list" />
+        tools:layout="@layout/fragment_my_album" />
 
 
 </LinearLayout>

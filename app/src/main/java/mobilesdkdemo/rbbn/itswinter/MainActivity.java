@@ -80,6 +80,18 @@ public class MainActivity extends AppCompatActivity {
                     drawerLayout.closeDrawer(Gravity.LEFT); ;
                 }
                 break;
+            case R.id.action_recipe:
+                startActivity(new Intent(MainActivity.this, RecipeHomeActivity.class));
+                break;
+            case R.id.action_covid19:
+                startActivity(new Intent(MainActivity.this, CovidHomeActivity.class));
+                break;
+            case R.id.action_audioApi:
+                startActivity(new Intent(MainActivity.this, AudioHomeActivity.class));
+                break;
+            case R.id.action_event:
+                startActivity(new Intent(MainActivity.this, EventHomeActivity.class));
+                break;
             case R.id.action_help:
                startActivity(new Intent(MainActivity.this, HelpActivity.class));
                break;

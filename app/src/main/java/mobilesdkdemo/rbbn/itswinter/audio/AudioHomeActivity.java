@@ -4,12 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import mobilesdkdemo.rbbn.itswinter.R;
+import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
+import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 
-public class AudioHomeActivity extends AppCompatActivity {
+public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter.AlbumItemClicked {
+
+    private static final String TAG="AudioHomeActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,14 +27,36 @@ public class AudioHomeActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.audio_home, menu);
+        return true;
+    }
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
                 AudioHomeActivity.this.finish();
                 break;
+            case (R.id.action_mine):
+                startActivity(new Intent(AudioHomeActivity.this, MyAlbumActivity.class));
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onAlbumItemClicked(Album item) {
+      Intent intent=new Intent(AudioHomeActivity.this, AlbumDetailActivity.class);
+      intent.putExtra("album", item);
+      startActivity(intent);
+
+    }
+
+    @Override
+    public void onAlbumItemLongClicked(Album item) {
+
     }
 }
