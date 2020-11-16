@@ -133,8 +133,8 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
             case (R.id.action_help):
                 new AlertDialog.Builder(this).setTitle("Help")
                         .setMessage("This Page is home of Audio-API.\n" +
-                                "When you enter your title of the album that you want to find, you can find the ablum list with the title.\n" +
-                                "When you click each item, you can access the detailed information about the album with their tracks.")
+                                "When you enter your title of the album that you want to find and click the search button, you can find the ablum list with the title.\n" +
+                                "When you click each item, you can access the detailed information about the album with its tracks.")
                         .setPositiveButton(R.string.yes,(click, arg) -> {
 
                         } )
