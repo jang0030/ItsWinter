@@ -23,4 +23,5 @@
     <string name="enter_album_name">Enter Album name</string>
     <string name="search">Search</string>
     <string name="album">Album</string>
+    <string name="yes">Yes</string>
 </resources>

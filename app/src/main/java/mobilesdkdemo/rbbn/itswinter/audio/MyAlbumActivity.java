@@ -22,7 +22,7 @@ import static android.content.DialogInterface.BUTTON_NEGATIVE;
 import static android.content.DialogInterface.BUTTON_NEUTRAL;
 import static android.content.DialogInterface.BUTTON_POSITIVE;
 
-public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.AlbumItemClicked, AlertDialog.OnClickListener  {
+public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.AlbumItemClicked{
 
     private MyAlbumFrag myAlbumFrag;
     private Album selectedItem;
@@ -71,33 +71,18 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
     @Override
     public void onAlbumItemLongClicked(Album item) {
         selectedItem=item;
-        AlertDialog dialog=Utility.createAndShowDialog(this,"Delete Album", "Do you want to delete this album?");
+        //AlertDialog dialog=Utility.createAndShowDialog(this,"Delete Album", "Do you want to delete this album?");
+        new AlertDialog.Builder(this).setTitle("Delete").setMessage("Do you want to delete this album?")
+                .setPositiveButton(R.string.yes,(click, arg) -> {
+                    if(myAlbumFrag.removeItem(selectedItem)){
+                        Toast.makeText(MyAlbumActivity.this, "It was deleted", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(MyAlbumActivity.this, "It was not deleted", Toast.LENGTH_SHORT).show();
+                    }
+                } )
+                .setNegativeButton("No", (click, arg) -> {  })
+                .create().show();
 
     }
 
-
-
-    @Override
-    public void onClick(DialogInterface dialog, int i) {
-        switch (i) {
-            case BUTTON_NEGATIVE:
-                // int which = -2
-                dialog.dismiss();
-                break;
-            case BUTTON_NEUTRAL:
-                // int which = -3
-                dialog.dismiss();
-                break;
-            case BUTTON_POSITIVE:
-                 //int which = -1
-                if(myAlbumFrag.removeItem(selectedItem)){
-                    Toast.makeText(this, "It was deleted", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(this, "It was not deleted", Toast.LENGTH_SHORT).show();
-                }
-
-                dialog.dismiss();
-                break;
-        }
-    }
 }

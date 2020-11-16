@@ -29,4 +29,5 @@
     -->
     <string name="hello_world">Hello Square World!</string>
     <string name="album">Album</string>
+    <string name="yes">Yes</string>
 </resources>
