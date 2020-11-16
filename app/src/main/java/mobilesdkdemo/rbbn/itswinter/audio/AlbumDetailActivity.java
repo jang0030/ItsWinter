@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -32,11 +33,12 @@ import static android.content.DialogInterface.BUTTON_NEUTRAL;
 import static android.content.DialogInterface.BUTTON_POSITIVE;
 
 
-public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapter.TrackItemClicked, AlertDialog.OnClickListener {
+public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapter.TrackItemClicked{
 
     private Album album;
     private ActivityAlbumDetailBinding binding;
     private TrackListFrag trackListFrag;
+    //private ListFrag listFrag;
     private WinterRepository repo;
 
     @Override
@@ -71,6 +73,12 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
         });
         binding.tvGenre.setText("Genre:" + album.getStrGenre());
         binding.tvScore.setText("Score:" + album.getIntScore());
+        String memo=album.getMyMemo()==null?"-":album.getMyMemo();
+        binding.etMyMemo.setText(album.getMyMemo());
+        binding.tvMyMemo.setText(memo);
+        if(album.getIsSaved()==1)binding.llMemoInput.setVisibility(View.GONE);
+        else binding.llMemoView.setVisibility(View.GONE);
+
         trackListFrag = new TrackListFrag();
         repo=new WinterRepository(this);
         Bundle dataToPass = new Bundle();
@@ -81,6 +89,8 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
                 .replace(R.id.fragmentLocation, trackListFrag) //Add the fragment in FrameLayout
                 .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
         binding.ivSave.setOnClickListener(v->{
+            album.setMyMemo(binding.etMyMemo.getText().toString().trim());
+            album.setIsSaved(1);
             repo.insert_Album(album);
         });
 
@@ -100,6 +110,14 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
                 this.finish();
                 break;
             case (R.id.action_help):
+                new AlertDialog.Builder(this).setTitle("Help")
+                        .setMessage("This Page have detailed information about the album that you clicked.\n" +
+                                "This page also provides the tracks of the album.\n" +
+                                "When you click each track, you can access detailed information about the track through google.")
+                        .setPositiveButton(R.string.ok,(click, arg) -> {
+
+                        } )
+                        .create().show();
                 break;
             case (R.id.action_home):
                 startActivity(new Intent(AlbumDetailActivity.this, AudioHomeActivity.class));
@@ -118,22 +136,5 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
 
     }
 
-    @Override
-    public void onClick(DialogInterface dialog, int i) {
-        switch (i) {
-            case BUTTON_NEGATIVE:
-                // int which = -2
-                dialog.dismiss();
-                break;
-            case BUTTON_NEUTRAL:
-                // int which = -3
-                dialog.dismiss();
-                break;
-            case BUTTON_POSITIVE:
-                // int which = -1
-                AlbumDetailActivity.this.finish();
-                dialog.dismiss();
-                break;
-        }
-    }
+
 }

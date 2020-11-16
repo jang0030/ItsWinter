@@ -34,14 +34,14 @@
                 tools:text="Title" />
 
             <ImageButton
-                android:id="@+id/ivSave"
+                android:id="@+id/ivSaved"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#00FFFFFF"
                 android:layout_gravity="center"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/ic_add" />
+                android:src="@drawable/ic_favorite_white" />
         </LinearLayout>
 
        <LinearLayout
@@ -113,7 +113,63 @@
 
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_bg"
+        android:orientation="horizontal"
+        android:padding="5dp">
 
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="5dp"
+            app:srcCompat="@drawable/ic_dog2" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/my_memo"
+            android:fontFamily="@font/alike"
+            android:textColor="@color/black"
+            android:layout_marginLeft="5dp"
+            android:textSize="16sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/llMemoInput"
+        android:layout_margin="5dp">
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/etMyMemo"
+            android:layout_weight="8"
+            android:hint="@string/please_enter_your_memo"/>
+        <ImageButton
+            android:id="@+id/ivSave"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_add_box" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:id="@+id/llMemoView"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvMyMemo"
+            android:layout_marginLeft="5dp"
+            tools:text="@string/my_memo"/>
+    </LinearLayout>
     <FrameLayout
         android:id="@+id/fragmentLocation"
         android:layout_width="match_parent"

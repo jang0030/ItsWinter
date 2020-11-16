@@ -32,6 +32,8 @@ public class Album implements Parcelable {
     private String strReview;
     private String strMood;
     private String strLocked;
+    private String myMemo;
+    private int isSaved;
 
     public Album() {
     }
@@ -58,6 +60,8 @@ public class Album implements Parcelable {
         strReview = in.readString();
         strMood = in.readString();
         strLocked = in.readString();
+        myMemo = in.readString();
+        isSaved = in.readInt();
     }
 
     @Override
@@ -82,6 +86,8 @@ public class Album implements Parcelable {
         dest.writeString(strReview);
         dest.writeString(strMood);
         dest.writeString(strLocked);
+        dest.writeString(myMemo);
+        dest.writeInt(isSaved);
     }
 
     @Override
@@ -101,6 +107,21 @@ public class Album implements Parcelable {
         }
     };
 
+    public int getIsSaved() {
+        return isSaved;
+    }
+
+    public void setIsSaved(int isSaved) {
+        this.isSaved = isSaved;
+    }
+
+    public String getMyMemo() {
+        return myMemo;
+    }
+
+    public void setMyMemo(String myMemo) {
+        this.myMemo = myMemo;
+    }
 
     public int getIdAlbum() {
         return idAlbum;

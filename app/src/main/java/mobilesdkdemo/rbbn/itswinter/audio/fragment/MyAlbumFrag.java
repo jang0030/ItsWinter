@@ -1,6 +1,5 @@
 package mobilesdkdemo.rbbn.itswinter.audio.fragment;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -13,18 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import mobilesdkdemo.rbbn.itswinter.R;
-import mobilesdkdemo.rbbn.itswinter.audio.AlbumDetailActivity;
-import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
+import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapterOrg;
 import mobilesdkdemo.rbbn.itswinter.audio.db.WinterRepository;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
-import mobilesdkdemo.rbbn.itswinter.utility.Utility;
-
-import static android.content.DialogInterface.BUTTON_NEGATIVE;
-import static android.content.DialogInterface.BUTTON_NEUTRAL;
-import static android.content.DialogInterface.BUTTON_POSITIVE;
 
 
 public class MyAlbumFrag extends Fragment {
@@ -66,11 +58,11 @@ public class MyAlbumFrag extends Fragment {
     }
 
     private void initialRecyclerView() {
-        rvAlbumList=v.findViewById(R.id.rvAlbumList);
+        rvAlbumList=v.findViewById(R.id.rvList);
         rvAlbumList.setHasFixedSize(true);
         layoutManager=new LinearLayoutManager(getContext());
         rvAlbumList.setLayoutManager(layoutManager);
-        myAdapter=new AlbumAdapter(getContext(), list);
+        myAdapter=new AlbumAdapterOrg(getContext(), list);
         rvAlbumList.setAdapter(myAdapter);
     }
 

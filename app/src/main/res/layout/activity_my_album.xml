@@ -21,20 +21,46 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="3"
             android:paddingLeft="10dp"
-            android:text="My Album List"
+            android:text="@string/my_album_list"
             android:textColor="#000000"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:id="@+id/tvHeader"/>
 
 
     </LinearLayout>
-
-    <fragment
-        android:id="@+id/myAlbumFrag"
-        android:name="mobilesdkdemo.rbbn.itswinter.audio.fragment.MyAlbumFrag"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_my_album" />
+        android:layout_margin="5dp">
+
+        <EditText
+            android:id="@+id/etKeyword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:autofillHints="@string/enter_album_name"
+            android:hint="@string/enter_album_name"
+            android:singleLine="true" />
+
+        <ImageButton
+            android:id="@+id/btnSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_search" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+<!--    <fragment-->
+<!--        android:id="@+id/myAlbumFrag"-->
+<!--        android:name="mobilesdkdemo.rbbn.itswinter.audio.fragment.MyAlbumFrag"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        tools:layout="@layout/fragment_my_album" />-->
 
 
 </LinearLayout>

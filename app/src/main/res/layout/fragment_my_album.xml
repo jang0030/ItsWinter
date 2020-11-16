@@ -6,15 +6,9 @@
     android:orientation="vertical"
     tools:context=".audio.fragment.MyAlbumFrag">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_bg"
-        android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvAlbumList"
+        android:id="@+id/rvList"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
