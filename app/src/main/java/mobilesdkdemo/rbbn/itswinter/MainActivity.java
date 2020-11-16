@@ -96,11 +96,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, EventHomeActivity.class));
                 break;
             case R.id.action_help:
-                new AlertDialog.Builder(this).setTitle("Help").setMessage("Do you want to know how to use this page?")
+                new AlertDialog.Builder(this).setTitle("Help")
+                        .setMessage("When you clicked each icon, you can visit individual app.\n" +
+                                "● First icon can access the Recipe app that is made by Jiyeon Choi. \n "+
+                                "● Second icon can access the Covid-19 app that is made by Hyunju Jang.\n " +
+                                "● Third icon can access the Audio-API app that is made by Kiwoong Kim.\n" +
+                                "● Forth icon can access the Ticket Event app that is made by Zackery Brennan.")
                         .setPositiveButton(R.string.yes,(click, arg) -> {
-                            startActivity(new Intent(MainActivity.this, HelpActivity.class));
+
                         } )
-                        .setNegativeButton("No", (click, arg) -> {  })
                         .create().show();
                break;
         }
