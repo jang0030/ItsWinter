@@ -115,8 +115,8 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
                 break;
             case (R.id.action_help):
                 new AlertDialog.Builder(this).setTitle("Help")
-                        .setMessage("This Page is my storage box for my albums.\n" +
-                                "When you click each item, you can access detail ablum infomations with their tracks.\n" +
+                        .setMessage("This Page is your storage box for your albums.\n" +
+                                "When you click each item, you can access detail ablum infomations with its tracks.\n" +
                                 "When you click each item for more long time, you can delete to the item in your storage. ")
                         .setPositiveButton(R.string.yes,(click, arg) -> {
 
