@@ -12,11 +12,11 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import mobilesdkdemo.rbbn.itswinter.R;
-import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
+import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapterOrg;
 import mobilesdkdemo.rbbn.itswinter.audio.fragment.MyAlbumFrag;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 
-public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.AlbumItemClicked{
+public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapterOrg.AlbumItemClicked{
 
     private MyAlbumFrag myAlbumFrag;
     private Album selectedItem;

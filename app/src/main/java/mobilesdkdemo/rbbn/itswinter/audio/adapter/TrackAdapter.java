@@ -14,7 +14,9 @@ import java.util.List;
 import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Track;
 
-public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolder> {
+public class TrackAdapter extends  MyRecyclerAdapter<Track, TrackAdapter.ViewHolder> {
+
+
 
     public interface TrackItemClicked{
         void onTrackItemClicked(Track item);
@@ -60,7 +62,10 @@ public class TrackAdapter extends RecyclerView.Adapter<TrackAdapter.ViewHolder> 
         holder.itemView.setTag(item);
         holder.setItem(item);
     }
+    @Override
+    public void retriveList(List<Track> list) {
 
+    }
 
 
     @Override

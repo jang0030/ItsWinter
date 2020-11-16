@@ -1,6 +1,5 @@
 package mobilesdkdemo.rbbn.itswinter.audio.adapter;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,34 +9,33 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 
-public class AlbumAdapter extends MyRecyclerAdapter<Album, AlbumAdapter.ViewHolder>{
+public class AlbumAdapterOrg extends RecyclerView.Adapter<AlbumAdapterOrg.ViewHolder> {
 
 
 
     private AlbumItemClicked context;
-
-
+    private ArrayList<Album> list;
 
     public interface AlbumItemClicked{
-        void onAlbumItemClicked(Album item);
-        void onAlbumItemLongClicked(Album item);
+      void onAlbumItemClicked(Album item);
+      void onAlbumItemLongClicked(Album item);
     }
 
-    public AlbumAdapter(Context context, ArrayList<Album> list) {
+    public AlbumAdapterOrg(Context context, ArrayList<Album> list) {
         this.context = (AlbumItemClicked) context;
-        this.setList(list);
+        this.list = list;
     }
 
-    public class ViewHolder extends MyRecyclerAdapter.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
         ImageView ivPoster;
         TextView tvTitle, tvArtist, tvGenre, tvYear;
@@ -76,33 +74,27 @@ public class AlbumAdapter extends MyRecyclerAdapter<Album, AlbumAdapter.ViewHold
             }
         }
     }
-
     @NonNull
     @Override
-    public AlbumAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.album_item, parent, false);
         return new ViewHolder(v);
     }
 
 
-    public void onBindViewHolder(@NonNull AlbumAdapter.ViewHolder holder, int position) {
-        Album album=this.getList().get(position);
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Album album=list.get(position);
         holder.itemView.setTag(album);
         holder.setItem(album);
     }
 
     @Override
     public int getItemCount() {
-        return this.getList().size();
+        return list.size();
     }
 
-    @Override
-    public void retriveList(List<Album> albums) {
-        if(albums.size()>0){
-            this.getList().clear();
-            this.getList().addAll(albums);
-            this.notifyDataSetChanged();
-        }
-    }
+
 
 }

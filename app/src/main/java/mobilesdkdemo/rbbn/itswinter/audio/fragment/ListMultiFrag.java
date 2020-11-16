@@ -14,32 +14,32 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
-import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapterOrg;
-import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
+import mobilesdkdemo.rbbn.itswinter.audio.adapter.MyRecyclerAdapter;
 
 
-public class AlbumListFrag extends Fragment {
+public class ListMultiFrag<T> extends Fragment {
 
-    private static final String TAG="AlbumListFrag";
-    private static final String KEYWORD="audio_keyword";
+    private static final String TAG="ListMultiFrag";
     private View v;
     private RecyclerView rvList;
     private RecyclerView.LayoutManager layoutManager;
-    private RecyclerView.Adapter myAdapter;
-    private ArrayList<Album> list;
-
-   // private IAudioRepository audioRepository;
-
-    private String album_url;
-    public AlbumListFrag() {
+    private static MyRecyclerAdapter myAdapter;
+    private ArrayList<T> list;
+    private static int resource;
+    public ListMultiFrag() {
         // Required empty public constructor
     }
-
+    public static ListMultiFrag newInstance(MyRecyclerAdapter adapter, int resourceId) {
+        ListMultiFrag fragment = new ListMultiFrag();
+        myAdapter=adapter;
+        resource=resourceId;
+        return fragment;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        v= inflater.inflate(R.layout.fragment_album_list, container, false);
+        v= inflater.inflate(resource, container, false);
         return  v;
     }
 
@@ -51,13 +51,9 @@ public class AlbumListFrag extends Fragment {
     }
 
 
-    public void retriveList(ArrayList<Album> albums) {
+    public void retriveList(ArrayList<T> newList) {
 
-        if(albums.size()>0){
-            list.clear();
-            list.addAll(albums);
-            myAdapter.notifyDataSetChanged();
-        }
+     myAdapter.retriveList(newList);
 
     }
 
@@ -66,7 +62,6 @@ public class AlbumListFrag extends Fragment {
         rvList.setHasFixedSize(true);
         layoutManager=new LinearLayoutManager(this.getContext());
         rvList.setLayoutManager(layoutManager);
-        myAdapter=new AlbumAdapterOrg(this.getContext(), list);
         rvList.setAdapter(myAdapter);
     }
 

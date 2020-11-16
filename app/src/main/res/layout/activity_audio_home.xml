@@ -28,13 +28,36 @@
 
 
     </LinearLayout>
-
-    <fragment
-        android:id="@+id/albumsFrag"
-        android:name="mobilesdkdemo.rbbn.itswinter.audio.fragment.AlbumListFrag"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_album_list" />
+        android:layout_margin="5dp">
 
+        <EditText
+            android:id="@+id/etKeyword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:autofillHints="@string/enter_album_name"
+            android:hint="@string/enter_album_name"
+            android:singleLine="true" />
 
+        <ImageButton
+            android:id="@+id/btnSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_search" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+<!--    <fragment-->
+<!--        android:id="@+id/albumsFrag"-->
+<!--        android:name="mobilesdkdemo.rbbn.itswinter.audio.fragment.AlbumListFrag"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        tools:layout="@layout/fragment_album_list" />-->
 </LinearLayout>

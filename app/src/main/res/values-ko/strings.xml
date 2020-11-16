@@ -25,4 +25,8 @@
     <string name="album">Album</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="please_enter_your_memo">Please enter your memo</string>
+    <string name="ok">OK</string>
+    <string name="my_memo">My Memo</string>
+    <string name="track_list">Track List</string>
 </resources>
