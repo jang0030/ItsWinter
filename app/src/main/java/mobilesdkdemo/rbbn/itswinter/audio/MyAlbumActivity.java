@@ -51,7 +51,6 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
                 this.finish();
                 break;
             case (R.id.action_help):
-                Utility.createAndShowDialog(MyAlbumActivity.this, "title", "msg");
                 break;
             case (R.id.action_home):
                 startActivity(new Intent(MyAlbumActivity.this, AudioHomeActivity.class));

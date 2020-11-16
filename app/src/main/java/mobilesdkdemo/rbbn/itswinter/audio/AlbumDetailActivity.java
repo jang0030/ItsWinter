@@ -100,7 +100,6 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
                 this.finish();
                 break;
             case (R.id.action_help):
-                Utility.createAndShowDialog(AlbumDetailActivity.this, "title", "msg");
                 break;
             case (R.id.action_home):
                 startActivity(new Intent(AlbumDetailActivity.this, AudioHomeActivity.class));
