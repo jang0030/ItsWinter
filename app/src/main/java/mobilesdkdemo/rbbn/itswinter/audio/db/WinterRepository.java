@@ -14,7 +14,7 @@ import mobilesdkdemo.rbbn.itswinter.audio.MyAlbumActivity;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 import mobilesdkdemo.rbbn.itswinter.utility.Utility;
 
-// This is to query inner DB for SQLite.
+// This is to query inner DB for SQLite with Room database.
 public class WinterRepository {
 
     private WinterDB db;

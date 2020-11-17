@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mobilesdkdemo.rbbn.itswinter.R;
@@ -22,11 +23,11 @@ public class TrackAdapter extends  MyRecyclerAdapter<Track, TrackAdapter.ViewHol
         void onTrackItemClicked(Track item);
     }
     private TrackItemClicked context;
-    private List<Track> list;
+    //private List<Track> list;
     View v;
-    public TrackAdapter(Context context, List<Track> list) {
+    public TrackAdapter(Context context, ArrayList<Track> list) {
         this.context = (TrackItemClicked) context;
-        this.list = list;
+        this.setList(list);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -58,14 +59,9 @@ public class TrackAdapter extends  MyRecyclerAdapter<Track, TrackAdapter.ViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Track item=list.get(position);
+        Track item=this.getList().get(position);
         holder.itemView.setTag(item);
         holder.setItem(item);
     }
 
-
-    @Override
-    public int getItemCount() {
-        return list.size();
-    }
 }

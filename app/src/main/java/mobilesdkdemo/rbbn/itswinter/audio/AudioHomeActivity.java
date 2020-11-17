@@ -37,7 +37,7 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
     TextView tvHeader;
     private ArrayList<Album> list;
 
-    private MyListFrag listFra;
+    private MyListFrag listFrag;
     private class AlbumQuery extends AsyncTask< String, Integer, String> {
         ArrayList<Album> albums;
         ProgressDialog dialog;
@@ -69,7 +69,7 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
         @Override
         protected void onPostExecute(String s) {
             Log.i(TAG, "onPostExecute: "+albums.size());
-            listFra.retriveList(albums);
+            listFrag.retriveList(albums);
             tvHeader.setText(String.format("Album List(%d)",albums.size()));
             try {
                 Thread.sleep(300);
@@ -90,7 +90,7 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
         actionBar.setDisplayHomeAsUpEnabled(true);
 //        albumsFrag= (AlbumListFrag) getSupportFragmentManager().findFragmentById(R.id.albumsFrag);
         list=new ArrayList<>();
-        listFra= MyListFrag.newInstance(new AlbumAdapter(this, list),R.layout.fragment_album_list);
+        listFrag= MyListFrag.newInstance(new AlbumAdapter(this, list),R.layout.fragment_album_list);
         btnSearch=findViewById(R.id.btnSearch);
         etKeyword=findViewById(R.id.etKeyword);
         tvHeader=findViewById(R.id.tvHeader);
@@ -105,7 +105,7 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
         executeAlbumQuery(keyword);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragmentLocation, listFra) //Add the fragment in FrameLayout
+                .replace(R.id.fragmentLocation, listFrag) //Add the fragment in FrameLayout
                 .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
 
     }

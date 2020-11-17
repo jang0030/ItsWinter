@@ -25,6 +25,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
+/**
+ * It is not use and It was replaced by MyListFrag
+ */
 public class TrackListFrag extends Fragment {
 
 
@@ -32,7 +36,7 @@ public class TrackListFrag extends Fragment {
     private RecyclerView rvTrackList;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter myAdpater;
-    private List<Track> list;
+    private ArrayList<Track> list;
     private Bundle dataFromActivity;
     private int id;
     private IAudioRepository repo;

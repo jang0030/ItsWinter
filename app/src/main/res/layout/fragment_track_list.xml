@@ -26,6 +26,7 @@
             android:text="@string/track_list"
             android:fontFamily="@font/alike"
             android:textColor="@color/black"
+            android:id="@+id/tvHeader"
             android:textSize="16sp"/>
     </LinearLayout>
 

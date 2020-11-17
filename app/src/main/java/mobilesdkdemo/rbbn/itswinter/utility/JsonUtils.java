@@ -24,7 +24,6 @@ public class JsonUtils {
     private static final String TAG="JsonUtils";
     public static <T> ArrayList<T> getArrayListbyUrl(Class<T> target, String urlPath, String firstObjectKey)
     {
-
         ArrayList<T> list=new ArrayList<>();
         try {
             try {

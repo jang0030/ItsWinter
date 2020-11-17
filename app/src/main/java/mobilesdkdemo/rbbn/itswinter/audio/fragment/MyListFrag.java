@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.adapter.MyRecyclerAdapter;
@@ -51,7 +52,7 @@ public class MyListFrag<T> extends Fragment {
     }
 
 
-    public void retriveList(ArrayList<T> newList) {
+    public void retriveList(List<T> newList) {
             myAdapter.retrieveList(newList);
     }
 
