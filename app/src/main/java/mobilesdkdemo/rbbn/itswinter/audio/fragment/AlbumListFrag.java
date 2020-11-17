@@ -14,10 +14,12 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
-import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapterOrg;
+import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 
-
+/**
+ * It is not use and It was replaced by MyListFrag
+ */
 public class AlbumListFrag extends Fragment {
 
     private static final String TAG="AlbumListFrag";
@@ -51,22 +53,22 @@ public class AlbumListFrag extends Fragment {
     }
 
 
-    public void retriveList(ArrayList<Album> albums) {
-
-        if(albums.size()>0){
-            list.clear();
-            list.addAll(albums);
-            myAdapter.notifyDataSetChanged();
-        }
-
-    }
+//    public void retriveList(ArrayList<Album> albums) {
+//
+//        if(albums.size()>0){
+//            list.clear();
+//            list.addAll(albums);
+//            myAdapter.notifyDataSetChanged();
+//        }
+//
+//    }
 
     private void initialRecylerView() {
         rvList =v.findViewById(R.id.rvList);
         rvList.setHasFixedSize(true);
         layoutManager=new LinearLayoutManager(this.getContext());
         rvList.setLayoutManager(layoutManager);
-        myAdapter=new AlbumAdapterOrg(this.getContext(), list);
+        myAdapter=new AlbumAdapter(this.getContext(), list);
         rvList.setAdapter(myAdapter);
     }
 

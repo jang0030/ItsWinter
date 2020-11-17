@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
-import mobilesdkdemo.rbbn.itswinter.audio.fragment.ListMultiFrag;
+import mobilesdkdemo.rbbn.itswinter.audio.fragment.MyListFrag;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 import mobilesdkdemo.rbbn.itswinter.utility.JsonUtils;
 import mobilesdkdemo.rbbn.itswinter.utility.PreferenceManager;
@@ -37,7 +37,7 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
     TextView tvHeader;
     private ArrayList<Album> list;
 
-    private ListMultiFrag listFra;
+    private MyListFrag listFra;
     private class AlbumQuery extends AsyncTask< String, Integer, String> {
         ArrayList<Album> albums;
         ProgressDialog dialog;
@@ -90,7 +90,7 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
         actionBar.setDisplayHomeAsUpEnabled(true);
 //        albumsFrag= (AlbumListFrag) getSupportFragmentManager().findFragmentById(R.id.albumsFrag);
         list=new ArrayList<>();
-        listFra= ListMultiFrag.newInstance(new AlbumAdapter(this, list),R.layout.fragment_album_list);
+        listFra= MyListFrag.newInstance(new AlbumAdapter(this, list),R.layout.fragment_album_list);
         btnSearch=findViewById(R.id.btnSearch);
         etKeyword=findViewById(R.id.etKeyword);
         tvHeader=findViewById(R.id.tvHeader);

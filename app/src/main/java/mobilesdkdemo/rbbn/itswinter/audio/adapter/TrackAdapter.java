@@ -62,10 +62,6 @@ public class TrackAdapter extends  MyRecyclerAdapter<Track, TrackAdapter.ViewHol
         holder.itemView.setTag(item);
         holder.setItem(item);
     }
-    @Override
-    public void retriveList(List<Track> list) {
-
-    }
 
 
     @Override

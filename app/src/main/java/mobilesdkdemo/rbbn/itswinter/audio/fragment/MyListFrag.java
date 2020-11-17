@@ -15,23 +15,22 @@ import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.adapter.MyRecyclerAdapter;
-import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 
 
-public class ListMultiFrag<T> extends Fragment {
+public class MyListFrag<T> extends Fragment {
 
-    private static final String TAG="ListMultiFrag";
+    private static final String TAG="MyListFrag";
     private View v;
     private RecyclerView rvList;
     private RecyclerView.LayoutManager layoutManager;
     private static MyRecyclerAdapter myAdapter;
     //private ArrayList<T> list;
     private static int resource;
-    public ListMultiFrag() {
+    public MyListFrag() {
         // Required empty public constructor
     }
-    public static ListMultiFrag newInstance(MyRecyclerAdapter adapter, int resourceId) {
-        ListMultiFrag fragment = new ListMultiFrag();
+    public static MyListFrag newInstance(MyRecyclerAdapter adapter, int resourceId) {
+        MyListFrag fragment = new MyListFrag();
         myAdapter=adapter;
         resource=resourceId;
         return fragment;
@@ -53,9 +52,7 @@ public class ListMultiFrag<T> extends Fragment {
 
 
     public void retriveList(ArrayList<T> newList) {
-
-     myAdapter.retriveList(newList);
-
+            myAdapter.retrieveList(newList);
     }
 
     private void initialRecylerView() {
@@ -70,8 +67,8 @@ public class ListMultiFrag<T> extends Fragment {
         if(myAdapter!=null) myAdapter.notifyDataSetChanged();
     }
 
-    public boolean removeItem(T item){
-        return myAdapter.removeItem(item);
-    }
+//    public boolean removeItem(T item){
+//        return myAdapter.removeItem(item);
+//    }
 
 }

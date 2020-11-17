@@ -31,7 +31,7 @@ public abstract class MyRecyclerAdapter<T, V extends ViewHolder> extends Recycle
     }
 
 
-    public void retriveList(List<T> newList){
+    public void retrieveList(List<T> newList){
         if(newList.size()>0){
             list.clear();
             list.addAll(newList);
@@ -44,4 +44,10 @@ public abstract class MyRecyclerAdapter<T, V extends ViewHolder> extends Recycle
         this.notifyDataSetChanged();
         return result;
     }
+
+    @Override
+    public int getItemCount() {
+        return this.getList().size();
+    }
+
 }

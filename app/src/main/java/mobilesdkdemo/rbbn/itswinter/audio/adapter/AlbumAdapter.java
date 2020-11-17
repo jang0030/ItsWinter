@@ -21,11 +21,7 @@ import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 
 public class AlbumAdapter extends MyRecyclerAdapter<Album, AlbumAdapter.ViewHolder>{
 
-
-
     private AlbumItemClicked context;
-
-
 
     public interface AlbumItemClicked{
         void onAlbumItemClicked(Album item);
@@ -57,12 +53,12 @@ public class AlbumAdapter extends MyRecyclerAdapter<Album, AlbumAdapter.ViewHold
                 context.onAlbumItemLongClicked((Album) itemView.getTag());
                 return false;
             });
+
         }
-        public void setItem(Album item){
+        private void setItem(Album item){
             tvTitle.setText(item.getStrAlbum());
             tvArtist.setText(item.getStrArtist());
             tvGenre.setText("Genre:"+item.getStrGenre());
-//            tvYear.setText(item.getIntYearReleased());
             tvYear.setText("Released:"+item.getIntYearReleased());
 
             if (item.getStrAlbumThumb() == null) {
@@ -84,25 +80,11 @@ public class AlbumAdapter extends MyRecyclerAdapter<Album, AlbumAdapter.ViewHold
         return new ViewHolder(v);
     }
 
-
+    @Override
     public void onBindViewHolder(@NonNull AlbumAdapter.ViewHolder holder, int position) {
         Album album=this.getList().get(position);
         holder.itemView.setTag(album);
         holder.setItem(album);
-    }
-
-    @Override
-    public int getItemCount() {
-        return this.getList().size();
-    }
-
-    @Override
-    public void retriveList(List<Album> albums) {
-        if(albums.size()>0){
-            this.getList().clear();
-            this.getList().addAll(albums);
-            this.notifyDataSetChanged();
-        }
     }
 
 }

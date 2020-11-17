@@ -14,11 +14,13 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
-import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapterOrg;
+import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
 import mobilesdkdemo.rbbn.itswinter.audio.db.WinterRepository;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 
-
+/**
+ * It is not use and It was replaced by MyListFrag
+ */
 public class MyAlbumFrag extends Fragment {
     private RecyclerView rvAlbumList;
     private RecyclerView.LayoutManager layoutManager;
@@ -62,24 +64,24 @@ public class MyAlbumFrag extends Fragment {
         rvAlbumList.setHasFixedSize(true);
         layoutManager=new LinearLayoutManager(getContext());
         rvAlbumList.setLayoutManager(layoutManager);
-        myAdapter=new AlbumAdapterOrg(getContext(), list);
+        myAdapter=new AlbumAdapter(getContext(), list);
         rvAlbumList.setAdapter(myAdapter);
     }
 
-    public boolean removeItem(Album item){
-      //int pos= list.indexOf(item);
-        boolean result;
-        try {
-            repo.delete_Album(item);
-            list.remove(item);
-            myAdapter.notifyDataSetChanged();
-            result=true;
-        }catch (Exception e){
-            result=false;
-        }
-
-      return  result;
-    }
+//    public boolean removeItem(Album item){
+//      //int pos= list.indexOf(item);
+//        boolean result;
+//        try {
+//            repo.delete_Album(item);
+//            list.remove(item);
+//            myAdapter.notifyDataSetChanged();
+//            result=true;
+//        }catch (Exception e){
+//            result=false;
+//        }
+//
+//      return  result;
+//    }
 
     public void notifyChanged(){
         if(myAdapter!=null) myAdapter.notifyDataSetChanged();

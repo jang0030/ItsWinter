@@ -18,12 +18,8 @@ import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
-import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapterOrg;
-import mobilesdkdemo.rbbn.itswinter.audio.data.AudioRepository;
-import mobilesdkdemo.rbbn.itswinter.audio.data.IAudioRepository;
 import mobilesdkdemo.rbbn.itswinter.audio.db.WinterRepository;
-import mobilesdkdemo.rbbn.itswinter.audio.fragment.ListMultiFrag;
-import mobilesdkdemo.rbbn.itswinter.audio.fragment.MyAlbumFrag;
+import mobilesdkdemo.rbbn.itswinter.audio.fragment.MyListFrag;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 import mobilesdkdemo.rbbn.itswinter.utility.PreferenceManager;
 
@@ -41,7 +37,7 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
     TextView tvHeader;
     private ArrayList<Album> list;
 
-    private ListMultiFrag listFra;
+    private MyListFrag listFra;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +48,7 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
 //        albumsFrag= (AlbumListFrag) getSupportFragmentManager().findFragmentById(R.id.albumsFrag);
         repo=new WinterRepository(this);
         list=new ArrayList<>();
-        listFra= ListMultiFrag.newInstance(new AlbumAdapter(this, list),R.layout.fragment_album_list);
+        listFra= MyListFrag.newInstance(new AlbumAdapter(this, list),R.layout.fragment_album_list);
         btnSearch=findViewById(R.id.btnSearch);
         etKeyword=findViewById(R.id.etKeyword);
         tvHeader=findViewById(R.id.tvHeader);
