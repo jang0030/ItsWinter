@@ -4,17 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,26 +20,18 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
-import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
 import mobilesdkdemo.rbbn.itswinter.audio.adapter.TrackAdapter;
 import mobilesdkdemo.rbbn.itswinter.audio.data.AudioRepository;
 import mobilesdkdemo.rbbn.itswinter.audio.data.IAudioRepository;
 import mobilesdkdemo.rbbn.itswinter.audio.db.WinterRepository;
 import mobilesdkdemo.rbbn.itswinter.audio.fragment.MyListFrag;
-import mobilesdkdemo.rbbn.itswinter.audio.fragment.TrackListFrag;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Track;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Wrapper;
 import mobilesdkdemo.rbbn.itswinter.databinding.ActivityAlbumDetailBinding;
-import mobilesdkdemo.rbbn.itswinter.utility.JsonUtils;
-import mobilesdkdemo.rbbn.itswinter.utility.Utility;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.content.DialogInterface.BUTTON_NEGATIVE;
-import static android.content.DialogInterface.BUTTON_NEUTRAL;
-import static android.content.DialogInterface.BUTTON_POSITIVE;
 
 
 public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapter.TrackItemClicked{
