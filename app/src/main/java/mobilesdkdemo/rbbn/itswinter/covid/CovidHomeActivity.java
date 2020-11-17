@@ -79,6 +79,9 @@ public class CovidHomeActivity extends AppCompatActivity {
             }
         };
 
+        dateEditText.setFocusable(false);
+        dateEditText.setKeyListener(null);
+
         dateEditText.setOnClickListener(v-> {
             final Calendar cal = Calendar.getInstance();
             int day = cal.get(Calendar.DAY_OF_MONTH);
