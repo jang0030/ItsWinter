@@ -37,8 +37,13 @@ import java.util.ArrayList;
 import mobilesdkdemo.rbbn.itswinter.R;
 
 public class RecipeHomeActivity extends AppCompatActivity {
+    // we store the recipes here in this list
     public static ArrayList<Recipe> recipe_list = new ArrayList<Recipe>();
 
+    /**
+     * Creates the main recipe home activity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,104 +58,116 @@ public class RecipeHomeActivity extends AppCompatActivity {
         ProgressBar progressBar=findViewById(R.id.recipe_ProgressBar);
         progressBar.setVisibility(View.VISIBLE);
 
+        //we use recipe_list_adapter to connect recipe list to ListView
         Recipe_List_Adapter recipe_list_adapter= new Recipe_List_Adapter();
         recipe_ListView.setAdapter(recipe_list_adapter);
+        // refresh the listview
         recipe_list_adapter.notifyDataSetChanged();
 
+        // this runs when you click the recipe search button
         recipe_Button.setOnClickListener((View v) -> {
             RecipeQuery req= new RecipeQuery();
+
+            // if the search string is empty, show a Toast message
             if (recipe_EditText.getText().toString().contentEquals("")) {
-                Context context = getApplicationContext();
-                CharSequence text = "Please enter recipe keyword.";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
+                Toast toast = Toast.makeText(getApplicationContext(), "Please enter recipe keyword.", Toast.LENGTH_SHORT);
                 toast.show();
-                return;
-            }
-            recipe_list.clear();
-            req.execute("http://www.recipepuppy.com/api/?q="+recipe_EditText.getText().toString()+"&p=3&format=xml");
-            try {
-                Thread.sleep(1000);
-                progressBar.setMax(100);
-                progressBar.setProgress(50);
-                recipe_list_adapter.notifyDataSetChanged();
-                Thread.sleep(1000);
-                progressBar.setProgress(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            recipe_list_adapter.notifyDataSetChanged();
+            } else {    //do the search
+                recipe_list.clear();
+                // do the search in the background and the results go into recipe_list
+                req.execute("http://www.recipepuppy.com/api/?q="+recipe_EditText.getText().toString()+"&p=3&format=xml");
 
-            if (recipe_list.size()==0) {
-                Snackbar snackbar = Snackbar.make(v,"No results",Snackbar.LENGTH_SHORT);
-                snackbar.show();
-            }
-        });
+                // wait a couple of seconds until the search is done, while updating the progress bar
+                try {
+                    Thread.sleep(1000); // wait 1000 milliseconds
+                    progressBar.setMax(100);
+                    progressBar.setProgress(50);
+                    Thread.sleep(1000);
+                    progressBar.setProgress(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                recipe_list_adapter.notifyDataSetChanged(); //refresh the ListView results
 
+                // if there no results, show Snackbar message
+                if (recipe_list.size()==0) {
+                    Snackbar snackbar = Snackbar.make(v,"No results",Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+                }
+            }
+         });
+
+        // When we click on a recipe name, show the recipe contents
         recipe_ListView.setOnItemClickListener(( parent, view, position,id) -> {
+            //show an alert box
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-           alertDialogBuilder.setTitle(recipe_list.get(position).getRecipe_title());
+            alertDialogBuilder.setTitle(recipe_list.get(position).getRecipe_title());
             alertDialogBuilder.setMessage("Ingredients: " + recipe_list.get(position).getRecipe_ingredients()
                     + "\n URL: " + recipe_list.get(position).getRecipe_url());
             alertDialogBuilder.create().show();
         });
     }
 
+    /**
+     *  this method performs the query to the recipepuppy.com API in the background
+     */
     private class RecipeQuery extends AsyncTask<String, Integer, String>{
         Recipe recipe=new Recipe();
 
         @Override
         protected String doInBackground(String... strings) {
-                //create a URL object of what server to contact:
+                //create a URL object of what server to contact (from example code)
             URL url = null;
             try {
                 url = new URL(strings[0]);
 
-            //open the connection
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            //wait for data:
-            InputStream response = urlConnection.getInputStream();
-            //From part 3: slide 19
-            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-            factory.setNamespaceAware(false);
-            XmlPullParser xpp = factory.newPullParser();
-            xpp.setInput( response  , "UTF-8"); //response is data from the server
-            publishProgress(50);
-            //From part 3, slide 20
-            String parameter = null;
+                //open the connection for the XML API
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                //wait for data:
+                InputStream response = urlConnection.getInputStream();
+                // Code to search through  XML data from API
+                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                factory.setNamespaceAware(false);
+                XmlPullParser xpp = factory.newPullParser();
+                xpp.setInput( response  , "UTF-8"); //response is data from the server
+                publishProgress(50); // update progress bar
+                String parameter = null;
 
-            int eventType = xpp.getEventType(); //The parser is currently at START_DOCUMENT
+                int eventType = xpp.getEventType(); //The parser is currently at START_DOCUMENT
 
-            while(eventType != XmlPullParser.END_DOCUMENT)
-            {
-                if(eventType == XmlPullParser.START_TAG)
+                // while loop that goes through the XML code searching for
+                // Recipe TITLE, HREF & INGREDIENTS tags
+                while(eventType != XmlPullParser.END_DOCUMENT)
                 {
-                    //If you get here, then you are pointing at a start tag
-                    if(xpp.getName().equals("title"))
+                    if(eventType == XmlPullParser.START_TAG)
                     {
-                        xpp.next(); //move the pointer from the opening tag to the TEXT event
-                        recipe.setRecipe_title(xpp.getText()); // this will return  20
-                        Log.i("TITLE", recipe.getRecipe_title());
-                    } else
-                    //If you get here, then you are pointing at a start tag
-                    if(xpp.getName().equals("href"))
-                    {
-                        xpp.next(); //move the pointer from the opening tag to the TEXT event
-                        recipe.setRecipe_url(xpp.getText()); // this will return  20
-                        Log.i("URL",  recipe.getRecipe_url());
-                    } else
                         //If you get here, then you are pointing at a start tag
-                        if(xpp.getName().equals("ingredients"))
+                        // Search for TITLE of recipe
+                        if(xpp.getName().equals("title"))
                         {
                             xpp.next(); //move the pointer from the opening tag to the TEXT event
-                            recipe.setRecipe_ingredients(xpp.getText()); // this will return  20
-                            Log.i("INGREDIENTS", recipe.getRecipe_ingredients());
-                            // add recipe to list
-                            recipe_list.add(recipe);
-                            recipe=new Recipe();
-                        }
-                }
-                eventType = xpp.next(); //move to the next xml event and store it in a variable
+                            recipe.setRecipe_title(xpp.getText());
+                            //Log.i("TITLE", recipe.getRecipe_title());
+                        } else
+                        //If you get here, then you are pointing at a start tag
+                        if(xpp.getName().equals("href"))
+                        {
+                            xpp.next(); //move the pointer from the opening tag to the TEXT event
+                            recipe.setRecipe_url(xpp.getText()); // this will return  20
+                            //Log.i("URL",  recipe.getRecipe_url());
+                        } else
+                            //If you get here, then you are pointing at a start tag
+                            if(xpp.getName().equals("ingredients"))
+                            {
+                                xpp.next(); //move the pointer from the opening tag to the TEXT event
+                                recipe.setRecipe_ingredients(xpp.getText()); // this will return  20
+                                //Log.i("INGREDIENTS", recipe.getRecipe_ingredients());
+                                // add recipe object to recipe list ArrayList<Recipe>
+                                recipe_list.add(recipe);
+                                recipe=new Recipe(); // Start with a new Recipe to add
+                            }
+                    }
+                    eventType = xpp.next(); //move to the next xml event and store it in a variable
             }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -171,6 +188,9 @@ public class RecipeHomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * This class connects the recipe_list to ListView
+     */
     public class Recipe_List_Adapter extends BaseAdapter {
 
         @Override
@@ -188,19 +208,26 @@ public class RecipeHomeActivity extends AppCompatActivity {
             return position;
         }
 
+        /**
+         * This method returns each TextView we want to put in the ListView
+         * @param position is the number of the row of the ListView
+         * @param convertView
+         * @param parent
+         * @return the TextView of the Recipe Title at the position requested
+         */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            for (int i=0;i<10;i++) {
-                Log.i("ARRAY", recipe_list.get(i).getRecipe_title());
-            }
             LayoutInflater inflater = getLayoutInflater();
-                View newView = inflater.inflate(R.layout.activity_recipe_listview_item, parent, false);
-                TextView tv = newView.findViewById(R.id.recipe_TextView);
-                tv.setText(recipe_list.get(position).getRecipe_title());
-                return newView;
+            View newView = inflater.inflate(R.layout.activity_recipe_listview_item, parent, false);
+            TextView tv = newView.findViewById(R.id.recipe_TextView);
+            tv.setText(recipe_list.get(position).getRecipe_title());
+            return newView;
          }
     }
 
+    /**
+     *  this class/type holds a single recipe
+     */
     private class Recipe {
         String recipe_title;
         String recipe_url;
