@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:hint="Select Date"/>
+        android:hint="Click to pick date"/>
 
     <Button
         android:id="@+id/c_search_button"
