@@ -29,13 +29,9 @@ public class Event {
         return tkUrl;
     }
 
-    public double getPriceMin() {
-        return priceMin;
-    }
+    public double getPriceMin() { return priceMin; }
 
-    public double getPriceMax() {
-        return priceMax;
-    }
+    public double getPriceMax() { return priceMax; }
 
     public Bitmap getPromoImage() {
         return promoImage;

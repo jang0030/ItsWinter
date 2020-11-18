@@ -25,4 +25,5 @@
     <string name="e_welcomeText">Welcome to the Ticket Master Search</string>
     <string name="e_citySearchBarHint">Enter city</string>
     <string name="e_radiusSearchBarHint">Enter Radius</string>
+    <string name="e_goToSiteBtnHint">Go to Site</string>
 </resources>

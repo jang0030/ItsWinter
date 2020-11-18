@@ -33,6 +33,7 @@ import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.event.Event;
 import mobilesdkdemo.rbbn.itswinter.event.EventHomeActivity;
+import mobilesdkdemo.rbbn.itswinter.event.eventDetails;
 
 public class eventResults extends AppCompatActivity {
 
@@ -64,16 +65,12 @@ public class eventResults extends AppCompatActivity {
             dataToPass.putString("url",eventList.get(pos).getTkUrl());
             dataToPass.putDouble("priceMax",eventList.get(pos).getPriceMax());
             dataToPass.putDouble("priceMin",eventList.get(pos).getPriceMin());
+            dataToPass.putParcelable("promoImage",eventList.get(pos).getPromoImage());
 
-//            compresses BitMap of the promoImage to add to bundle
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            promoImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            dataToPass.putByteArray("promoImage",byteArray);
-            /* use this to get the image on the other side
-           byte[] byteArray = getArgument().getByteArrayExtra("image");
-           Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-             */
+
+            Intent goToDetailsPage = new Intent(eventResults.this, eventDetails.class);
+            goToDetailsPage.putExtras(dataToPass);
+            startActivity(goToDetailsPage);
         });
     }
 
