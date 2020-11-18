@@ -8,31 +8,27 @@
     tools:context=".event.EventHomeActivity"
     android:orientation="vertical">
 
-    <ListView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/e_searchReturns"
-        android:layout_weight="1"/>
+        android:textSize="30dp"
+        android:text="@string/e_welcomeText"/>
 
-    <LinearLayout
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/e_searchButton"
-            android:layout_weight="1"
-            android:text="@string/e_searchButtonString"/>
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/e_searchBar"
-            android:layout_weight="3"
-            android:hint="@string/e_searchBarHint"/>
-
-
-    </LinearLayout>
+        android:textSize="30dp"
+        android:hint="@string/e_citySearchBarHint"
+        android:id="@+id/e_citySearch"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:hint="@string/e_radiusSearchBarHint"
+        android:id="@+id/e_radiusSearch"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/e_searchButton"
+        android:text="@string/e_searchButtonString"/>
 </LinearLayout>

@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EventListViewLayout"></activity>
+        <activity android:name=".eventResults"></activity>
+        <activity android:name=".EventListViewLayout" />
         <activity android:name=".HelpActivity" />
         <activity android:name=".event.EventHomeActivity" />
         <activity android:name=".recipe.RecipeHomeActivity" />
