@@ -178,13 +178,13 @@ public class EventHomeActivity extends AppCompatActivity {
 
                     publishProgress(100);
                     eventList.add(new Event(name,startDate,tkUrl,minPrice,maxPrice,promoImgae));
-
                 }//end of loop through events
 
 
             }catch(Exception e){
                 Log.e("API: Error caught:", String.valueOf(e));
             }
+
 
             return "Done";
         }
@@ -194,7 +194,7 @@ public class EventHomeActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String s){
-
+            eventAdapter.notifyDataSetChanged();
         }
     }
 
