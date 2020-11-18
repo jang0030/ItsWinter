@@ -1,4 +1,4 @@
-package mobilesdkdemo.rbbn.itswinter;
+package mobilesdkdemo.rbbn.itswinter.event;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,8 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,7 +21,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -31,9 +28,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-import mobilesdkdemo.rbbn.itswinter.event.Event;
-import mobilesdkdemo.rbbn.itswinter.event.EventHomeActivity;
-import mobilesdkdemo.rbbn.itswinter.event.eventDetails;
+import mobilesdkdemo.rbbn.itswinter.R;
 
 public class eventResults extends AppCompatActivity {
 

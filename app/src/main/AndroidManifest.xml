@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".event.eventDetails"></activity>
-        <activity android:name=".eventResults" />
+        <activity android:name=".event.eventResults" />
         <activity android:name=".EventListViewLayout" />
         <activity android:name=".HelpActivity" />
 
