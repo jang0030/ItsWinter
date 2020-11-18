@@ -40,13 +40,11 @@ import mobilesdkdemo.rbbn.itswinter.eventResults;
 
 public class EventHomeActivity extends AppCompatActivity {
 
-//    TODO: create layout for event screen
 //    TODO: be able to click event link, take to browser (alert dialog)
-//    TODO: add oLongClick to listView
 //    TODO: save last search term in shared Preferences
 //    TODO: add favorite feature for event (save to database)(toast)
 //    TODO: add favorites screen (fragment?)
-//    TODO: add favorites search
+//    TODO: add favorites search (OPTIONAL)
 //    TODO: add favorites remove (snackbar with revert option)
 
 

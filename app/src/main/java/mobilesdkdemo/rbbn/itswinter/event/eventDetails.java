@@ -30,8 +30,8 @@ public class eventDetails extends AppCompatActivity {
         Bundle dataToPass = getIntent().getExtras();
         eventName.setText(dataToPass.getString("name"));
         eventStartDate.setText(dataToPass.getString("startDate"));
-        eventMinPrice.setText(dataToPass.getString("priceMin"));
-        eventMaxPrice.setText(dataToPass.getString("priceMax"));
+        eventMinPrice.setText("Min price: "+String.valueOf(dataToPass.getDouble("priceMin")));
+        eventMaxPrice.setText("Max price: "+String.valueOf(dataToPass.getDouble("priceMax")));
         eventGoToSite.setText(dataToPass.getString("url"));
         Bitmap promoImage = dataToPass.getParcelable("promoImage");
         eventPromoImage.setImageBitmap(promoImage);

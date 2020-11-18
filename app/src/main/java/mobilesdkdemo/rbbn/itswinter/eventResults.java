@@ -91,6 +91,7 @@ public class eventResults extends AppCompatActivity {
 
         protected String doInBackground(String...args) {
             try{
+                publishProgress(10);
                 URL url = new URL(args[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 InputStream response = urlConnection.getInputStream();
