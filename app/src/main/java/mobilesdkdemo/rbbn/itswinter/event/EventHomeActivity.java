@@ -48,7 +48,7 @@ public class EventHomeActivity extends AppCompatActivity {
 //    TODO: add favorites screen (fragment?)
 //    TODO: add favorites search
 //    TODO: add favorites remove (snackbar with revert option)
-//    TODO: add progress bar
+
 
 
 
