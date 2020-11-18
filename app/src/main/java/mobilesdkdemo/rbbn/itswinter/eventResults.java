@@ -16,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -41,6 +42,7 @@ public class eventResults extends AppCompatActivity {
     private Bitmap promoImage;
     private ListView resultList;
     private EventListAdapter eventAdapter;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,6 @@ public class eventResults extends AppCompatActivity {
            byte[] byteArray = getArgument().getByteArrayExtra("image");
            Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
              */
-
         });
     }
 
@@ -100,7 +101,7 @@ public class eventResults extends AppCompatActivity {
                 //Build the entire string response:
                 BufferedReader reader = new BufferedReader(new InputStreamReader(response, "UTF-8"), 8);
                 StringBuilder sb = new StringBuilder();
-
+                publishProgress(25);
                 String line = null;
                 while ((line = reader.readLine()) != null)
                 {
@@ -166,7 +167,6 @@ public class eventResults extends AppCompatActivity {
                     outputStream.flush();
                     outputStream.close();
 
-                    publishProgress(100);
                     eventList.add(new Event(name,startDate,tkUrl,minPrice,maxPrice,promoImgae));
                 }//end of loop through events
 
@@ -176,14 +176,18 @@ public class eventResults extends AppCompatActivity {
             }
 
 
+            publishProgress(100);
             return "Done";
         }
 
         protected void onProgressUpdate(Integer... value) {
-
+            progressBar = findViewById(R.id.e_progressBar);
+            progressBar.setVisibility(View.VISIBLE);
+            progressBar.setProgress(value[0]);
         }
 
         protected void onPostExecute(String s){
+            progressBar.setVisibility(View.INVISIBLE);
             eventAdapter.notifyDataSetChanged();
         }
     }

@@ -25,7 +25,8 @@
         android:layout_height="wrap_content"
         android:textSize="30dp"
         android:hint="@string/e_radiusSearchBarHint"
-        android:id="@+id/e_radiusSearch"/>
+        android:id="@+id/e_radiusSearch"
+        android:inputType="number"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
