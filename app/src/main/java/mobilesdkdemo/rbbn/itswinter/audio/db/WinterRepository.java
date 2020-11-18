@@ -1,12 +1,18 @@
 package mobilesdkdemo.rbbn.itswinter.audio.db;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -14,6 +20,16 @@ import mobilesdkdemo.rbbn.itswinter.audio.MyAlbumActivity;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 import mobilesdkdemo.rbbn.itswinter.utility.Utility;
 
+/**
+ * This WinterRepository is to query inner DB for SQLite with Room database.
+ *  * <p>
+ *  This WinterRepository make a singleton {@link WinterDB}.
+ *  This WinterRepository uses {@link AlbumInsertAsyncTask}, {@link AlbumDeleteAsyncTask}, {@link AlbumDeleteAsyncTask} that is extented by {@link AsyncTask}
+ *  </p>
+ *  @author kiwoong kim
+ *  @since 11152020
+ *  @version 1.0
+ */
 // This is to query inner DB for SQLite with Room database.
 public class WinterRepository {
 
@@ -55,15 +71,20 @@ public class WinterRepository {
 
         @Override
         protected void onPostExecute(Long aLong) {
+            //RelativeLayout relativeLayout=new RelativeLayout(mContext);
+            View rootView = ((Activity)mContext).getWindow().getDecorView().findViewById(android.R.id.content);
             if(aLong==0){
+
+
                 Toast.makeText(mContext,
                         "* You can not save this albume. *\n" +
                             "The album was already saved in your storage.",
                         Toast.LENGTH_SHORT).show();
             }else{
-                Toast.makeText(mContext,
-                        "This album is saved successfully.",
-                        Toast.LENGTH_SHORT).show();
+                Snackbar.make(rootView, "This album is saved successfully.", Snackbar.LENGTH_LONG).show();
+//                Toast.makeText(mContext,
+//                        "This album is saved successfully.",
+//                        Toast.LENGTH_SHORT).show();
             }
 
         }

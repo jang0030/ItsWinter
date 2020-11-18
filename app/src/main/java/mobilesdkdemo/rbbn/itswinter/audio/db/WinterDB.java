@@ -9,7 +9,19 @@ import androidx.room.RoomDatabase;
 
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 
-
+/**
+ * This WinterDB is a concrete class for {@link androidx.room.RoomDatabase}
+ *  * <p>
+ *  This WinterDB make SQLite Database.
+ *  The data base is named as WinterDB
+ *  This WinterDBis singlton.
+ *  This WinterDB has some DAO {@link AlbumDao}
+ *  This WinterDB use DAO to get data.
+ *  </p>
+ *  @author kiwoong kim
+ *  @since 11152020
+ *  @version 1.0
+ */
 @Database(entities = {Album.class},version = 1,  exportSchema = false)
 public abstract class WinterDB extends RoomDatabase {
 

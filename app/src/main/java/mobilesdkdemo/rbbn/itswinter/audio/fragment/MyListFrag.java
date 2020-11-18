@@ -15,9 +15,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mobilesdkdemo.rbbn.itswinter.R;
+import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
 import mobilesdkdemo.rbbn.itswinter.audio.adapter.MyRecyclerAdapter;
+import mobilesdkdemo.rbbn.itswinter.audio.adapter.TrackAdapter;
 
-
+/**
+ * This MyListFrag is child class  that extends {@link Fragment}
+ *  MyListFrag is generic class for simple list.
+ *  MyListFrag can implement every simple list.
+ *  MyListFrag has the field rvList as {@link RecyclerView}, the feild layoutManager for {@link RecyclerView.LayoutManager}
+ *  the field myAdapter for {@link MyRecyclerAdapter}, and layout id of item for list
+ *  This MyListFrag need {@link MyRecyclerAdapter}, layout id of item for list to initialte this.
+ *  </p>
+ *  @author kiwoong kim
+ *  @since 11152020
+ *  @version 1.0
+ */
 public class MyListFrag<T> extends Fragment {
 
     private static final String TAG="MyListFrag";
@@ -68,8 +81,8 @@ public class MyListFrag<T> extends Fragment {
         if(myAdapter!=null) myAdapter.notifyDataSetChanged();
     }
 
-//    public boolean removeItem(T item){
-//        return myAdapter.removeItem(item);
-//    }
+    public boolean removeItem(T item){
+        return myAdapter.removeItem(item);
+    }
 
 }

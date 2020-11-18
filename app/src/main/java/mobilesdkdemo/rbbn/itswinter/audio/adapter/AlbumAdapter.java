@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,19 @@ import java.util.List;
 import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 
+/**
+ * This adapter is a concrete class that extends {@link MyRecyclerAdapter}
+ *  * <p>
+ *  AlbumAdapter is used to be a myadapter field of {@link mobilesdkdemo.rbbn.itswinter.audio.fragment.MyListFrag}.
+ *  AlbumAdapter has the context as the field of  this object.
+ *  the context is setted as the Acitivity.
+ *  This has one interface {@link AlbumItemClicked}
+ *  The interface is used to control this adapter by the Activity.
+ *  </p>
+ *  @author kiwoong kim
+ *  @since 11152020
+ *  @version 1.0
+ */
 public class AlbumAdapter extends MyRecyclerAdapter<Album, AlbumAdapter.ViewHolder>{
 
     private AlbumItemClicked context;
@@ -26,6 +40,7 @@ public class AlbumAdapter extends MyRecyclerAdapter<Album, AlbumAdapter.ViewHold
     public interface AlbumItemClicked{
         void onAlbumItemClicked(Album item);
         void onAlbumItemLongClicked(Album item);
+        void onAlbumItemAddClicked(Album item);
     }
 
     public AlbumAdapter(Context context, ArrayList<Album> list) {
@@ -37,6 +52,7 @@ public class AlbumAdapter extends MyRecyclerAdapter<Album, AlbumAdapter.ViewHold
 
         ImageView ivPoster;
         TextView tvTitle, tvArtist, tvGenre, tvYear;
+        ImageButton ivAdd;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivPoster=itemView.findViewById(R.id.ivPoster);
@@ -44,6 +60,7 @@ public class AlbumAdapter extends MyRecyclerAdapter<Album, AlbumAdapter.ViewHold
             tvArtist=itemView.findViewById(R.id.tvArtist);
             tvGenre=itemView.findViewById(R.id.tvGenre);
             tvYear=itemView.findViewById(R.id.tvYear);
+            ivAdd=itemView.findViewById(R.id.ivAdd);
 
             itemView.setOnClickListener(v->{
                 context.onAlbumItemClicked((Album) itemView.getTag());
@@ -53,6 +70,11 @@ public class AlbumAdapter extends MyRecyclerAdapter<Album, AlbumAdapter.ViewHold
                 context.onAlbumItemLongClicked((Album) itemView.getTag());
                 return false;
             });
+
+            ivAdd.setOnClickListener(v->{
+                context.onAlbumItemAddClicked((Album) itemView.getTag());
+            });
+
 
         }
         private void setItem(Album item){
@@ -71,6 +93,7 @@ public class AlbumAdapter extends MyRecyclerAdapter<Album, AlbumAdapter.ViewHold
                         .into(ivPoster);
             }
         }
+
     }
 
     @NonNull
@@ -86,5 +109,6 @@ public class AlbumAdapter extends MyRecyclerAdapter<Album, AlbumAdapter.ViewHold
         holder.itemView.setTag(album);
         holder.setItem(album);
     }
+
 
 }

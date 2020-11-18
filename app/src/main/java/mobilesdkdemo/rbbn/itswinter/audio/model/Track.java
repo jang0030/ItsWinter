@@ -1,5 +1,14 @@
 package mobilesdkdemo.rbbn.itswinter.audio.model;
 
+import android.os.Parcelable;
+
+/**
+ * This Track is class for Track model and Track Table in {@link mobilesdkdemo.rbbn.itswinter.audio.data.AudioRepository}.
+ *  </p>
+ *  @author kiwoong kim
+ *  @since 11152020
+ *  @version 1.0
+ */
 public class Track {
     private int idTrack;
     private int idAlbum;
