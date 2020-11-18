@@ -11,9 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity android:name=".event.eventDetails"></activity>
+        <activity android:name=".eventResults" />
+        <activity android:name=".EventListViewLayout" />
+        <activity android:name=".HelpActivity" />
+
         <activity android:name=".covid.CovidResultActivity"></activity>
         <activity android:name=".audio.MyAlbumActivity" />
         <activity android:name=".audio.AlbumDetailActivity" />
+
         <activity android:name=".event.EventHomeActivity" />
         <activity android:name=".recipe.RecipeHomeActivity" />
         <activity android:name=".covid.CovidHomeActivity" />
