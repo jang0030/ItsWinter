@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -74,6 +75,14 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
                 .beginTransaction()
                 .replace(R.id.fragmentLocation, myListFrag) //Add the fragment in FrameLayout
                 .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
+        etKeyword.setOnKeyListener((v, keyCode, event)->{
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                btnSearch.callOnClick();
+                return true;
+            }
+            return  false;
+        });
 
     }
 

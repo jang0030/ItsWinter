@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -54,6 +55,7 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
     private WinterRepository repo;
     private MyListFrag listFrag;
     private AlbumAdapter myAdpater;
+
     private class AlbumQuery extends AsyncTask< String, Integer, String> {
         ArrayList<Album> albums;
         ProgressDialog dialog;
@@ -126,8 +128,14 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
                 .replace(R.id.fragmentLocation, listFrag) //Add the fragment in FrameLayout
                 .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
 
-
-
+        etKeyword.setOnKeyListener((v, keyCode, event)->{
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                      btnSearch.callOnClick();
+                return true;
+            }
+            return  false;
+        });
     }
 
     private void executeAlbumQuery(String albumName){

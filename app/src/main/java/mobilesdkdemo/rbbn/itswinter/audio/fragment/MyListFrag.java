@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,23 +38,23 @@ public class MyListFrag<T> extends Fragment {
     private View v;
     private RecyclerView rvList;
     private RecyclerView.LayoutManager layoutManager;
-    private static MyRecyclerAdapter myAdapter;
+    private MyRecyclerAdapter myAdapter;
     //private ArrayList<T> list;
-    private static int resource;
-    public MyListFrag() {
+    private int resource;
+    private MyListFrag() {
         // Required empty public constructor
     }
     public static MyListFrag newInstance(MyRecyclerAdapter adapter, int resourceId) {
         MyListFrag fragment = new MyListFrag();
-        myAdapter=adapter;
-        resource=resourceId;
+        fragment.setMyAdapter(adapter);
+        fragment.setResource(resourceId);
         return fragment;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        v= inflater.inflate(resource, container, false);
+        v= inflater.inflate(this.getResource(), container, false);
         return  v;
     }
 
@@ -66,7 +67,8 @@ public class MyListFrag<T> extends Fragment {
 
 
     public void retriveList(List<T> newList) {
-            myAdapter.retrieveList(newList);
+        if(newList.size()>0) myAdapter.retrieveList(newList);
+        else Toast.makeText(getContext(), "There are no results!", Toast.LENGTH_SHORT).show();
     }
 
     private void initialRecylerView() {
@@ -85,4 +87,19 @@ public class MyListFrag<T> extends Fragment {
         return myAdapter.removeItem(item);
     }
 
+    public  MyRecyclerAdapter getMyAdapter() {
+        return myAdapter;
+    }
+
+    public  void setMyAdapter(MyRecyclerAdapter myAdapter) {
+        this.myAdapter = myAdapter;
+    }
+
+    public int getResource() {
+        return resource;
+    }
+
+    public void setResource(int resource) {
+        this.resource = resource;
+    }
 }
