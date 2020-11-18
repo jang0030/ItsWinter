@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -14,11 +15,13 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import mobilesdkdemo.rbbn.itswinter.audio.AudioHomeActivity;
+import mobilesdkdemo.rbbn.itswinter.audio.MyAlbumActivity;
 import mobilesdkdemo.rbbn.itswinter.covid.CovidHomeActivity;
 import mobilesdkdemo.rbbn.itswinter.event.EventHomeActivity;
 import mobilesdkdemo.rbbn.itswinter.recipe.RecipeHomeActivity;
@@ -80,8 +83,29 @@ public class MainActivity extends AppCompatActivity {
                     drawerLayout.closeDrawer(Gravity.LEFT); ;
                 }
                 break;
+            case R.id.action_recipe:
+                startActivity(new Intent(MainActivity.this, RecipeHomeActivity.class));
+                break;
+            case R.id.action_covid19:
+                startActivity(new Intent(MainActivity.this, CovidHomeActivity.class));
+                break;
+            case R.id.action_audioApi:
+                startActivity(new Intent(MainActivity.this, AudioHomeActivity.class));
+                break;
+            case R.id.action_event:
+                startActivity(new Intent(MainActivity.this, EventHomeActivity.class));
+                break;
             case R.id.action_help:
-               startActivity(new Intent(MainActivity.this, HelpActivity.class));
+                new AlertDialog.Builder(this).setTitle("Help")
+                        .setMessage("When you clicked each icon, you can visit individual app.\n" +
+                                "● First icon can access the Recipe app that is made by Jiyeon Choi. \n "+
+                                "● Second icon can access the Covid-19 app that is made by Hyunju Jang.\n " +
+                                "● Third icon can access the Audio-API app that is made by Kiwoong Kim.\n" +
+                                "● Forth icon can access the Ticket Event app that is made by Zackery Brennan.")
+                        .setPositiveButton(R.string.yes,(click, arg) -> {
+
+                        } )
+                        .create().show();
                break;
         }
         return super.onOptionsItemSelected(item);

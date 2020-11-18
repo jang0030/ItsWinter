@@ -20,10 +20,26 @@
     <string name="drawer_close">Close</string>
     <string name="welcome_to_our_app">Welcome To Our App</string>
     <string name="help">Help</string>
+
     <string name="e_searchButtonString">Search</string>
     <string name="e_searchBarHint">Enter search term</string>
     <string name="e_welcomeText">Welcome to the Ticket Master Search</string>
     <string name="e_citySearchBarHint">Enter city</string>
     <string name="e_radiusSearchBarHint">Enter Radius</string>
     <string name="e_goToSiteBtnHint">Go to Site</string>
+
+    <string name="enter_album_name">Enter Album name</string>
+    <string name="search">Search</string>
+    <string name="title_activity_track">TrackActivity</string>
+    <string name="album">Album</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="please_enter_your_memo">Please enter your memo</string>
+    <string name="ok">OK</string>
+    <string name="my_memo">My Memo</string>
+    <string name="track_list">Track List</string>
+    <string name="my_album_list">My Album List</string>
+    <string name="require_keyword">Please enter your keyword</string>
+
+
 </resources>

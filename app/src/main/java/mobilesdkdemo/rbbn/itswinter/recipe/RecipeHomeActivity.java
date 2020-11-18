@@ -2,22 +2,178 @@ package mobilesdkdemo.rbbn.itswinter.recipe;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.content.AsyncTaskLoader;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 
 public class RecipeHomeActivity extends AppCompatActivity {
+    // we store the recipes here in this list
+    public static ArrayList<Recipe> recipe_list = new ArrayList<Recipe>();
 
+    /**
+     * Creates the main recipe home activity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_home);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("Recipe Cook");
+        actionBar.setTitle("Recipe Search");
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        Button recipe_Button = findViewById(R.id.recipe_Button);
+        EditText recipe_EditText = findViewById(R.id.recipe_EditText);
+        ListView recipe_ListView = findViewById(R.id.recipe_ListView);
+        ProgressBar progressBar=findViewById(R.id.recipe_ProgressBar);
+        progressBar.setVisibility(View.VISIBLE);
+
+        //we use recipe_list_adapter to connect recipe list to ListView
+        Recipe_List_Adapter recipe_list_adapter= new Recipe_List_Adapter();
+        recipe_ListView.setAdapter(recipe_list_adapter);
+        // refresh the listview
+        recipe_list_adapter.notifyDataSetChanged();
+
+        // this runs when you click the recipe search button
+        recipe_Button.setOnClickListener((View v) -> {
+            RecipeQuery req= new RecipeQuery();
+
+            // if the search string is empty, show a Toast message
+            if (recipe_EditText.getText().toString().contentEquals("")) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Please enter recipe keyword.", Toast.LENGTH_SHORT);
+                toast.show();
+            } else {    //do the search
+                recipe_list.clear();
+                // do the search in the background and the results go into recipe_list
+                req.execute("http://www.recipepuppy.com/api/?q="+recipe_EditText.getText().toString()+"&p=3&format=xml");
+
+                // wait a couple of seconds until the search is done, while updating the progress bar
+                try {
+                    Thread.sleep(1000); // wait 1000 milliseconds
+                    progressBar.setMax(100);
+                    progressBar.setProgress(50);
+                    Thread.sleep(1000);
+                    progressBar.setProgress(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                recipe_list_adapter.notifyDataSetChanged(); //refresh the ListView results
+
+                // if there no results, show Snackbar message
+                if (recipe_list.size()==0) {
+                    Snackbar snackbar = Snackbar.make(v,"No results",Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+                }
+            }
+         });
+
+        // When we click on a recipe name, show the recipe contents
+        recipe_ListView.setOnItemClickListener(( parent, view, position,id) -> {
+            //show an alert box
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle(recipe_list.get(position).getRecipe_title());
+            alertDialogBuilder.setMessage("Ingredients: " + recipe_list.get(position).getRecipe_ingredients()
+                    + "\n URL: " + recipe_list.get(position).getRecipe_url());
+            alertDialogBuilder.create().show();
+        });
+    }
+
+    /**
+     *  this method performs the query to the recipepuppy.com API in the background
+     */
+    private class RecipeQuery extends AsyncTask<String, Integer, String>{
+        Recipe recipe=new Recipe();
+
+        @Override
+        protected String doInBackground(String... strings) {
+                //create a URL object of what server to contact (from example code)
+            URL url = null;
+            try {
+                url = new URL(strings[0]);
+
+                //open the connection for the XML API
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                //wait for data:
+                InputStream response = urlConnection.getInputStream();
+                // Code to search through  XML data from API
+                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                factory.setNamespaceAware(false);
+                XmlPullParser xpp = factory.newPullParser();
+                xpp.setInput( response  , "UTF-8"); //response is data from the server
+                publishProgress(50); // update progress bar
+                String parameter = null;
+
+                int eventType = xpp.getEventType(); //The parser is currently at START_DOCUMENT
+
+                // while loop that goes through the XML code searching for
+                // Recipe TITLE, HREF & INGREDIENTS tags
+                while(eventType != XmlPullParser.END_DOCUMENT)
+                {
+                    if(eventType == XmlPullParser.START_TAG)
+                    {
+                        //If you get here, then you are pointing at a start tag
+                        // Search for TITLE of recipe
+                        if(xpp.getName().equals("title"))
+                        {
+                            xpp.next(); //move the pointer from the opening tag to the TEXT event
+                            recipe.setRecipe_title(xpp.getText());
+                            //Log.i("TITLE", recipe.getRecipe_title());
+                        } else
+                        //If you get here, then you are pointing at a start tag
+                        if(xpp.getName().equals("href"))
+                        {
+                            xpp.next(); //move the pointer from the opening tag to the TEXT event
+                            recipe.setRecipe_url(xpp.getText()); // this will return  20
+                            //Log.i("URL",  recipe.getRecipe_url());
+                        } else
+                            //If you get here, then you are pointing at a start tag
+                            if(xpp.getName().equals("ingredients"))
+                            {
+                                xpp.next(); //move the pointer from the opening tag to the TEXT event
+                                recipe.setRecipe_ingredients(xpp.getText()); // this will return  20
+                                //Log.i("INGREDIENTS", recipe.getRecipe_ingredients());
+                                // add recipe object to recipe list ArrayList<Recipe>
+                                recipe_list.add(recipe);
+                                recipe=new Recipe(); // Start with a new Recipe to add
+                            }
+                    }
+                    eventType = xpp.next(); //move to the next xml event and store it in a variable
+            }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return "";
+        }
     }
 
     @Override
@@ -32,4 +188,73 @@ public class RecipeHomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * This class connects the recipe_list to ListView
+     */
+    public class Recipe_List_Adapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return recipe_list.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return recipe_list.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        /**
+         * This method returns each TextView we want to put in the ListView
+         * @param position is the number of the row of the ListView
+         * @param convertView
+         * @param parent
+         * @return the TextView of the Recipe Title at the position requested
+         */
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = getLayoutInflater();
+            View newView = inflater.inflate(R.layout.activity_recipe_listview_item, parent, false);
+            TextView tv = newView.findViewById(R.id.recipe_TextView);
+            tv.setText(recipe_list.get(position).getRecipe_title());
+            return newView;
+         }
+    }
+
+    /**
+     *  this class/type holds a single recipe
+     */
+    private class Recipe {
+        String recipe_title;
+        String recipe_url;
+        String recipe_ingredients;
+
+        public String getRecipe_title() {
+            return recipe_title;
+        }
+
+        public void setRecipe_title(String recipe_title) {
+            this.recipe_title = recipe_title;
+        }
+
+        public String getRecipe_url() {
+            return recipe_url;
+        }
+
+        public void setRecipe_url(String recipe_url) {
+            this.recipe_url = recipe_url;
+        }
+
+        public String getRecipe_ingredients() {
+            return recipe_ingredients;
+        }
+
+        public void setRecipe_ingredients(String recipe_ingredients) {
+            this.recipe_ingredients = recipe_ingredients;
+        }
+    }
 }

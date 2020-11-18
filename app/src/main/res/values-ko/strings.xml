@@ -20,4 +20,16 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="welcome_to_our_app">환영합니다</string>
     <string name="help">도움말</string>
+    <string name="enter_album_name">Enter Album name</string>
+    <string name="search">Search</string>
+    <string name="title_activity_track">TrackActivity</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="please_enter_your_memo">Please enter your memo</string>
+    <string name="ok">OK</string>
+    <string name="my_memo">My Memo</string>
+    <string name="track_list">Track List</string>
+    <string name="my_album_list">My Album List</string>
+    <string name="album">Album</string>
+    <string name="require_keyword">Please enter your keyword</string>
 </resources>
