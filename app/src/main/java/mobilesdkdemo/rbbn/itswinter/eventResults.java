@@ -3,6 +3,7 @@ package mobilesdkdemo.rbbn.itswinter;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -49,7 +50,9 @@ public class eventResults extends AppCompatActivity {
         resultList = findViewById(R.id.e_searchReturns);
         resultList.setAdapter(eventAdapter = new EventListAdapter());
 
-        search();
+        Intent searchTerms = getIntent();
+
+        search(searchTerms.getStringExtra("city"),searchTerms.getStringExtra("radius"));
 
 
         resultList.setOnItemClickListener((p,b,pos,id)->{
@@ -77,12 +80,7 @@ public class eventResults extends AppCompatActivity {
 
 
     //    launches EventQuery
-    private void search(){
-        EditText citySearch = findViewById(R.id.e_citySearch);
-        EditText radiusSearch = findViewById(R.id.e_radiusSearch);
-        String citySearchTerm = citySearch.getText().toString();
-        String radiusSearchTerm = radiusSearch.getText().toString();
-
+    private void search(String citySearchTerm, String radiusSearchTerm){
         EventQuery query = new EventQuery();
         String apiKey = "KiOshiJsVO1WxmGWXYxpwy4Yxd7Cu6r1";
         /*test link
