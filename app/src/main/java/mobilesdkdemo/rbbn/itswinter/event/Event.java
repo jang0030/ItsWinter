@@ -6,6 +6,7 @@ public class Event {
     protected String name,startDate,tkUrl;
     protected double priceMin, priceMax;
     protected Bitmap promoImage;
+    private long id;
 
     public Event(String name, String startDate, String tkUrl, Double priceMin, Double priceMax, Bitmap promoImage){
         this.name = name;
@@ -39,4 +40,6 @@ public class Event {
     public Bitmap getPromoImage() {
         return promoImage;
     }
+
+    public long getId() { return id; }
 }

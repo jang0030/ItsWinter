@@ -9,9 +9,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,12 +46,15 @@ public class EventHomeActivity extends AppCompatActivity {
 //    TODO: add favorites screen (fragment?)
 //    TODO: add favorites search
 //    TODO: add favorites remove (snackbar with revert option)
+//    TODO: add progress bar
 
 
     private ArrayList<Event> eventList = new ArrayList();
     private String name,startDate,tkUrl;
     private double minPrice,maxPrice;
     private Bitmap promoImage;
+    private ListView resultList;
+    private EventListAdapter eventAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +64,11 @@ public class EventHomeActivity extends AppCompatActivity {
         actionBar.setTitle("Event Schedule");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        resultList = findViewById(R.id.e_searchReturns);
         Button searchButton = findViewById(R.id.e_searchButton);
+
+        resultList.setAdapter(eventAdapter = new EventListAdapter());
+
         searchButton.setOnClickListener(x->{
            search();
         });
@@ -72,6 +86,7 @@ public class EventHomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+//    launches EventQuery
     private void search(){
         EditText editText = findViewById(R.id.e_searchBar);
         String searchTerm = editText.getText().toString();
@@ -82,7 +97,6 @@ public class EventHomeActivity extends AppCompatActivity {
             https://app.ticketmaster.com/discovery/v2/events.json?apikey=KiOshiJsVO1WxmGWXYxpwy4Yxd7Cu6r1&city=ottawa&radius=100
         */
         query.execute("https://app.ticketmaster.com/discovery/v2/events.json?apikey="+apiKey+"&city="+searchTerm+"&radius=100");
-
     }
 
     private class EventQuery extends AsyncTask<String,Integer,String> {
@@ -111,11 +125,11 @@ public class EventHomeActivity extends AppCompatActivity {
                 for(int i =0; i < events.getJSONObject("page").getInt("size"); i++){
 
 //                    stores the JSONObject so don't have to call the huge line every time we want a value
-                    JSONObject object = events.getJSONObject("_embedded").getJSONObject("events").getJSONObject(String.valueOf(i));
+                    JSONObject object = events.getJSONObject("_embedded").getJSONArray("events").getJSONObject(i);
 
 //                    gets name, start date and Ticket Master URL
                      name = object.getString("name");
-                     startDate = object.getJSONObject("start").getString("localDate");
+                     startDate = object.getJSONObject("dates").getJSONObject("start").getString("localDate");
                      tkUrl = object.getString("url");
 
 //                    finds max and min prices
@@ -155,7 +169,6 @@ public class EventHomeActivity extends AppCompatActivity {
                     if (responseCode == 200) {
                         promoImgae = BitmapFactory.decodeStream(connection.getInputStream());
                     }
-                    publishProgress(100);
 
 //                builds the bitmap object
                     FileOutputStream outputStream = openFileOutput(promoImgae + ".png", Context.MODE_PRIVATE);
@@ -163,11 +176,15 @@ public class EventHomeActivity extends AppCompatActivity {
                     outputStream.flush();
                     outputStream.close();
 
+                    publishProgress(100);
                     eventList.add(new Event(name,startDate,tkUrl,minPrice,maxPrice,promoImgae));
+
                 }//end of loop through events
 
 
-            }catch(Exception e){}
+            }catch(Exception e){
+                Log.e("API: Error caught:", String.valueOf(e));
+            }
 
             return "Done";
         }
@@ -177,7 +194,33 @@ public class EventHomeActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String s){
-//            TODO: Add name to ListView
+
+        }
+    }
+
+//    handles adding the name of the event to the ListView
+    private class EventListAdapter extends BaseAdapter{
+
+        @Override
+        public int getCount() { return eventList.size(); }
+
+        @Override
+        public Object getItem(int position) { return eventList.get(position); }
+
+        @Override
+        public long getItemId(int position) { return eventList.get(position).getId(); }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = getLayoutInflater();
+            View newView =convertView;
+
+            if(newView == null){
+                newView = inflater.inflate(R.layout.activity_event_list_view_layout,parent,false);
+                TextView tview = newView.findViewById(R.id.e_resultsListText);
+                tview.setText(eventList.get(position).getName());
+            }
+            return newView;
         }
     }
 }
