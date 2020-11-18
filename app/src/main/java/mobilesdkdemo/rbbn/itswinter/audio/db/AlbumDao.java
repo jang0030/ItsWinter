@@ -10,8 +10,22 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import mobilesdkdemo.rbbn.itswinter.audio.data.IAudioRepository;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
+import mobilesdkdemo.rbbn.itswinter.audio.utils.AudioUtils;
 
+/**
+ * This AlbumDao is an inteface for {@link WinterDB}
+ *  * <p>
+ *  This AlbumDao is made for Roomdatabase
+ *  AlbumDao is used by Data Access object
+ *  The method is implemeted automatically by Room
+ *  This AlbumDao is the regular Dao inteface for {@link androidx.room.RoomDatabase}
+ *  </p>
+ *  @author kiwoong kim
+ *  @since 11152020
+ *  @version 1.0
+ */
 @Dao
 public interface AlbumDao {
 

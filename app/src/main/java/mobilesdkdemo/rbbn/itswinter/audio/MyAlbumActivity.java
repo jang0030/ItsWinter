@@ -23,6 +23,16 @@ import mobilesdkdemo.rbbn.itswinter.audio.fragment.MyListFrag;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 import mobilesdkdemo.rbbn.itswinter.utility.PreferenceManager;
 
+/**
+ * This MyAlbumActivity is for My Album page
+ *  * <p>
+ *  This MyAlbumActivity is extended {@link AppCompatActivity}
+ *  This MyAlbumActivity is implemented {@link AlbumAdapter.AlbumItemClicked}
+ *  </p>
+ *  @author kiwoong kim
+ *  @since 11152020
+ *  @version 1.0
+ */
 public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.AlbumItemClicked{
 
     //private MyAlbumFrag myAlbumFrag;
@@ -37,7 +47,7 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
     TextView tvHeader;
     private ArrayList<Album> list;
 
-    private MyListFrag listFra;
+    private MyListFrag myListFrag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +58,7 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
 //        albumsFrag= (AlbumListFrag) getSupportFragmentManager().findFragmentById(R.id.albumsFrag);
         repo=new WinterRepository(this);
         list=new ArrayList<>();
-        listFra= MyListFrag.newInstance(new AlbumAdapter(this, list),R.layout.fragment_album_list);
+        myListFrag = MyListFrag.newInstance(new AlbumAdapter(this, list),R.layout.fragment_album_list);
         btnSearch=findViewById(R.id.btnSearch);
         etKeyword=findViewById(R.id.etKeyword);
         tvHeader=findViewById(R.id.tvHeader);
@@ -62,7 +72,7 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
         executeAlbumQuery("");
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragmentLocation, listFra) //Add the fragment in FrameLayout
+                .replace(R.id.fragmentLocation, myListFrag) //Add the fragment in FrameLayout
                 .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
 
     }
@@ -77,7 +87,7 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
                     list.addAll(albums);
                     tvHeader.setText(String.format("My Album List(%d)",albums.size()));
                 }
-                listFra.notifyChanged();
+                myListFrag.notifyChanged();
             });
         }else{
             repo.getList_Album_filter(filtering).observe(this, albums -> {
@@ -88,7 +98,7 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
                     list.addAll(albums);
                     tvHeader.setText(String.format("My Album List(%d)",albums.size()));
                 }
-                listFra.notifyChanged();
+                myListFrag.notifyChanged();
             });
         }
 
@@ -134,18 +144,30 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
 
     }
 
-    @Override
     public void onAlbumItemLongClicked(Album item) {
         //selectedItem=item;
         //AlertDialog dialog=Utility.createAndShowDialog(this,"Delete Album", "Do you want to delete this album?");
         new AlertDialog.Builder(this).setTitle("Delete").setMessage("Do you want to delete this album?")
                 .setPositiveButton(R.string.yes,(click, arg) -> {
-                    removeAlbumItem(item);
+                    //removeAlbumItem(item);
+                    myListFrag.removeItem(item);
                 } )
                 .setNegativeButton("No", (click, arg) -> {  })
                 .create().show();
 
     }
+
+    @Override
+    public void onAlbumItemAddClicked(Album item) {
+        new AlertDialog.Builder(this).setTitle("Delete").setMessage("Do you want to delete this album?")
+                .setPositiveButton(R.string.yes,(click, arg) -> {
+                    removeAlbumItem(item);
+                    //myListFrag.removeItem(item);
+                } )
+                .setNegativeButton("No", (click, arg) -> {  })
+                .create().show();
+    }
+
     public void removeAlbumItem(Album item){
         try {
             repo.delete_Album(item); //list is setted livedata

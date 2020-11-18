@@ -3,11 +3,22 @@ package mobilesdkdemo.rbbn.itswinter.audio.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import mobilesdkdemo.rbbn.itswinter.audio.adapter.MyRecyclerAdapter;
 
+/**
+ * This Album is class for Album model and Album Table in {@link mobilesdkdemo.rbbn.itswinter.audio.db.WinterDB}.
+ *  This Album is implemented {@link Parcelable}.
+ *  </p>
+ *  @author kiwoong kim
+ *  @since 11152020
+ *  @version 1.0
+ */
 @Entity(tableName = "Album")
 public class Album implements Parcelable {
 
@@ -283,7 +294,5 @@ public class Album implements Parcelable {
         this.strLocked = strLocked;
     }
 
-    public AlbumMini createAlbumMini(){
-        return  new AlbumMini(this.idAlbum,this.idArtist,this.strAlbum,this.strArtist,intYearReleased,strGenre);
-    }
+
 }

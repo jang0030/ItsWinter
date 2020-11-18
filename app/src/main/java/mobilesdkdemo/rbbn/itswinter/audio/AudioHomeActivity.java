@@ -17,15 +17,30 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
+import mobilesdkdemo.rbbn.itswinter.audio.adapter.TrackAdapter;
+import mobilesdkdemo.rbbn.itswinter.audio.db.WinterRepository;
 import mobilesdkdemo.rbbn.itswinter.audio.fragment.MyListFrag;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 import mobilesdkdemo.rbbn.itswinter.utility.JsonUtils;
 import mobilesdkdemo.rbbn.itswinter.utility.PreferenceManager;
 
+/**
+ * This AudioHomeActivity is for Audio Main page
+ *  * <p>
+ *  This AudioHomeActivity is extended {@link AppCompatActivity}
+ *  This AudioHomeActivity is implemented {@link AlbumAdapter.AlbumItemClicked}
+ *  </p>
+ *  @author kiwoong kim
+ *  @since 11152020
+ *  @version 1.0
+ */
 public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter.AlbumItemClicked {
 
     private static final String TAG="AudioHomeActivity";
@@ -36,8 +51,9 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
     String keyword;
     TextView tvHeader;
     private ArrayList<Album> list;
-
+    private WinterRepository repo;
     private MyListFrag listFrag;
+    private AlbumAdapter myAdpater;
     private class AlbumQuery extends AsyncTask< String, Integer, String> {
         ArrayList<Album> albums;
         ProgressDialog dialog;
@@ -89,8 +105,10 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
         actionBar.setTitle("Audio API");
         actionBar.setDisplayHomeAsUpEnabled(true);
 //        albumsFrag= (AlbumListFrag) getSupportFragmentManager().findFragmentById(R.id.albumsFrag);
+        repo=new WinterRepository(this);
         list=new ArrayList<>();
-        listFrag= MyListFrag.newInstance(new AlbumAdapter(this, list),R.layout.fragment_album_list);
+        myAdpater=new AlbumAdapter(this, list);
+        listFrag= MyListFrag.newInstance(myAdpater,R.layout.fragment_album_list);
         btnSearch=findViewById(R.id.btnSearch);
         etKeyword=findViewById(R.id.etKeyword);
         tvHeader=findViewById(R.id.tvHeader);
@@ -107,6 +125,8 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
                 .beginTransaction()
                 .replace(R.id.fragmentLocation, listFrag) //Add the fragment in FrameLayout
                 .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
+
+
 
     }
 
@@ -157,5 +177,16 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
     @Override
     public void onAlbumItemLongClicked(Album item) {
 
+    }
+
+    @Override
+    public void onAlbumItemAddClicked(Album item) {
+        item.setIsSaved(1);
+        repo.insert_Album(item);
+
+//        Snackbar.make(tvHeader, "The sort is now on.", Snackbar.LENGTH_LONG)
+//                .setAction("Undo", click -> {
+//                    Toast.makeText(this, "The item is restored again", Toast.LENGTH_SHORT).show();
+//                }).show();
     }
 }
