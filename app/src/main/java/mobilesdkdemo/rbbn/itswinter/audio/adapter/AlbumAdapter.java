@@ -15,15 +15,15 @@ import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import mobilesdkdemo.rbbn.itswinter.R;
+import mobilesdkdemo.rbbn.itswinter.audio.fragment.GenericListFrag;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 
 /**
- * This adapter is a concrete class that extends {@link MyRecyclerAdapter}
+ * This adapter is a concrete class that extends {@link GenericAdapter}
  *  * <p>
- *  AlbumAdapter is used to be a myadapter field of {@link mobilesdkdemo.rbbn.itswinter.audio.fragment.MyListFrag}.
+ *  AlbumAdapter is used to be a myadapter field of {@link GenericListFrag}.
  *  AlbumAdapter has the context as the field of  this object.
  *  the context is setted as the Acitivity.
  *  This has one interface {@link AlbumItemClicked}
@@ -33,22 +33,23 @@ import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
  *  @since 11152020
  *  @version 1.0
  */
-public class AlbumAdapter extends MyRecyclerAdapter<Album, AlbumAdapter.ViewHolder>{
+public class AlbumAdapter extends GenericAdapter<Album, AlbumAdapter.ViewHolder> {
 
     private AlbumItemClicked context;
-
+    private boolean isMine;
     public interface AlbumItemClicked{
         void onAlbumItemClicked(Album item);
         void onAlbumItemLongClicked(Album item);
         void onAlbumItemAddClicked(Album item);
     }
 
-    public AlbumAdapter(Context context, ArrayList<Album> list) {
+    public AlbumAdapter(Context context, ArrayList<Album> list, boolean isMine) {
         this.context = (AlbumItemClicked) context;
         this.setList(list);
+        this.isMine=isMine;
     }
 
-    public class ViewHolder extends MyRecyclerAdapter.ViewHolder{
+    public class ViewHolder extends GenericAdapter.ViewHolder{
 
         ImageView ivPoster;
         TextView tvTitle, tvArtist, tvGenre, tvYear;
@@ -62,6 +63,9 @@ public class AlbumAdapter extends MyRecyclerAdapter<Album, AlbumAdapter.ViewHold
             tvYear=itemView.findViewById(R.id.tvYear);
             ivAdd=itemView.findViewById(R.id.ivAdd);
 
+            if(isMine){
+                ivAdd.setBackgroundResource(R.drawable.ic_delete);
+            }
             itemView.setOnClickListener(v->{
                 context.onAlbumItemClicked((Album) itemView.getTag());
             });

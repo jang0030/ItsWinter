@@ -18,16 +18,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
-import mobilesdkdemo.rbbn.itswinter.audio.adapter.TrackAdapter;
 import mobilesdkdemo.rbbn.itswinter.audio.db.WinterRepository;
-import mobilesdkdemo.rbbn.itswinter.audio.fragment.MyListFrag;
+import mobilesdkdemo.rbbn.itswinter.audio.fragment.GenericListFrag;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 import mobilesdkdemo.rbbn.itswinter.utility.JsonUtils;
 import mobilesdkdemo.rbbn.itswinter.utility.PreferenceManager;
@@ -53,7 +51,7 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
     TextView tvHeader;
     private ArrayList<Album> list;
     private WinterRepository repo;
-    private MyListFrag listFrag;
+    private GenericListFrag listFrag;
     private AlbumAdapter myAdpater;
 
     private class AlbumQuery extends AsyncTask< String, Integer, String> {
@@ -109,8 +107,8 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
 //        albumsFrag= (AlbumListFrag) getSupportFragmentManager().findFragmentById(R.id.albumsFrag);
         repo=new WinterRepository(this);
         list=new ArrayList<>();
-        myAdpater=new AlbumAdapter(this, list);
-        listFrag= MyListFrag.newInstance(myAdpater,R.layout.fragment_album_list);
+        myAdpater=new AlbumAdapter(this, list, false);
+        listFrag= GenericListFrag.newInstance(myAdpater,R.layout.fragment_album_list);
         btnSearch=findViewById(R.id.btnSearch);
         etKeyword=findViewById(R.id.etKeyword);
         tvHeader=findViewById(R.id.tvHeader);
@@ -184,17 +182,17 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
 
     @Override
     public void onAlbumItemLongClicked(Album item) {
-
+        new AlertDialog.Builder(this).setTitle("Add").setMessage("Do you want to add this album in your box?")
+                .setPositiveButton(R.string.yes,(click, arg) -> {
+                        item.setIsSaved(1);
+                        repo.insert_Album(item);
+                } )
+                .setNegativeButton("No", (click, arg) -> {  })
+                .create().show();
     }
 
     @Override
     public void onAlbumItemAddClicked(Album item) {
-        item.setIsSaved(1);
-        repo.insert_Album(item);
-
-//        Snackbar.make(tvHeader, "The sort is now on.", Snackbar.LENGTH_LONG)
-//                .setAction("Undo", click -> {
-//                    Toast.makeText(this, "The item is restored again", Toast.LENGTH_SHORT).show();
-//                }).show();
+        onAlbumItemLongClicked(item);
     }
 }

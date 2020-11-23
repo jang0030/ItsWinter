@@ -15,12 +15,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
 import mobilesdkdemo.rbbn.itswinter.audio.db.WinterRepository;
-import mobilesdkdemo.rbbn.itswinter.audio.fragment.MyListFrag;
+import mobilesdkdemo.rbbn.itswinter.audio.fragment.GenericListFrag;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 import mobilesdkdemo.rbbn.itswinter.utility.PreferenceManager;
 
@@ -48,7 +50,7 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
     TextView tvHeader;
     private ArrayList<Album> list;
 
-    private MyListFrag myListFrag;
+    private GenericListFrag myListFrag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +61,7 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
 //        albumsFrag= (AlbumListFrag) getSupportFragmentManager().findFragmentById(R.id.albumsFrag);
         repo=new WinterRepository(this);
         list=new ArrayList<>();
-        myListFrag = MyListFrag.newInstance(new AlbumAdapter(this, list),R.layout.fragment_album_list);
+        myListFrag = GenericListFrag.newInstance(new AlbumAdapter(this, list, true),R.layout.fragment_album_list);
         btnSearch=findViewById(R.id.btnSearch);
         etKeyword=findViewById(R.id.etKeyword);
         tvHeader=findViewById(R.id.tvHeader);
@@ -154,37 +156,27 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
     }
 
     public void onAlbumItemLongClicked(Album item) {
-        //selectedItem=item;
-        //AlertDialog dialog=Utility.createAndShowDialog(this,"Delete Album", "Do you want to delete this album?");
+
         new AlertDialog.Builder(this).setTitle("Delete").setMessage("Do you want to delete this album?")
                 .setPositiveButton(R.string.yes,(click, arg) -> {
                     //removeAlbumItem(item);
-                    myListFrag.removeItem(item);
+                    try {
+                        repo.delete_Album(item); //list is setted livedata
+                    }catch (Exception e){
+                        Toast.makeText(MyAlbumActivity.this, "There is some issue", Toast.LENGTH_SHORT).show();
+                    }
                 } )
                 .setNegativeButton("No", (click, arg) -> {  })
                 .create().show();
+
 
     }
 
     @Override
     public void onAlbumItemAddClicked(Album item) {
-        new AlertDialog.Builder(this).setTitle("Delete").setMessage("Do you want to delete this album?")
-                .setPositiveButton(R.string.yes,(click, arg) -> {
-                    removeAlbumItem(item);
-                    //myListFrag.removeItem(item);
-                } )
-                .setNegativeButton("No", (click, arg) -> {  })
-                .create().show();
+        onAlbumItemLongClicked(item);
     }
 
-    public void removeAlbumItem(Album item){
-        try {
-            repo.delete_Album(item); //list is setted livedata
-            Toast.makeText(MyAlbumActivity.this, "It was deleted", Toast.LENGTH_SHORT).show();
-        }catch (Exception e){
-            Toast.makeText(MyAlbumActivity.this, "It was not deleted", Toast.LENGTH_SHORT).show();
-        }
 
-    }
 
 }

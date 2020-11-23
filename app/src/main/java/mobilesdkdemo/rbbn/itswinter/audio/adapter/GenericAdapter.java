@@ -15,8 +15,8 @@ import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 /**
  * This adapter is a concrete class that extends {@link androidx.recyclerview.widget.RecyclerView.Adapter}
  *  * <p>
- *  MyRecyclerAdapter is abstract class.
- *  MyRecyclerAdapter need to concreate Adapter ,such as {@link AlbumAdapter}, {@link TrackAdapter}
+ *  GenericAdapter is abstract class.
+ *  GenericAdapter need to concreate Adapter ,such as {@link AlbumAdapter}, {@link TrackAdapter}
  *  This has a field one generic ArrayList<T> list;
  *  The list field is used by retrieve list
  *  </p>
@@ -24,7 +24,7 @@ import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
  *  @since 11152020
  *  @version 1.0
  */
-public abstract class MyRecyclerAdapter<T, V extends ViewHolder> extends RecyclerView.Adapter<V> {
+public abstract class GenericAdapter<T, V extends ViewHolder> extends RecyclerView.Adapter<V> {
 
     private ArrayList<T> list;
 

@@ -3,13 +3,8 @@ package mobilesdkdemo.rbbn.itswinter.audio.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Entity;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
-
-import mobilesdkdemo.rbbn.itswinter.audio.adapter.MyRecyclerAdapter;
 
 /**
  * This Album is class for Album model and Album Table in {@link mobilesdkdemo.rbbn.itswinter.audio.db.WinterDB}.

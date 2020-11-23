@@ -16,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
+import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.MyAlbumActivity;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 import mobilesdkdemo.rbbn.itswinter.utility.Utility;
@@ -53,7 +54,7 @@ public class WinterRepository {
 
     private  class AlbumInsertAsyncTask extends AsyncTask<Album, Void, Long> {
         private AlbumDao dao;
-
+        private Album item;
         public AlbumInsertAsyncTask(AlbumDao dao) { this.dao = dao; }
 
         @Override
@@ -62,6 +63,7 @@ public class WinterRepository {
             try{
                 long[] id=dao.insert_Album(Albums);
                 newId=id[0];
+                item=Albums[0];
             }catch (SQLiteConstraintException e){
                 newId=0;
             }
@@ -74,17 +76,14 @@ public class WinterRepository {
             //RelativeLayout relativeLayout=new RelativeLayout(mContext);
             View rootView = ((Activity)mContext).getWindow().getDecorView().findViewById(android.R.id.content);
             if(aLong==0){
-
-
                 Toast.makeText(mContext,
-                        "* You can not save this albume. *\n" +
+                        "* You can not save this album in your box. *\n" +
                             "The album was already saved in your storage.",
                         Toast.LENGTH_SHORT).show();
             }else{
-                Snackbar.make(rootView, "This album is saved successfully.", Snackbar.LENGTH_LONG).show();
-//                Toast.makeText(mContext,
-//                        "This album is saved successfully.",
-//                        Toast.LENGTH_SHORT).show();
+                Snackbar.make(rootView, "This album is saved in your box.", Snackbar.LENGTH_LONG).setAction(R.string.a_Undo,v->{
+                    if(item!=null)delete_Album(item);
+                }).show();
             }
 
         }
@@ -92,6 +91,7 @@ public class WinterRepository {
 
     private  class AlbumDeleteAsyncTask extends AsyncTask<Album, Void, Long>{
         private AlbumDao dao;
+        private Album item;
         public AlbumDeleteAsyncTask(AlbumDao dao) {
             this.dao = dao;
         }
@@ -100,6 +100,7 @@ public class WinterRepository {
             newId=0;
             try{
                 newId= dao.delete_Album(Albums);
+                item=Albums[0];
             }catch (Exception e){
                 newId=0;
             }
@@ -109,10 +110,17 @@ public class WinterRepository {
 
         @Override
         protected void onPostExecute(Long aLong) {
-//
-//            if(aLong==0) Toast.makeText(mContext, "It was not deleted", Toast.LENGTH_SHORT).show();
-//            else Toast.makeText(mContext, "It was deleted", Toast.LENGTH_SHORT).show();
 
+            View rootView = ((Activity)mContext).getWindow().getDecorView().findViewById(android.R.id.content);
+            if(aLong==0){
+                Toast.makeText(mContext,
+                        "* You can not delete this albume in your box." , Toast.LENGTH_SHORT).show();
+            }else{
+                Snackbar.make(rootView, "This album is deleted in your box.", Snackbar.LENGTH_LONG).setAction(R.string.a_Undo,v->{
+                    if(item!=null)insert_Album(item);
+                }).show();
+
+            }
 
         }
     }

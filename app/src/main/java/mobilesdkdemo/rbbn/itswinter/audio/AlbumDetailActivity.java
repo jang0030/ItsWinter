@@ -20,13 +20,11 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
-import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
-import mobilesdkdemo.rbbn.itswinter.audio.adapter.MyRecyclerAdapter;
 import mobilesdkdemo.rbbn.itswinter.audio.adapter.TrackAdapter;
 import mobilesdkdemo.rbbn.itswinter.audio.data.AudioRepository;
 import mobilesdkdemo.rbbn.itswinter.audio.data.IAudioRepository;
 import mobilesdkdemo.rbbn.itswinter.audio.db.WinterRepository;
-import mobilesdkdemo.rbbn.itswinter.audio.fragment.MyListFrag;
+import mobilesdkdemo.rbbn.itswinter.audio.fragment.GenericListFrag;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Track;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Wrapper;
@@ -52,7 +50,7 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
     private ActivityAlbumDetailBinding binding;
     //private TrackListFrag trackListFrag;
     private ArrayList<Track> list;
-    private MyListFrag listFrag;
+    private GenericListFrag listFrag;
     private WinterRepository repo;
     private IAudioRepository audioRepository;
 
@@ -98,7 +96,7 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
         repo=new WinterRepository(this);
         audioRepository=new AudioRepository();
         list=new ArrayList<>();
-        listFrag= MyListFrag.newInstance(new TrackAdapter(this, list),R.layout.fragment_album_list);
+        listFrag= GenericListFrag.newInstance(new TrackAdapter(this, list),R.layout.fragment_album_list);
         Bundle dataToPass = new Bundle();
         dataToPass.putInt("albumId", album.getIdAlbum());
         listFrag.setArguments(dataToPass); //pass it a bundle for information

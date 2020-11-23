@@ -12,40 +12,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import mobilesdkdemo.rbbn.itswinter.R;
-import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
-import mobilesdkdemo.rbbn.itswinter.audio.adapter.MyRecyclerAdapter;
-import mobilesdkdemo.rbbn.itswinter.audio.adapter.TrackAdapter;
+import mobilesdkdemo.rbbn.itswinter.audio.adapter.GenericAdapter;
 
 /**
- * This MyListFrag is child class  that extends {@link Fragment}
- *  MyListFrag is generic class for simple list.
- *  MyListFrag can implement every simple list.
- *  MyListFrag has the field rvList as {@link RecyclerView}, the feild layoutManager for {@link RecyclerView.LayoutManager}
- *  the field myAdapter for {@link MyRecyclerAdapter}, and layout id of item for list
- *  This MyListFrag need {@link MyRecyclerAdapter}, layout id of item for list to initialte this.
+ * This GenericListFrag is child class  that extends {@link Fragment}
+ *  GenericListFrag is generic class for simple list.
+ *  GenericListFrag can implement every simple list.
+ *  GenericListFrag has the field rvList as {@link RecyclerView}, the feild layoutManager for {@link RecyclerView.LayoutManager}
+ *  the field myAdapter for {@link GenericAdapter}, and layout id of item for list
+ *  This GenericListFrag need {@link GenericAdapter}, layout id of item for list to initialte this.
  *  </p>
  *  @author kiwoong kim
  *  @since 11152020
  *  @version 1.0
  */
-public class MyListFrag<T> extends Fragment {
+public class GenericListFrag<T> extends Fragment {
 
-    private static final String TAG="MyListFrag";
+    private static final String TAG="GenericListFrag";
     private View v;
     private RecyclerView rvList;
     private RecyclerView.LayoutManager layoutManager;
-    private MyRecyclerAdapter myAdapter;
+    private GenericAdapter myAdapter;
     //private ArrayList<T> list;
     private int resource;
-    private MyListFrag() {
+    private GenericListFrag() {
         // Required empty public constructor
     }
-    public static MyListFrag newInstance(MyRecyclerAdapter adapter, int resourceId) {
-        MyListFrag fragment = new MyListFrag();
+    public static GenericListFrag newInstance(GenericAdapter adapter, int resourceId) {
+        GenericListFrag fragment = new GenericListFrag();
         fragment.setMyAdapter(adapter);
         fragment.setResource(resourceId);
         return fragment;
@@ -87,11 +84,11 @@ public class MyListFrag<T> extends Fragment {
         return myAdapter.removeItem(item);
     }
 
-    public  MyRecyclerAdapter getMyAdapter() {
+    public GenericAdapter getMyAdapter() {
         return myAdapter;
     }
 
-    public  void setMyAdapter(MyRecyclerAdapter myAdapter) {
+    public  void setMyAdapter(GenericAdapter myAdapter) {
         this.myAdapter = myAdapter;
     }
 
