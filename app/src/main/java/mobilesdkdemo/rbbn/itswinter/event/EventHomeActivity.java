@@ -43,7 +43,7 @@ public class EventHomeActivity extends AppCompatActivity {
             if(Integer.parseInt(radiusString) < 100){
                 Toast.makeText(this,this.getString(R.string.e_radiusErrorString),Toast.LENGTH_LONG).show();
             }else{
-                Intent goToResultsScreen = new Intent(EventHomeActivity.this, eventResults.class);
+                Intent goToResultsScreen = new Intent(EventHomeActivity.this, EventResults.class);
                 goToResultsScreen.putExtra("city",city.getText().toString());
                 goToResultsScreen.putExtra("radius",radiusString);
                 EventHomeActivity.this.startActivity(goToResultsScreen);

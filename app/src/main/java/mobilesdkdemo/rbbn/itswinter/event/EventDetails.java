@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 
-public class eventDetails extends AppCompatActivity {
+public class EventDetails extends AppCompatActivity {
 
 
     @Override

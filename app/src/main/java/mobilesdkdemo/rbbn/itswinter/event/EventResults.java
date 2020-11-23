@@ -1,6 +1,5 @@
 package mobilesdkdemo.rbbn.itswinter.event;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -11,7 +10,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -32,7 +30,7 @@ import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 
-public class eventResults extends AppCompatActivity {
+public class EventResults extends AppCompatActivity {
 
     private ArrayList<Event> eventList = new ArrayList();
     private String name,startDate,tkUrl;
@@ -68,7 +66,7 @@ public class eventResults extends AppCompatActivity {
             dataToPass.putParcelable("promoImage",eventList.get(pos).getPromoImage());
 
 
-            Intent goToDetailsPage = new Intent(eventResults.this, eventDetails.class);
+            Intent goToDetailsPage = new Intent(EventResults.this, EventDetails.class);
             goToDetailsPage.putExtras(dataToPass);
             startActivity(goToDetailsPage);
         });
