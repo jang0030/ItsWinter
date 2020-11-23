@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -19,12 +21,14 @@ public class EventHomeActivity extends AppCompatActivity {
 //    TODO: save last search term in shared Preferences
 //    TODO: add favorite feature for event (save to database)(toast)
 //    TODO: add favorites screen (fragment?)
-//    TODO: add favorites search (OPTIONAL)
 //    TODO: add favorites remove (snackbar with revert option)
 
 
 
-
+    private SharedPreferences prefs;
+    private EditText city;
+    private EditText radius;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +38,12 @@ public class EventHomeActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         Button searchButton = findViewById(R.id.e_searchButton);
-        EditText city = findViewById(R.id.e_citySearch);
-        EditText radius = findViewById(R.id.e_radiusSearch);
+        city = findViewById(R.id.e_citySearch);
+        radius = findViewById(R.id.e_radiusSearch);
+        prefs = getSharedPreferences("e_searchPrefs", Context.MODE_PRIVATE);
+
+        city.setText(prefs.getString("city",""));
+        radius.setText(prefs.getString("radius",""));
 
         searchButton.setOnClickListener(x->{
             String radiusString = radius.getText().toString();
@@ -52,6 +60,18 @@ public class EventHomeActivity extends AppCompatActivity {
 
         });
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        SharedPreferences.Editor edit = prefs.edit();
+
+        edit.putString("city",city.getText().toString());
+        edit.putString("radius",radius.getText().toString());
+        edit.commit();
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
