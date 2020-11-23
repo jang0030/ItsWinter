@@ -1,5 +1,6 @@
 package mobilesdkdemo.rbbn.itswinter.event;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -10,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -38,7 +40,9 @@ public class eventResults extends AppCompatActivity {
     private Bitmap promoImage;
     private ListView resultList;
     private EventListAdapter eventAdapter;
-    ProgressBar progressBar;
+    private ProgressBar progressBar;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +54,8 @@ public class eventResults extends AppCompatActivity {
 
         Intent searchTerms = getIntent();
 
-        search(searchTerms.getStringExtra("city"),searchTerms.getStringExtra("radius"));
+        String city = searchTerms.getStringExtra("city").toLowerCase();
+        search(city,searchTerms.getStringExtra("radius"));
 
 
         resultList.setOnItemClickListener((p,b,pos,id)->{

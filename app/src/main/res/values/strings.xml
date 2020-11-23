@@ -40,6 +40,7 @@
     <string name="track_list">Track List</string>
     <string name="my_album_list">My Album List</string>
     <string name="require_keyword">Please enter your keyword</string>
+    <string name="e_radiusErrorString">Radius must be at least 100km</string>
 
 
 </resources>

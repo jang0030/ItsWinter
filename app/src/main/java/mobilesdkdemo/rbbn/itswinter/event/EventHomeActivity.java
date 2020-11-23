@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 
@@ -37,10 +38,18 @@ public class EventHomeActivity extends AppCompatActivity {
         EditText radius = findViewById(R.id.e_radiusSearch);
 
         searchButton.setOnClickListener(x->{
-            Intent goToResultsScreen = new Intent(EventHomeActivity.this, eventResults.class);
-            goToResultsScreen.putExtra("city",city.getText().toString());
-            goToResultsScreen.putExtra("radius",radius.getText().toString());
-            EventHomeActivity.this.startActivity(goToResultsScreen);
+            String radiusString = radius.getText().toString();
+
+            if(Integer.parseInt(radiusString) < 100){
+                Toast.makeText(this,this.getString(R.string.e_radiusErrorString),Toast.LENGTH_LONG).show();
+            }else{
+                Intent goToResultsScreen = new Intent(EventHomeActivity.this, eventResults.class);
+                goToResultsScreen.putExtra("city",city.getText().toString());
+                goToResultsScreen.putExtra("radius",radiusString);
+                EventHomeActivity.this.startActivity(goToResultsScreen);
+            }
+
+
         });
     }
 
