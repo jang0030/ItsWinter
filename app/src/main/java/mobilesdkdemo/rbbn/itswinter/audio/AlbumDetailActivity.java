@@ -157,7 +157,7 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
                         } )
                         .create().show();
                 break;
-            case (R.id.action_home):
+            case (R.id.action_main):
                 startActivity(new Intent(AlbumDetailActivity.this, AudioHomeActivity.class));
                 break;
             case (R.id.action_mine):

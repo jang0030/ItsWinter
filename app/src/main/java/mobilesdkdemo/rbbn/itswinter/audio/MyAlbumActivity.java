@@ -15,8 +15,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
@@ -140,7 +138,7 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
                         } )
                         .create().show();
                 break;
-            case (R.id.action_home):
+            case (R.id.action_main):
                 startActivity(new Intent(MyAlbumActivity.this, AudioHomeActivity.class));
                 break;
         }

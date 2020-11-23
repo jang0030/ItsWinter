@@ -18,10 +18,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 
+import mobilesdkdemo.rbbn.itswinter.MainActivity;
 import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
 import mobilesdkdemo.rbbn.itswinter.audio.db.WinterRepository;
@@ -155,6 +154,9 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
                 break;
             case (R.id.action_mine):
                 startActivity(new Intent(AudioHomeActivity.this, MyAlbumActivity.class));
+                break;
+            case (R.id.action_main):
+                startActivity(new Intent(AudioHomeActivity.this, MainActivity.class));
                 break;
             case (R.id.action_help):
                 new AlertDialog.Builder(this).setTitle("Help")

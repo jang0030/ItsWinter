@@ -39,4 +39,5 @@
     <string name="e_citySearchBarHint">도시를 입력해주세요</string>
     <string name="e_radiusSearchBarHint">반경을 입력해주세요</string>
     <string name="e_goToSiteBtnHint">사이트로 이동</string>
+    <string name="go_main_home">첫페이지로 이동</string>
 </resources>

@@ -41,6 +41,7 @@
     <string name="my_album_list">My Album List</string>
     <string name="require_keyword">Please enter your keyword</string>
     <string name="a_Undo">Undo</string>
+    <string name="go_main_home">Go Main Home</string>
 
 
 </resources>
