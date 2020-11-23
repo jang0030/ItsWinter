@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         actionBar=getSupportActionBar();
         // actionBar.setIcon(R.drawable.logo);
-        actionBar.setTitle("It's Winter");
+        actionBar.setTitle(R.string.main_title);
         actionBar.setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_main);
 

@@ -60,7 +60,7 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
         //setContentView(R.layout.activity_album_detail);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_album_detail);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Audio API");
+        actionBar.setTitle(R.string.audio_api);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         album = getIntent().getParcelableExtra("album");
@@ -148,7 +148,7 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
                 this.finish();
                 break;
             case (R.id.action_help):
-                new AlertDialog.Builder(this).setTitle("Help")
+                new AlertDialog.Builder(this).setTitle(R.string.help)
                         .setMessage("This Page have detailed information about the album that you clicked.\n" +
                                 "This page also provides the tracks of the album.\n" +
                                 "When you click each track, you can access detailed information about the track through google.")

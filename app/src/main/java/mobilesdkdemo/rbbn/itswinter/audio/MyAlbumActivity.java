@@ -54,7 +54,7 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio_home);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("Audio API");
+        actionBar.setTitle(getString(R.string.audio_api));
         actionBar.setDisplayHomeAsUpEnabled(true);
 //        albumsFrag= (AlbumListFrag) getSupportFragmentManager().findFragmentById(R.id.albumsFrag);
         repo=new WinterRepository(this);
@@ -94,7 +94,7 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
                 }
                 if(albums != null){
                     list.addAll(albums);
-                    tvHeader.setText(String.format("My Album List(%d)",albums.size()));
+                    tvHeader.setText(String.format("%s(%d)",getString(R.string.my_album_list),albums.size()));
                 }
                 myListFrag.notifyChanged();
             });
@@ -105,7 +105,7 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
                 }
                 if(albums != null){
                     list.addAll(albums);
-                    tvHeader.setText(String.format("My Album List(%d)",albums.size()));
+                    tvHeader.setText(String.format("%s(%d)",getString(R.string.my_album_list),albums.size()));
                 }
                 myListFrag.notifyChanged();
             });
@@ -129,7 +129,7 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
                 this.finish();
                 break;
             case (R.id.action_help):
-                new AlertDialog.Builder(this).setTitle("Help")
+                new AlertDialog.Builder(this).setTitle(getString(R.string.help))
                         .setMessage("This Page is your storage box for your albums.\n" +
                                 "When you click each item, you can access detail ablum infomations with its tracks.\n" +
                                 "When you click each item for more long time, you can delete to the item in your storage. ")

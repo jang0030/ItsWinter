@@ -85,7 +85,7 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
         protected void onPostExecute(String s) {
             Log.i(TAG, "onPostExecute: "+albums.size());
             listFrag.retriveList(albums);
-            tvHeader.setText(String.format("Album List(%d)",albums.size()));
+            tvHeader.setText(String.format("%s(%d)",getString(R.string.album_list),albums.size()));
             try {
                 Thread.sleep(300);
                 dialog.setProgress(100);
@@ -101,7 +101,7 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio_home);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("Audio API");
+        actionBar.setTitle(R.string.audio_api);
         actionBar.setDisplayHomeAsUpEnabled(true);
 //        albumsFrag= (AlbumListFrag) getSupportFragmentManager().findFragmentById(R.id.albumsFrag);
         repo=new WinterRepository(this);
@@ -117,7 +117,7 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
         btnSearch.setOnClickListener(v->{
             keyword=etKeyword.getText().toString().trim();
             if(!keyword.isEmpty()) executeAlbumQuery(keyword);
-            else Toast.makeText(this, "Please enter your keyword", Toast.LENGTH_SHORT).show();
+            else Toast.makeText(this, R.string.require_keyword, Toast.LENGTH_SHORT).show();
         });
         executeAlbumQuery(keyword);
         getSupportFragmentManager()
@@ -159,7 +159,7 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
                 startActivity(new Intent(AudioHomeActivity.this, MainActivity.class));
                 break;
             case (R.id.action_help):
-                new AlertDialog.Builder(this).setTitle("Help")
+                new AlertDialog.Builder(this).setTitle(R.string.help)
                         .setMessage("This Page is home of Audio-API.\n" +
                                 "When you enter your title of the album that you want to find and click the search button, you can find the ablum list with the title.\n" +
                                 "When you click each item, you can access the detailed information about the album with its tracks.")
