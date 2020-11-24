@@ -8,6 +8,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +16,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -79,7 +82,7 @@ public class CovidResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_covid_result);
 
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("Covid Search Result");
+        actionBar.setTitle(getResources().getString(R.string.c_result_title));
 
         Switch swc = findViewById(R.id.c_onOff);
         //   swc.setOnCheckedChangeListner(new CompoundButton.OnCheckedChangeListener() {
@@ -91,7 +94,7 @@ public class CovidResultActivity extends AppCompatActivity {
 
                 myAdapter.notifyDataSetChanged();
 
-                Snackbar.make(swc, "The sort is now on.", BaseTransientBottomBar.LENGTH_LONG)
+                Snackbar.make(swc, getResources().getString(R.string.c_sort_on), BaseTransientBottomBar.LENGTH_LONG)
                         .setAction("Undo", click -> {
                             cb.setChecked(!isChecked);
                         }).show();
@@ -104,8 +107,8 @@ public class CovidResultActivity extends AppCompatActivity {
 
                 myAdapter.notifyDataSetChanged();
 
-                Snackbar.make(swc, "The sort is now off.", BaseTransientBottomBar.LENGTH_LONG)
-                        .setAction("Undo", click -> cb.setChecked(!isChecked)).show();
+                Snackbar.make(swc, getResources().getString(R.string.c_sort_off), BaseTransientBottomBar.LENGTH_LONG)
+                        .setAction("Redo", click -> cb.setChecked(!isChecked)).show();
             }
         });
 
@@ -446,5 +449,40 @@ public class CovidResultActivity extends AppCompatActivity {
         public int compareTo(Message simpson) {
             return this.getCases().compareTo(simpson.getCases());
         }
+    }
+
+    /**
+     * Runs when option menu chosen
+     * @param item selected menu item
+     * @returns boolean
+     */
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                CovidResultActivity.this.finish();
+                break;
+            case R.id.covid_result_help:
+                String msg = getResources().getString(R.string.c_result_help);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle(getResources().getString(R.string.help))
+                        .setMessage(msg)
+                        .setPositiveButton("OK",(click,arg)->{})
+                        .create().show();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Add covid home menu for Help
+     * @param menu menu where menu item is to be added
+     * @returns boolean true
+     */
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.covid_result, menu);
+        return true;
     }
 }

@@ -2,12 +2,14 @@ package mobilesdkdemo.rbbn.itswinter.covid;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -18,7 +20,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import mobilesdkdemo.rbbn.itswinter.MainActivity;
 import mobilesdkdemo.rbbn.itswinter.R;
+import mobilesdkdemo.rbbn.itswinter.audio.AudioHomeActivity;
+import mobilesdkdemo.rbbn.itswinter.audio.MyAlbumActivity;
 
 /**
  * This class is the main page of Covid-19 Case Data
@@ -51,7 +56,7 @@ public class CovidHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_covid_home);
 
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("Covid-19 Case Data");
+        actionBar.setTitle(getResources().getString(R.string.c_home_title));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         countryEditText = findViewById(R.id.c_country_editTxt);
@@ -103,11 +108,11 @@ public class CovidHomeActivity extends AppCompatActivity {
 
             if (country.equalsIgnoreCase("")) {
                 // show message country field can't be empty
-                Toast.makeText(CovidHomeActivity.this, "Country field can't be empty.", Toast.LENGTH_LONG).show();
+                Toast.makeText(CovidHomeActivity.this, getResources().getString(R.string.c_country_empty), Toast.LENGTH_LONG).show();
             }
             else if (fromDate.equalsIgnoreCase("")) {
                 // show message country field can't be empty
-                Toast.makeText(CovidHomeActivity.this, "Date field can't be empty.", Toast.LENGTH_LONG).show();
+                Toast.makeText(CovidHomeActivity.this, getResources().getString(R.string.c_date_empty), Toast.LENGTH_LONG).show();
             }
             else {
                 final Calendar cal = Calendar.getInstance();
@@ -134,9 +139,29 @@ public class CovidHomeActivity extends AppCompatActivity {
             case android.R.id.home:
                 CovidHomeActivity.this.finish();
                 break;
+            case R.id.covid_home_help:
+                String msg = getResources().getString(R.string.c_home_help);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle(getResources().getString(R.string.help))
+                        .setMessage(msg)
+                        .setPositiveButton("OK",(click,arg)->{})
+                        .create().show();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Add covid home menu for Help
+     * @param menu menu where menu item is to be added
+     * @returns boolean true
+     */
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.covid_home, menu);
+        return true;
+    }
+
 }

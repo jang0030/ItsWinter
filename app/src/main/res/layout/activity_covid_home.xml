@@ -11,7 +11,7 @@
         android:id="@+id/c_country_txtView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Country"/>
+        android:text="@string/c_country"/>
 
     <EditText
         android:id="@+id/c_country_editTxt"
@@ -19,13 +19,13 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:hint="Type Country Name"/>
+        android:hint="@string/c_country_hint"/>
 
     <TextView
         android:id="@+id/c_date_txtView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date"/>
+        android:text="@string/c_date"/>
 
     <EditText
         android:id="@+id/c_date_editTxt"
@@ -33,11 +33,11 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:hint="Click to pick date"/>
+        android:hint="@string/c_date_hint"/>
 
     <Button
         android:id="@+id/c_search_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Search" />
+        android:text="@string/c_search" />
 </LinearLayout>
