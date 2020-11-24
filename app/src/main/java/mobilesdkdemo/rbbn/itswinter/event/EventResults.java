@@ -163,7 +163,7 @@ public class EventResults extends AppCompatActivity {
                     outputStream.flush();
                     outputStream.close();
 
-                    eventList.add(new Event(name,startDate,tkUrl,minPrice,maxPrice,promoImgae));
+                    eventList.add(new Event(name,startDate,tkUrl,minPrice,maxPrice,promoImgae,false));
                 }//end of loop through events
 
 
