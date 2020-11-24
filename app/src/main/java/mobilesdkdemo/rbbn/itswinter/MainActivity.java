@@ -104,10 +104,7 @@ public class MainActivity extends AppCompatActivity {
     public void initNavigationDrawer() {
 
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-
+        navigationView.setNavigationItemSelectedListener(menuItem-> {
                 int id = menuItem.getItemId();
                 Intent intent;
                 switch (id){
@@ -133,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 drawerLayout.closeDrawers();
                 return true;
-            }
         });
        // View header = navigationView.getHeaderView(0);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
