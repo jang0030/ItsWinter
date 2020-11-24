@@ -7,7 +7,7 @@ public class Event {
     private double priceMin, priceMax;
     private Bitmap promoImage;
     private boolean saved;
-    private int id;
+    private long id;
 
     public Event(String name, String startDate, String tkUrl, Double priceMin, Double priceMax, Bitmap promoImage, Boolean saved){
         this.name = name;
@@ -19,7 +19,7 @@ public class Event {
         this.saved = saved;
     }
 
-    public Event(String name, String startDate, String tkUrl, Double priceMin, Double priceMax, Bitmap promoImage, Boolean saved, int id){
+    public Event(String name, String startDate, String tkUrl, Double priceMin, Double priceMax, Bitmap promoImage, Boolean saved, long id){
         this(name, startDate, tkUrl, priceMin, priceMax, promoImage, saved);
         this.id = id;
     }
@@ -48,5 +48,5 @@ public class Event {
 
     public void setSaved(boolean saved) { this.saved = saved; }
 
-    public int getId() { return id; }
+    public long getId() { return id; }
 }

@@ -42,6 +42,8 @@
     <string name="require_keyword">Please enter your keyword</string>
     <string name="e_radiusErrorString">Radius must be at least 100km</string>
     <string name="e_saveEventString">Save this Event</string>
+    <string name="e_revertString">Revert save?</string>
+    <string name="e_removeString">Revert</string>
 
 
 </resources>

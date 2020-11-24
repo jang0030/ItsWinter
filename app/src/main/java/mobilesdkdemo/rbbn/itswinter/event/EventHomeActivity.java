@@ -22,6 +22,7 @@ public class EventHomeActivity extends AppCompatActivity {
 //    TODO: add favorite feature for event (save to database)
 //    TODO: add favorites remove (snackbar with revert option)
 //    TODO: fragment functionality
+//    TODO: add no results notification
 
 
 
