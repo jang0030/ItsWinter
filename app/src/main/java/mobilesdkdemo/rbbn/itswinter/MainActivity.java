@@ -51,17 +51,6 @@ public class MainActivity extends AppCompatActivity {
         });
         initNavigationDrawer();
 
-//        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-//        NavigationView navigationView = findViewById(R.id.nav_view);
-//        // Passing each menu ID as a set of Ids because each
-//        // menu should be considered as top level destinations.
-//        mAppBarConfiguration = new AppBarConfiguration.Builder(
-//                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
-//                .setDrawerLayout(drawer)
-//                .build();
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-//        NavigationUI.setupWithNavController(navigationView, navController);
     }
 
     @Override
@@ -108,15 +97,9 @@ public class MainActivity extends AppCompatActivity {
                         .create().show();
                break;
         }
-        return super.onOptionsItemSelected(item);
+        return true; //super.onOptionsItemSelected(item);
     }
 
-    //    @Override
-//    public boolean onSupportNavigateUp() {
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-//                || super.onSupportNavigateUp();
-//    }
 
     public void initNavigationDrawer() {
 
@@ -129,61 +112,36 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent;
                 switch (id){
                     case R.id.home:
-                        //Toast.makeText(getApplicationContext(),"Home",Toast.LENGTH_SHORT).show();
-
-                        drawerLayout.closeDrawers();
                         break;
                     case R.id.recipe:
-                        // Toast.makeText(getApplicationContext(),"Settings",Toast.LENGTH_SHORT).show();
                         intent=new Intent(MainActivity.this, RecipeHomeActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.nav_covid:
-                        //Toast.makeText(getApplicationContext(),"Trash",Toast.LENGTH_SHORT).show();
                         intent=new Intent(MainActivity.this, CovidHomeActivity.class);
                         startActivity(intent);
-                        drawerLayout.closeDrawers();
                         break;
                     case R.id.nav_audio:
-                        //Toast.makeText(getApplicationContext(),"Trash",Toast.LENGTH_SHORT).show();
                         intent=new Intent(MainActivity.this, AudioHomeActivity.class);
                         startActivity(intent);
-                        drawerLayout.closeDrawers();
+
                         break;
                     case R.id.nav_event:
-                        //Toast.makeText(getApplicationContext(),"Trash",Toast.LENGTH_SHORT).show();
                         intent=new Intent(MainActivity.this, EventHomeActivity.class);
                         startActivity(intent);
-                        drawerLayout.closeDrawers();
                         break;
-//                    case R.id.logout:
-//                        finish();
-
                 }
+                drawerLayout.closeDrawers();
                 return true;
             }
         });
-        View header = navigationView.getHeaderView(0);
-//        TextView tv_email = (TextView)header.findViewById(R.id.tv_email);
-//        tv_email.setText("kw2446@gmail.com");
+       // View header = navigationView.getHeaderView(0);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.drawer_open,R.string.drawer_close){
-
-            @Override
-            public void onDrawerClosed(View v){
-                super.onDrawerClosed(v);
-            }
-
-            @Override
-            public void onDrawerOpened(View v) {
-                super.onDrawerOpened(v);
-            }
-        };
-        actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.drawer_open,R.string.drawer_close);
+        //actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-        // toolbar.setNavigationIcon(R.drawable.logo);
     }
 
 }
