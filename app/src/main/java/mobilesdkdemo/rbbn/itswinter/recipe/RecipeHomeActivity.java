@@ -6,7 +6,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.AsyncTaskLoader;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -95,17 +98,23 @@ public class RecipeHomeActivity extends AppCompatActivity {
                     snackbar.show();
                 }
             }
-         });
+        });
 
         // When we click on a recipe name, show the recipe contents
         recipe_ListView.setOnItemClickListener(( parent, view, position,id) -> {
-            //show an alert box
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle(recipe_list.get(position).getRecipe_title());
-            alertDialogBuilder.setMessage("Ingredients: " + recipe_list.get(position).getRecipe_ingredients()
-                    + "\n URL: " + recipe_list.get(position).getRecipe_url());
-            alertDialogBuilder.create().show();
+            Intent nextPage=new Intent(RecipeHomeActivity.this, activity_recipe_page.class);
+            nextPage.putExtra("recipe_name", recipe_list.get(position).getRecipe_title());
+            nextPage.putExtra("ingredients",recipe_list.get(position).getRecipe_ingredients() );
+            nextPage.putExtra("url", recipe_list.get(position).getRecipe_url());
+            startActivity(nextPage);
         });
+
+        ImageButton favoritesListButton=findViewById(R.id.favoritesListButton);
+        favoritesListButton.setOnClickListener(bt -> {
+            Intent nextPage=new Intent(RecipeHomeActivity.this, activity_recipe_favorites_list.class);
+            startActivity(nextPage);
+        });
+
     }
 
     /**
@@ -116,7 +125,7 @@ public class RecipeHomeActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-                //create a URL object of what server to contact (from example code)
+            //create a URL object of what server to contact (from example code)
             URL url = null;
             try {
                 url = new URL(strings[0]);
@@ -149,26 +158,26 @@ public class RecipeHomeActivity extends AppCompatActivity {
                             recipe.setRecipe_title(xpp.getText());
                             //Log.i("TITLE", recipe.getRecipe_title());
                         } else
-                        //If you get here, then you are pointing at a start tag
-                        if(xpp.getName().equals("href"))
-                        {
-                            xpp.next(); //move the pointer from the opening tag to the TEXT event
-                            recipe.setRecipe_url(xpp.getText()); // this will return  20
-                            //Log.i("URL",  recipe.getRecipe_url());
-                        } else
                             //If you get here, then you are pointing at a start tag
-                            if(xpp.getName().equals("ingredients"))
+                            if(xpp.getName().equals("href"))
                             {
                                 xpp.next(); //move the pointer from the opening tag to the TEXT event
-                                recipe.setRecipe_ingredients(xpp.getText()); // this will return  20
-                                //Log.i("INGREDIENTS", recipe.getRecipe_ingredients());
-                                // add recipe object to recipe list ArrayList<Recipe>
-                                recipe_list.add(recipe);
-                                recipe=new Recipe(); // Start with a new Recipe to add
-                            }
+                                recipe.setRecipe_url(xpp.getText()); // this will return  20
+                                //Log.i("URL",  recipe.getRecipe_url());
+                            } else
+                                //If you get here, then you are pointing at a start tag
+                                if(xpp.getName().equals("ingredients"))
+                                {
+                                    xpp.next(); //move the pointer from the opening tag to the TEXT event
+                                    recipe.setRecipe_ingredients(xpp.getText()); // this will return  20
+                                    //Log.i("INGREDIENTS", recipe.getRecipe_ingredients());
+                                    // add recipe object to recipe list ArrayList<Recipe>
+                                    recipe_list.add(recipe);
+                                    recipe=new Recipe(); // Start with a new Recipe to add
+                                }
                     }
                     eventType = xpp.next(); //move to the next xml event and store it in a variable
-            }
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -222,7 +231,7 @@ public class RecipeHomeActivity extends AppCompatActivity {
             TextView tv = newView.findViewById(R.id.recipe_TextView);
             tv.setText(recipe_list.get(position).getRecipe_title());
             return newView;
-         }
+        }
     }
 
     /**
@@ -258,3 +267,4 @@ public class RecipeHomeActivity extends AppCompatActivity {
         }
     }
 }
+
