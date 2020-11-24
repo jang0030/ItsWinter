@@ -35,11 +35,9 @@ public class EventResults extends AppCompatActivity {
     private ArrayList<Event> eventList = new ArrayList();
     private String name,startDate,tkUrl;
     private double minPrice,maxPrice;
-    private Bitmap promoImage;
     private ListView resultList;
     private EventListAdapter eventAdapter;
     private ProgressBar progressBar;
-
 
 
     @Override
