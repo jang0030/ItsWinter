@@ -68,5 +68,12 @@
     <string name="textview2">TextView</string>
     <string name="textview3">TextView</string>
     <string name="save_to_favorites">SAVE TO FAVORITES</string>
+    <string name="recipe_title1">Recipe Search</string>
+    <string name="toast1">Please enter recipe keyword</string>
+    <string name="snackbar1">No Results</string>
+    <string name="detailPageTitle">Recipe Detail</string>
+    <string name="alert1">Recipe</string>
+    <string name="alert2">Favorite Saved</string>
+    <string name="favoritesTitle">Saved Favorites</string>
 
 </resources>
