@@ -35,7 +35,8 @@ public class activity_recipe_page extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_page);
 
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("Recipe Detail Page");
+        String detailPageTitle = getString(R.string.detailPageTitle);
+        actionBar.setTitle(detailPageTitle);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         TextView recipe_name_page=findViewById(R.id.recipe_name_page);
@@ -75,8 +76,10 @@ public class activity_recipe_page extends AppCompatActivity {
 
             //show alert
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle("Recipe");
-            alertDialogBuilder.setMessage("Favorite Saved");
+            String alert1 = getString(R.string.alert1);
+            alertDialogBuilder.setTitle(alert1);
+            String alert2 = getString(R.string.alert2);
+            alertDialogBuilder.setMessage(alert2);
             alertDialogBuilder.create().show();
         });
     }

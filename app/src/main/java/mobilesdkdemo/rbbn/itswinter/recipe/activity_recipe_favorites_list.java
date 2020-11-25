@@ -42,7 +42,8 @@ public class activity_recipe_favorites_list extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_favorites_list);
 
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("Saved Favorites");
+        String favoritesTitle = getString(R.string.favoritesTitle);
+        actionBar.setTitle(favoritesTitle);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         ListView favoritesListView=findViewById(R.id.favorites_list_view);

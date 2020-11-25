@@ -56,8 +56,10 @@ public class RecipeHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_home);
 
+        String title = getString(R.string.recipe_title1);
+
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("Recipe Search");
+        actionBar.setTitle(title);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         Button recipe_Button = findViewById(R.id.recipe_Button);
@@ -95,9 +97,11 @@ public class RecipeHomeActivity extends AppCompatActivity {
         recipe_Button.setOnClickListener((View v) -> {
             RecipeQuery req= new RecipeQuery();
 
+            String toast1 = getString(R.string.toast1);
+
             // if the search string is empty, show a Toast message
             if (recipe_EditText.getText().toString().contentEquals("")) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Please enter recipe keyword.", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getApplicationContext(), toast1, Toast.LENGTH_SHORT);
                 toast.show();
             } else {    //do the search
                 recipe_list.clear();
@@ -116,9 +120,11 @@ public class RecipeHomeActivity extends AppCompatActivity {
                 }
                 recipe_list_adapter.notifyDataSetChanged(); //refresh the ListView results
 
+                String snackbar1 = getString(R.string.snackbar1);
+                
                 // if there are no results, show Snackbar message
                 if (recipe_list.size()==0) {
-                    Snackbar snackbar = Snackbar.make(v,"No results",Snackbar.LENGTH_SHORT);
+                    Snackbar snackbar = Snackbar.make(v,snackbar1,Snackbar.LENGTH_SHORT);
                     snackbar.show();
                 }
             }
