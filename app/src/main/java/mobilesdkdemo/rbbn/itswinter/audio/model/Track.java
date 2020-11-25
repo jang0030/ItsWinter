@@ -35,7 +35,7 @@ public class Track {
     private String strMusicVidScreen1;
     private int intTrackNumber;
     private int intLoved;
-    private int intScore;
+    private double intScore;
     private int intScoreVotes;
     private int intTotalListeners;
     private int intTotalPlays;
@@ -241,11 +241,11 @@ public class Track {
         this.intLoved = intLoved;
     }
 
-    public int getIntScore() {
+    public double getIntScore() {
         return intScore;
     }
 
-    public void setIntScore(int intScore) {
+    public void setIntScore(double intScore) {
         this.intScore = intScore;
     }
 

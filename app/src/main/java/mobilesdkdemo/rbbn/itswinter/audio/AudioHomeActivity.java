@@ -18,6 +18,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.MainActivity;
@@ -75,9 +77,15 @@ public class AudioHomeActivity extends AppCompatActivity implements AlbumAdapter
                 Log.d(TAG, "onPostExecute: "+e.getMessage());
             }
 
-            String url=String.format("https://www.theaudiodb.com/api/v1/json/1/searchalbum.php?s=%s",args[0]);
-            albums= JsonUtils.getArrayListbyUrl(Album.class,url, "album");
-            dialog.setProgress(80);
+            String url= null;
+            try {
+                url = String.format("https://www.theaudiodb.com/api/v1/json/1/searchalbum.php?s=%s", URLEncoder.encode(args[0], "UTF-8") );
+                albums= JsonUtils.getArrayListbyUrl(Album.class,url, "album");
+                dialog.setProgress(80);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
             return null;
         }
 

@@ -169,7 +169,7 @@ public class AlbumDetailActivity extends AppCompatActivity implements TrackAdapt
 
     @Override
     public void onTrackItemClicked(Track item) {
-        String keyword=String.format("%s+%s",item.getStrAlbum(),item.getStrArtist());
+        String keyword=String.format("%s+%s",item.getStrTrack(),item.getStrArtist());
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("http://www.google.com/search?q="+keyword, item.getStrArtist())));
         startActivity(intent);
 
