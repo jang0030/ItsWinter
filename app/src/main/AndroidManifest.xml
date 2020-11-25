@@ -14,11 +14,10 @@
       
         <activity android:name=".recipe.activity_recipe_favorites_list"></activity>
         <activity android:name=".recipe.activity_recipe_page" />
-        <activity android:name=".HelpActivity" />
 
         <activity android:name=".event.eventDetails"></activity>
         <activity android:name=".eventResults" />
-        <activity android:name=".EventListViewLayout" />
+        <!-- <activity android:name=".EventListViewLayout" /> -->
         <activity android:name=".HelpActivity" />
 
         <activity android:name=".covid.CovidResultActivity"></activity>

@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Enter recipe keyword"
+                android:hint="@string/enter_recipe_keyword"
                 android:inputType="textPersonName" />
 
             <Button
@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Search" />
+                android:text="@string/searchRecipeButton" />
 
             <ImageButton
                 android:id="@+id/favoritesListButton"
