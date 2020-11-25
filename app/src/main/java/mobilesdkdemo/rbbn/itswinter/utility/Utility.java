@@ -60,13 +60,4 @@ public class Utility {
                 .setAction("Action", null).show();
     }
 
-    public static void createAndShowDialog(Context context, String title, String msg) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(title);
-        builder.setMessage(msg);
-        builder.setPositiveButton("yes", (DialogInterface.OnClickListener) context);
-        builder.setNeutralButton("cancel", (DialogInterface.OnClickListener) context);
-        builder.setNegativeButton("no", (DialogInterface.OnClickListener) context);
-        builder.create().show();
-    }
 }

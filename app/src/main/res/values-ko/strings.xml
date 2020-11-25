@@ -20,4 +20,43 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="welcome_to_our_app">환영합니다</string>
     <string name="help">도움말</string>
+    <string name="enter_album_name">앨범의 이름을 입력해주세요</string>
+    <string name="search">검색</string>
+    <string name="title_activity_track">트랙 리스트</string>
+    <string name="yes">예</string>
+    <string name="no">아니오</string>
+    <string name="please_enter_your_memo">너의 메모를 입력해주세요</string>
+    <string name="ok">예</string>
+    <string name="my_memo">나의 메모</string>
+    <string name="track_list">트랙 리스트</string>
+    <string name="my_album_list">나의 앨범 리스트</string>
+    <string name="album">앨범</string>
+    <string name="require_keyword">너의 검색어를 넣어주세요</string>
+    <string name="a_Undo">되돌리기</string>
+    <string name="e_searchButtonString">검색</string>
+    <string name="e_searchBarHint">검색어를 입력해주세요</string>
+    <string name="e_welcomeText">환영합니다.</string>
+    <string name="e_citySearchBarHint">도시를 입력해주세요</string>
+    <string name="e_radiusSearchBarHint">반경을 입력해주세요</string>
+    <string name="e_goToSiteBtnHint">사이트로 이동</string>
+    <string name="go_main_home">첫페이지로 이동</string>
+    <string name="audio_api">오디오 API</string>
+    <string name="album_list">앨범 리스트</string>
+    <string name="main_title">겨울이다</string>
+
+    <string name="c_home_title">코로나-19 발생 현황</string>
+    <string name="c_result_title">코로나 검색 결과</string>
+    <string name="c_country">국가</string>
+    <string name="c_country_hint">국가 이름을 입력하세요</string>
+    <string name="c_date_hint">클릭해서 날짜를 선택하세요</string>
+    <string name="c_date">날짜</string>
+    <string name="c_search">검색</string>
+    <string name="c_country_empty">국가 이름을 입력하지 않았습니다.</string>
+    <string name="c_date_empty">날짜를 입력하지 않았습니다.</string>
+    <string name="c_home_help">국가 이름과 날짜를 입력하고 검색 버튼을 클릭해주세요.</string>
+    <string name="c_result_help">스위치를 키면 케이스 수별로 결과를 오름차순으로 표시해줍니다.</string>
+    <string name="c_sort">케이스 수로 정렬</string>
+    <string name="c_sort_on">정렬이 되었습니다.</string>
+    <string name="c_sort_off">정렬이 해제되었습니다.</string>
+
 </resources>

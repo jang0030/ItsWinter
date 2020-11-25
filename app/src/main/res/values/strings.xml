@@ -20,4 +20,45 @@
     <string name="drawer_close">Close</string>
     <string name="welcome_to_our_app">Welcome To Our App</string>
     <string name="help">Help</string>
+
+    <string name="e_searchButtonString">Search</string>
+    <string name="e_searchBarHint">Enter search term</string>
+    <string name="e_welcomeText">Welcome to the Ticket Master Search</string>
+    <string name="e_citySearchBarHint">Enter city</string>
+    <string name="e_radiusSearchBarHint">Enter Radius</string>
+    <string name="e_goToSiteBtnHint">Go to Site</string>
+
+    <string name="enter_album_name">Enter Album name</string>
+    <string name="search">Search</string>
+    <string name="title_activity_track">TrackActivity</string>
+    <string name="album">Album</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="please_enter_your_memo">Please enter your memo</string>
+    <string name="ok">OK</string>
+    <string name="my_memo">My Memo</string>
+    <string name="track_list">Track List</string>
+    <string name="my_album_list">My Album List</string>
+    <string name="require_keyword">Please enter your keyword</string>
+    <string name="a_Undo">Undo</string>
+    <string name="go_main_home">Go Main Home</string>
+    <string name="audio_api">Audio API</string>
+    <string name="album_list">Album List</string>
+    <string name="main_title">It\'s Winter</string>
+
+    <string name="c_home_title">Covid-19 Case Data</string>
+    <string name="c_result_title">Covid Search Result</string>
+    <string name="c_country">Country</string>
+    <string name="c_country_hint">Type Country Name</string>
+    <string name="c_date_hint">Click to pick date</string>
+    <string name="c_date">Date</string>
+    <string name="c_search">Search</string>
+    <string name="c_country_empty">Country field can\'t be empty.</string>
+    <string name="c_date_empty">Date field can\'t be empty.</string>
+    <string name="c_home_help">Enter country name and date and click on the Search button.</string>
+    <string name="c_result_help">Turn on the switch to show the results by number of cases in ascending order.</string>
+    <string name="c_sort">Sort by number of cases</string>
+    <string name="c_sort_on">The sort is now on.</string>
+    <string name="c_sort_off">The sort is now off.</string>
+
 </resources>
