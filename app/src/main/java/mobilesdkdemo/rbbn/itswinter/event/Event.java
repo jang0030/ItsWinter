@@ -2,6 +2,8 @@ package mobilesdkdemo.rbbn.itswinter.event;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
+
 public class Event {
     private String name,startDate,tkUrl;
     private double priceMin, priceMax;
@@ -47,6 +49,7 @@ public class Event {
     public boolean isSaved() { return saved; }
 
     public void setSaved(boolean saved) { this.saved = saved; }
+
 
     public long getId() { return id; }
 }

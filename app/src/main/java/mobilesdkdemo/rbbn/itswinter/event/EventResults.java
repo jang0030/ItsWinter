@@ -1,9 +1,13 @@
 package mobilesdkdemo.rbbn.itswinter.event;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Database;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -45,6 +49,7 @@ public class EventResults extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_results);
 
+
         resultList = findViewById(R.id.e_searchReturns);
         resultList.setAdapter(eventAdapter = new EventListAdapter());
 
@@ -62,12 +67,27 @@ public class EventResults extends AppCompatActivity {
             dataToPass.putDouble("priceMax",eventList.get(pos).getPriceMax());
             dataToPass.putDouble("priceMin",eventList.get(pos).getPriceMin());
             dataToPass.putParcelable("promoImage",eventList.get(pos).getPromoImage());
-
+            dataToPass.putBoolean("saved",eventList.get(pos).isSaved());
+            dataToPass.putLong("dbId",eventList.get(pos).getId());
 
             Intent goToDetailsPage = new Intent(EventResults.this, EventDetails.class);
             goToDetailsPage.putExtras(dataToPass);
             startActivity(goToDetailsPage);
         });
+
+        resultList.setOnItemLongClickListener((p,b,pos,id)->{
+            Event event = eventList.get(pos);
+
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+            alertBuilder.setTitle(getString(R.string.e_alertTitleString))
+                    .setMessage(getString(R.string.e_alertMessageString))
+                    .setPositiveButton(getString(R.string.e_yesString),(click,args)->{
+//                    TODO: Finish this bish
+                    })
+                    .setNegativeButton()
+                    .create().show();
+        });
+
     }
 
 
@@ -211,5 +231,4 @@ public class EventResults extends AppCompatActivity {
             return newView;
         }
     }
-
 }
