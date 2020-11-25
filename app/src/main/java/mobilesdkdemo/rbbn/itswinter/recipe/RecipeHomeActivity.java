@@ -9,6 +9,7 @@ import androidx.loader.content.AsyncTaskLoader;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,6 +40,9 @@ import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 
+/**
+ * This is the main search activity page for the Recipe app.
+ */
 public class RecipeHomeActivity extends AppCompatActivity {
     // we store the recipes here in this list
     public static ArrayList<Recipe> recipe_list = new ArrayList<Recipe>();
@@ -51,6 +55,7 @@ public class RecipeHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_home);
+
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle("Recipe Search");
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -67,7 +72,26 @@ public class RecipeHomeActivity extends AppCompatActivity {
         // refresh the listview
         recipe_list_adapter.notifyDataSetChanged();
 
-        // this runs when you click the recipe search button
+        //Load search string saved from before in LastSearch.XML
+        SharedPreferences prefs = getSharedPreferences("LastSearch", Context.MODE_PRIVATE);
+        String savedString = prefs.getString("LASTSEARCH", "");
+        // Get the search results from the last search
+        if (savedString!="") {
+            recipe_EditText.setText(savedString);
+            RecipeQuery req= new RecipeQuery();
+            recipe_list.clear();
+            // do the search in the background and the results go into recipe_list
+            req.execute("http://www.recipepuppy.com/api/?q="+recipe_EditText.getText().toString()+"&p=3&format=xml");
+            // wait a second until the search is done
+            try {
+                Thread.sleep(1000); // wait 1000 milliseconds
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            recipe_list_adapter.notifyDataSetChanged(); //refresh the ListView results
+        }
+
+        // when you click the recipe search button, do the recipe search
         recipe_Button.setOnClickListener((View v) -> {
             RecipeQuery req= new RecipeQuery();
 
@@ -92,7 +116,7 @@ public class RecipeHomeActivity extends AppCompatActivity {
                 }
                 recipe_list_adapter.notifyDataSetChanged(); //refresh the ListView results
 
-                // if there no results, show Snackbar message
+                // if there are no results, show Snackbar message
                 if (recipe_list.size()==0) {
                     Snackbar snackbar = Snackbar.make(v,"No results",Snackbar.LENGTH_SHORT);
                     snackbar.show();
@@ -100,7 +124,7 @@ public class RecipeHomeActivity extends AppCompatActivity {
             }
         });
 
-        // When we click on a recipe name, show the recipe contents
+        // When we click on a recipe name, show the recipe contents on activity_recipe_page
         recipe_ListView.setOnItemClickListener(( parent, view, position,id) -> {
             Intent nextPage=new Intent(RecipeHomeActivity.this, activity_recipe_page.class);
             nextPage.putExtra("recipe_name", recipe_list.get(position).getRecipe_title());
@@ -109,16 +133,31 @@ public class RecipeHomeActivity extends AppCompatActivity {
             startActivity(nextPage);
         });
 
+        // Favorites button opens activity_recipe_favorites_list
         ImageButton favoritesListButton=findViewById(R.id.favoritesListButton);
         favoritesListButton.setOnClickListener(bt -> {
             Intent nextPage=new Intent(RecipeHomeActivity.this, activity_recipe_favorites_list.class);
             startActivity(nextPage);
         });
+    }
 
+    /**
+     * When the app pauses, this method saves the Last Recipe search term into the file LastSearch.XML
+     * with the keyword LASTSEARCH. It takes what is in the search EditText box and saves it there.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences prefs = getSharedPreferences("LastSearch", Context.MODE_PRIVATE);
+        EditText typeField = findViewById(R.id.recipe_EditText);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("LASTSEARCH", typeField.getText().toString());
+        editor.commit();
     }
 
     /**
      *  this method performs the query to the recipepuppy.com API in the background
+     *  it is an AsyncTask method.
      */
     private class RecipeQuery extends AsyncTask<String, Integer, String>{
         Recipe recipe=new Recipe();
@@ -185,6 +224,11 @@ public class RecipeHomeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method is necessary for the back button to work.
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
@@ -199,19 +243,34 @@ public class RecipeHomeActivity extends AppCompatActivity {
 
     /**
      * This class connects the recipe_list to ListView
+     * and extends BaseAdapter
      */
     public class Recipe_List_Adapter extends BaseAdapter {
 
+        /**
+         * This method returns the size of the recipe list
+         * @return
+         */
         @Override
         public int getCount() {
             return recipe_list.size();
         }
 
+        /**
+         * This method returns an object when given a position
+         * @param position
+         * @return
+         */
         @Override
         public Object getItem(int position) {
             return recipe_list.get(position);
         }
 
+        /**
+         * We use the position as the ID
+         * @param position
+         * @return
+         */
         @Override
         public long getItemId(int position) {
             return position;
@@ -236,8 +295,9 @@ public class RecipeHomeActivity extends AppCompatActivity {
 
     /**
      *  this class/type holds a single recipe
+     *  A recipe has 3 strings: a title, ingredients & URL.
      */
-    private class Recipe {
+    public static class Recipe {
         String recipe_title;
         String recipe_url;
         String recipe_ingredients;
