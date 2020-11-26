@@ -6,7 +6,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
@@ -33,6 +35,31 @@ import mobilesdkdemo.rbbn.itswinter.audio.MyAlbumActivity;
 
 public class CovidHomeActivity extends AppCompatActivity {
     /**
+     * Shared Preferences file name
+     */
+    public static final String C_PREFS = "C_PREFS";
+
+    /**
+     * Shared Preference Key for Country Name
+     */
+    public static final String COUNTRY = "Country";
+
+    /**
+     * Shared Preference Key for FROM Date
+     */
+    public static final String FROM_DATE = "FromDate";
+
+    /**
+     * Shared Preference Key for FROM Date
+     */
+    public static final String TO_DATE = "ToDate";
+
+    /**
+     * shared preferences variable
+     */
+    SharedPreferences sharedPref;
+
+    /**
      * Text Field: Country
      */
     EditText countryEditText;
@@ -53,6 +80,12 @@ public class CovidHomeActivity extends AppCompatActivity {
      */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPref = getSharedPreferences(C_PREFS, Context.MODE_PRIVATE);
+
+        String lastCountrySearched = sharedPref.getString(COUNTRY, "");
+        String lastDateSearched = sharedPref.getString(FROM_DATE, "");
+        toDate = sharedPref.getString(TO_DATE, "");
+
         setContentView(R.layout.activity_covid_home);
 
         ActionBar actionBar=getSupportActionBar();
@@ -60,9 +93,12 @@ public class CovidHomeActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         countryEditText = findViewById(R.id.c_country_editTxt);
+        countryEditText.setText(lastCountrySearched);
+
         dateEditText = findViewById(R.id.c_date_editTxt);
 
         dateEditText.setInputType(InputType.TYPE_NULL);
+        dateEditText.setText(lastDateSearched);
 
         DatePickerDialog.OnDateSetListener datepickerListener = new DatePickerDialog.OnDateSetListener() {
 
@@ -115,8 +151,11 @@ public class CovidHomeActivity extends AppCompatActivity {
                 Toast.makeText(CovidHomeActivity.this, getResources().getString(R.string.c_date_empty), Toast.LENGTH_LONG).show();
             }
             else {
-                final Calendar cal = Calendar.getInstance();
-                final Date today = cal.getTime();
+                SharedPreferences.Editor prefWriter = sharedPref.edit();
+                prefWriter.putString(COUNTRY, country);
+                prefWriter.putString(FROM_DATE, fromDate);
+                prefWriter.putString(TO_DATE, toDate);
+                prefWriter.commit();
 
                 // Call the web page, get information, and show it in ListView in new Activity
                 // New Activity has progress bar
