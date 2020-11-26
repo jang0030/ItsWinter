@@ -74,7 +74,7 @@ public class EventResults extends AppCompatActivity {
             dataToPass.putString("url",eventList.get(pos).getTkUrl());
             dataToPass.putDouble("priceMax",eventList.get(pos).getPriceMax());
             dataToPass.putDouble("priceMin",eventList.get(pos).getPriceMin());
-            dataToPass.putParcelable("promoImage",eventList.get(pos).getPromoImage());
+            dataToPass.putString("promoImage", String.valueOf(eventList.get(pos).getPromoImage()));
             dataToPass.putBoolean("saved",eventList.get(pos).isSaved());
             dataToPass.putLong("dbId",eventList.get(pos).getId());
 
@@ -118,6 +118,7 @@ public class EventResults extends AppCompatActivity {
         Double min = event.getPriceMin();
         Double max = event.getPriceMax();
         String url = event.getTkUrl();
+        String promoImage = event.getPromoImage();
 
         ContentValues cValues = new ContentValues();
         cValues.put(EventSqlOpener.EVENT_COL_NAME, name );
@@ -125,9 +126,7 @@ public class EventResults extends AppCompatActivity {
         cValues.put(EventSqlOpener.EVENT_COL_PRICE_MIN, String.valueOf(min));
         cValues.put(EventSqlOpener.EVENT_COL_PRICE_MAX, String.valueOf(max));
         cValues.put(EventSqlOpener.EVENT_COL_TKURL, url);
-        //TODO: Figure out how to store image in db
-        //store image link and grab it from URL in this screen? Would also reduce inital search speed
-//                cValues.put(EventSqlOpener.EVENT_COL_PROMO_IMAGE, );
+        cValues.put(EventSqlOpener.EVENT_COL_PROMO_IMAGE, promoImage);
         cValues.put(EventSqlOpener.EVENT_COL_SAVED, true);
         Long id = db.insert(EVENT_TABLE_NAME,null, cValues);
         event.setId(id);
@@ -209,25 +208,12 @@ public class EventResults extends AppCompatActivity {
                     }
 
 
-//                    gets promo image
+//                    gets promo image string, actual image is grabbed when needed
 //                    while there can be multiple promo images, only one is required
-                    URL promoImageUrl = new URL(object.getJSONArray("images").getJSONObject(0).getString("url"));
-                    HttpURLConnection connection = (HttpURLConnection) promoImageUrl.openConnection();
-                    connection.connect();
+                    URL tempUrl = new URL(object.getJSONArray("images").getJSONObject(0).getString("url"));
+                    String promoImageUrl = String.valueOf(tempUrl);
 
-                    int responseCode = connection.getResponseCode();
-                    Bitmap promoImgae = null;
-                    if (responseCode == 200) {
-                        promoImgae = BitmapFactory.decodeStream(connection.getInputStream());
-                    }
-
-//                builds the bitmap object
-                    FileOutputStream outputStream = openFileOutput(promoImgae + ".png", Context.MODE_PRIVATE);
-                    promoImgae.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
-                    outputStream.flush();
-                    outputStream.close();
-
-                    eventList.add(new Event(name,startDate,tkUrl,minPrice,maxPrice,promoImgae,false));
+                    eventList.add(new Event(name,startDate,tkUrl,minPrice,maxPrice,promoImageUrl,false));
                 }//end of loop through events
 
 

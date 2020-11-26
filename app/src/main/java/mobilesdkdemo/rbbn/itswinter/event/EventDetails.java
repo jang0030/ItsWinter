@@ -4,15 +4,23 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.FileOutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 
@@ -20,6 +28,8 @@ public class EventDetails extends AppCompatActivity {
 
 
     private Bundle dataToPass;
+    private Bitmap promoImage;
+    private ImageView eventPromoImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +48,7 @@ public class EventDetails extends AppCompatActivity {
 
         Button eventGoToSiteBtn = findViewById(R.id.e_goToSiteBtn);
 
-        ImageView eventPromoImage = findViewById(R.id.e_promoImage);
+        eventPromoImage = findViewById(R.id.e_promoImage);
 
 
         dataToPass = getIntent().getExtras();
@@ -47,8 +57,9 @@ public class EventDetails extends AppCompatActivity {
         eventMinPrice.setText("Min price: "+String.valueOf(dataToPass.getDouble("priceMin")));
         eventMaxPrice.setText("Max price: "+String.valueOf(dataToPass.getDouble("priceMax")));
         eventGoToSiteBtn.setText(dataToPass.getString("url"));
-        Bitmap promoImage = dataToPass.getParcelable("promoImage");
-        eventPromoImage.setImageBitmap(promoImage);
+
+        ImageQuery query = new ImageQuery();
+        query.execute(dataToPass.getString("promoImage"));
 
 
 
@@ -58,7 +69,38 @@ public class EventDetails extends AppCompatActivity {
         });
     }
 
+    private class ImageQuery extends AsyncTask<String,Integer,String> {
 
+        @Override
+        protected String doInBackground(String... args) {
+            try {
+                URL url = new URL(args[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.connect();
+
+                    int responseCode = connection.getResponseCode();
+                    promoImage = null;
+                    if (responseCode == 200) {
+                        promoImage = BitmapFactory.decodeStream(connection.getInputStream());
+                    }
+
+//                builds the bitmap object
+                    FileOutputStream outputStream = openFileOutput(promoImage + ".png", Context.MODE_PRIVATE);
+                    promoImage.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
+                    outputStream.flush();
+                    outputStream.close();
+
+            }catch(Exception e){
+                Log.e("API: Error caught:", String.valueOf(e));
+            }
+            return "Done";
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            eventPromoImage.setImageBitmap(promoImage);
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
