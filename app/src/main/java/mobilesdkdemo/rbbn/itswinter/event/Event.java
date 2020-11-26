@@ -11,8 +11,9 @@ public class Event {
     private String promoImage;
     private boolean saved;
     private long id;
+    private String apiId;
 
-    public Event(String name, String startDate, String tkUrl, Double priceMin, Double priceMax, String promoImage, Boolean saved){
+    public Event(String name, String startDate, String tkUrl, Double priceMin, Double priceMax, String promoImage, Boolean saved, String apiId){
         this.name = name;
         this.startDate = startDate;
         this.tkUrl = tkUrl;
@@ -20,10 +21,11 @@ public class Event {
         this.priceMax = priceMax;
         this.promoImage = promoImage;
         this.saved = saved;
+        this.apiId = apiId;
     }
 
-    public Event(String name, String startDate, String tkUrl, Double priceMin, Double priceMax, String promoImage, Boolean saved, long id){
-        this(name, startDate, tkUrl, priceMin, priceMax, promoImage, saved);
+    public Event(String name, String startDate, String tkUrl, Double priceMin, Double priceMax, String promoImage, Boolean saved, long id, String apiId){
+        this(name, startDate, tkUrl, priceMin, priceMax, promoImage, saved, apiId);
         this.id = id;
     }
 

@@ -40,7 +40,7 @@ import static mobilesdkdemo.rbbn.itswinter.event.EventSqlOpener.EVENT_TABLE_NAME
 
 public class EventResults extends AppCompatActivity {
 
-    private ArrayList<Event> eventList = new ArrayList();
+    private static ArrayList<Event> eventList = new ArrayList();
     private String name,startDate,tkUrl;
     private double minPrice,maxPrice;
     private ListView resultList;
@@ -66,6 +66,7 @@ public class EventResults extends AppCompatActivity {
         String city = searchTerms.getStringExtra("city").toLowerCase();
         search(city,searchTerms.getStringExtra("radius"));
 
+        eventList.clear();
 
         resultList.setOnItemClickListener((p,b,pos,id)->{
             Bundle dataToPass = new Bundle();
@@ -136,8 +137,6 @@ public class EventResults extends AppCompatActivity {
         db.delete(EVENT_TABLE_NAME,EVENT_COL_ID+"=?",new String[]{Long.toString(event.getId())});
     }
 
-
-
     //    launches EventQuery
     private void search(String citySearchTerm, String radiusSearchTerm){
         EventQuery query = new EventQuery();
@@ -146,6 +145,36 @@ public class EventResults extends AppCompatActivity {
             https://app.ticketmaster.com/discovery/v2/events.json?apikey=KiOshiJsVO1WxmGWXYxpwy4Yxd7Cu6r1&city=ottawa&radius=100
         */
         query.execute("https://app.ticketmaster.com/discovery/v2/events.json?apikey="+apiKey+"&city="+citySearchTerm+"&"+radiusSearchTerm+"");
+    }
+
+    public static ArrayList<Event> e_getSavedEvents(){
+        ArrayList<Event> savedEvents = new ArrayList<>();
+
+        for(int i = 0; i > eventList.size(); i++){
+            if(eventList.get(i).isSaved()){
+                savedEvents.add(eventList.get(i));
+            }
+        }
+        return savedEvents;
+    }
+
+    private boolean checkIfInDb(String apiId){
+        EventSqlOpener dbOpener = new EventSqlOpener(this);
+        db = dbOpener.getReadableDatabase();
+
+        String [] columns = {EventSqlOpener.EVENT_COL_APIID,EventSqlOpener.EVENT_COL_SAVED};
+        Cursor results = db.query(false, EventSqlOpener.EVENT_TABLE_NAME, columns, null, null, null, null, null, null);
+
+        int apiIdColumn = results.getColumnIndex(EventSqlOpener.EVENT_COL_APIID);
+        int savedColumn = results.getColumnIndex(EventSqlOpener.EVENT_COL_SAVED);
+
+        while(results.moveToNext()){
+            if(results.getString(apiIdColumn).equals(apiId)){
+                return results.getInt(savedColumn) > 0;
+            }
+        }
+
+        return false;
     }
 
     private class EventQuery extends AsyncTask<String,Integer,String> {
@@ -208,12 +237,18 @@ public class EventResults extends AppCompatActivity {
                     }
 
 
+
 //                    gets promo image string, actual image is grabbed when needed
 //                    while there can be multiple promo images, only one is required
                     URL tempUrl = new URL(object.getJSONArray("images").getJSONObject(0).getString("url"));
                     String promoImageUrl = String.valueOf(tempUrl);
 
-                    eventList.add(new Event(name,startDate,tkUrl,minPrice,maxPrice,promoImageUrl,false));
+//                    gets apiId
+                    String apiId = object.getString("id");
+//                      checks if its in the db already and returns if it's saved
+                    Boolean saved = checkIfInDb(apiId);
+
+                    eventList.add(new Event(name,startDate,tkUrl,minPrice,maxPrice,promoImageUrl,saved, apiId));
                 }//end of loop through events
 
 

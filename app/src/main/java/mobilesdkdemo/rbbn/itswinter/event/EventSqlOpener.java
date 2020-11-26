@@ -17,6 +17,7 @@ public class EventSqlOpener extends SQLiteOpenHelper {
     public final static String EVENT_COL_PROMO_IMAGE = "PROMO_IMAGE";
     public final static String EVENT_COL_SAVED = "SAVED";
     public final static String EVENT_COL_ID = "id";
+    public final static String EVENT_COL_APIID = "APIID";
 
     public EventSqlOpener(Context ctx){
         super(ctx, DATABASE_NAME, null, VERSION_NUM);
@@ -31,7 +32,8 @@ public class EventSqlOpener extends SQLiteOpenHelper {
                 + EVENT_COL_PRICE_MIN  + " text,"
                 + EVENT_COL_PRICE_MAX + " text,"
                 + EVENT_COL_PROMO_IMAGE + " text,"
-                + EVENT_COL_SAVED + " boolean);");  // add or remove columns
+                + EVENT_COL_SAVED + " boolean, "
+                + EVENT_COL_APIID + " String );");  // add or remove columns
     }
 
     @Override
