@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -34,6 +35,9 @@ import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 
+import static mobilesdkdemo.rbbn.itswinter.event.EventSqlOpener.EVENT_COL_ID;
+import static mobilesdkdemo.rbbn.itswinter.event.EventSqlOpener.EVENT_TABLE_NAME;
+
 public class EventResults extends AppCompatActivity {
 
     private ArrayList<Event> eventList = new ArrayList();
@@ -43,12 +47,16 @@ public class EventResults extends AppCompatActivity {
     private EventListAdapter eventAdapter;
     private ProgressBar progressBar;
 
+    private SQLiteDatabase db;
+    private EventSqlOpener dbOpener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_results);
 
+        dbOpener = new EventSqlOpener(this);
+        db = dbOpener.getWritableDatabase();
 
         resultList = findViewById(R.id.e_searchReturns);
         resultList.setAdapter(eventAdapter = new EventListAdapter());
@@ -79,17 +87,55 @@ public class EventResults extends AppCompatActivity {
             Event event = eventList.get(pos);
 
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-            alertBuilder.setTitle(getString(R.string.e_alertTitleString))
-                    .setMessage(getString(R.string.e_alertMessageString))
-                    .setPositiveButton(getString(R.string.e_yesString),(click,args)->{
-//                    TODO: Finish this bish
-                    })
-                    .setNegativeButton()
-                    .create().show();
+            if(event.isSaved()) {
+                alertBuilder.setTitle(getString(R.string.e_alertTitleTrueString))
+                        .setMessage(getString(R.string.e_alertMessageTrueString))
+                        .setPositiveButton(getString(R.string.e_yesString), (click, args) -> {
+                            event.setSaved(false);
+                            removeFromDb(event);
+                        })
+                        .setNegativeButton(getString(R.string.e_noString), (click, args)->{ return; })
+                        .create().show();
+            }else{
+                alertBuilder.setTitle(getString(R.string.e_alertTitleFalseString))
+                        .setMessage(getString(R.string.e_alertMessageFalseString))
+                        .setPositiveButton(getString(R.string.e_yesString), (click, args) -> {
+                            event.setSaved(true);
+                            saveToDb(event);
+                        })
+                        .setNegativeButton(getString(R.string.e_noString), (click, args)->{ return; })
+                        .create().show();
+            }
+            return true;
         });
 
     }
 
+    private void saveToDb(Event event){
+
+        String name = event.getName();
+        String date = event.getStartDate();
+        Double min = event.getPriceMin();
+        Double max = event.getPriceMax();
+        String url = event.getTkUrl();
+
+        ContentValues cValues = new ContentValues();
+        cValues.put(EventSqlOpener.EVENT_COL_NAME, name );
+        cValues.put(EventSqlOpener.EVENT_COL_START_DATE, date);
+        cValues.put(EventSqlOpener.EVENT_COL_PRICE_MIN, String.valueOf(min));
+        cValues.put(EventSqlOpener.EVENT_COL_PRICE_MAX, String.valueOf(max));
+        cValues.put(EventSqlOpener.EVENT_COL_TKURL, url);
+        //TODO: Figure out how to store image in db
+        //store image link and grab it from URL in this screen? Would also reduce inital search speed
+//                cValues.put(EventSqlOpener.EVENT_COL_PROMO_IMAGE, );
+        cValues.put(EventSqlOpener.EVENT_COL_SAVED, true);
+        Long id = db.insert(EVENT_TABLE_NAME,null, cValues);
+        event.setId(id);
+    }
+
+    private void removeFromDb(Event event){
+        db.delete(EVENT_TABLE_NAME,EVENT_COL_ID+"=?",new String[]{Long.toString(event.getId())});
+    }
 
 
 

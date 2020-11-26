@@ -44,6 +44,12 @@
     <string name="e_saveEventString">Save this Event</string>
     <string name="e_revertString">Revert save?</string>
     <string name="e_removeString">Revert</string>
+    <string name="e_alertTitleTrueString">Unsave?</string>
+    <string name="e_alertMessageFalseString">Would you like to save this event?</string>
+    <string name="e_yesString">Yes</string>
+    <string name="e_noString">No</string>
+    <string name="e_alertMessageTrueString">Would you like to unsave this event</string>
+    <string name="e_alertTitleFalseString">Save?</string>
 
 
 </resources>
