@@ -20,7 +20,7 @@ public class EventHomeActivity extends AppCompatActivity {
 //    TODO: be able to click event link, take to browser (alert dialog)
 //    TODO: add favorites remove (snackbar with revert option)
 //    TODO: fragment functionality
-//    TODO: add no results notification
+//    TODO: add no results notification (toast)
 
 
 

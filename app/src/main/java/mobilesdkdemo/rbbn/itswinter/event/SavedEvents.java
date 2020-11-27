@@ -1,5 +1,6 @@
 package mobilesdkdemo.rbbn.itswinter.event;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -18,6 +19,9 @@ import java.util.ArrayList;
 
 import mobilesdkdemo.rbbn.itswinter.R;
 
+import static mobilesdkdemo.rbbn.itswinter.event.EventSqlOpener.EVENT_COL_ID;
+import static mobilesdkdemo.rbbn.itswinter.event.EventSqlOpener.EVENT_TABLE_NAME;
+
 public class SavedEvents extends AppCompatActivity {
 
     ArrayList<Event> savedEvents = new ArrayList<>();
@@ -32,6 +36,9 @@ public class SavedEvents extends AppCompatActivity {
 
         savedList = findViewById(R.id.e_savedList);
         savedList.setAdapter(eventAdapter = new EventListAdapter());
+
+        savedEvents.clear();
+        eventAdapter.notifyDataSetChanged();
 
         loadFromDb();
 
@@ -51,6 +58,28 @@ public class SavedEvents extends AppCompatActivity {
             startActivity(goToDetailsPage);
         });
 
+        savedList.setOnItemLongClickListener((p,b,pos,id)->{
+            Event event = savedEvents.get(pos);
+
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+
+                alertBuilder.setTitle(getString(R.string.e_alertTitleTrueString))
+                        .setMessage(getString(R.string.e_alertMessageTrueString))
+                        .setPositiveButton(getString(R.string.e_yesString), (click, args) -> {
+                            event.setSaved(false);
+                            EventResults.e_removeFav(event);
+                            removeFromDb(event);
+                            savedEvents.remove(event);
+                            eventAdapter.notifyDataSetChanged();
+                        })
+                        .setNegativeButton(getString(R.string.e_noString), (click, args)->{ return; })
+                        .create().show();
+            return true;
+        });
+    }
+
+    private void removeFromDb(Event event){
+        db.delete(EVENT_TABLE_NAME,EVENT_COL_ID+"=?",new String[]{Long.toString(event.getId())});
     }
 
     private void loadFromDb() {

@@ -61,6 +61,9 @@ public class EventResults extends AppCompatActivity {
         resultList = findViewById(R.id.e_searchReturns);
         resultList.setAdapter(eventAdapter = new EventListAdapter());
 
+        eventList.clear();
+        eventAdapter.notifyDataSetChanged();
+
         Intent searchTerms = getIntent();
 
         String city = searchTerms.getStringExtra("city").toLowerCase();
@@ -93,6 +96,7 @@ public class EventResults extends AppCompatActivity {
                         .setMessage(getString(R.string.e_alertMessageTrueString))
                         .setPositiveButton(getString(R.string.e_yesString), (click, args) -> {
                             event.setSaved(false);
+                            System.out.println("click"+event.getId());
                             removeFromDb(event);
                         })
                         .setNegativeButton(getString(R.string.e_noString), (click, args)->{ return; })
@@ -137,6 +141,14 @@ public class EventResults extends AppCompatActivity {
 
     private void removeFromDb(Event event){
         db.delete(EVENT_TABLE_NAME,EVENT_COL_ID+"=?",new String[]{Long.toString(event.getId())});
+    }
+
+    public static void e_removeFav(Event event){
+        for(int i = 0; i > eventList.size(); i++){
+            if(event.getApiId().equals(eventList.get(i).getApiId())){
+                eventList.get(i).setSaved(false);
+            }
+        }
     }
 
     //    launches EventQuery
