@@ -149,16 +149,6 @@ public class EventResults extends AppCompatActivity {
         query.execute("https://app.ticketmaster.com/discovery/v2/events.json?apikey="+apiKey+"&city="+citySearchTerm+"&"+radiusSearchTerm+"");
     }
 
-    public static ArrayList<Event> e_getSavedEvents(){
-        ArrayList<Event> savedEvents = new ArrayList<>();
-
-        for(int i = 0; i > eventList.size(); i++){
-            if(eventList.get(i).isSaved()){
-                savedEvents.add(eventList.get(i));
-            }
-        }
-        return savedEvents;
-    }
 
     private boolean checkIfInDb(String apiId){
         EventSqlOpener dbOpener = new EventSqlOpener(this);
@@ -171,8 +161,6 @@ public class EventResults extends AppCompatActivity {
         int savedColumn = results.getColumnIndex(EventSqlOpener.EVENT_COL_SAVED);
 
         while(results.moveToNext()){
-            String a = results.getString(apiIdColumn);
-            System.out.println(a);
             if(results.getString(apiIdColumn).equals(apiId)){
                 return results.getInt(savedColumn) > 0;
             }

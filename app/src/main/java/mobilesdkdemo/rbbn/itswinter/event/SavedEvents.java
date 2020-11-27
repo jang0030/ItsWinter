@@ -3,6 +3,8 @@ package mobilesdkdemo.rbbn.itswinter.event;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ public class SavedEvents extends AppCompatActivity {
     ArrayList<Event> savedEvents = new ArrayList<>();
     private ListView savedList;
     private EventListAdapter eventAdapter;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +31,19 @@ public class SavedEvents extends AppCompatActivity {
 
         savedList = findViewById(R.id.e_savedList);
         savedList.setAdapter(eventAdapter = new EventListAdapter());
-        savedEvents = EventResults.e_getSavedEvents();
-
-        eventAdapter.notifyDataSetChanged();
 
 
+        EventSqlOpener dbOpener = new EventSqlOpener(this);
+        db = dbOpener.getReadableDatabase();
+
+        String [] columns = {EventSqlOpener.EVENT_COL_NAME};
+        Cursor results = db.query(false, EventSqlOpener.EVENT_TABLE_NAME, columns, null, null, null, null, null, null);
+
+        int nameColumn = results.getColumnIndex(EventSqlOpener.EVENT_COL_NAME);
+
+        while(results.moveToNext()){
+//            TODO: GRAB ALL THE DB INFOR AND ADD IT TO THE LIST
+        }
     }
 
 
