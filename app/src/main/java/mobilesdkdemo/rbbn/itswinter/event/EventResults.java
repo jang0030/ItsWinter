@@ -21,6 +21,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -69,6 +70,9 @@ public class EventResults extends AppCompatActivity {
         String city = searchTerms.getStringExtra("city").toLowerCase();
         search(city,searchTerms.getStringExtra("radius"));
 
+        if(eventList.size() == 0){
+            Toast.makeText(this, this.getString(R.string.e_searchErrorString), Toast.LENGTH_LONG).show();
+        }
 
 
         resultList.setOnItemClickListener((p,b,pos,id)->{
@@ -158,6 +162,7 @@ public class EventResults extends AppCompatActivity {
         /*test link
             https://app.ticketmaster.com/discovery/v2/events.json?apikey=KiOshiJsVO1WxmGWXYxpwy4Yxd7Cu6r1&city=ottawa&radius=100
         */
+
         query.execute("https://app.ticketmaster.com/discovery/v2/events.json?apikey="+apiKey+"&city="+citySearchTerm+"&"+radiusSearchTerm+"");
     }
 
@@ -189,7 +194,6 @@ public class EventResults extends AppCompatActivity {
         }
         return true;
     }
-
 
     private class EventQuery extends AsyncTask<String,Integer,String> {
 

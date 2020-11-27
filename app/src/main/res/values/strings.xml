@@ -51,6 +51,7 @@
     <string name="e_alertMessageTrueString">Would you like to unsave this event</string>
     <string name="e_alertTitleFalseString">Save?</string>
     <string name="e_savedButtonString">Saved</string>
+    <string name="e_searchErrorString">There has been an error, please try again</string>
 
 
 </resources>
