@@ -50,6 +50,7 @@
     <string name="e_noString">No</string>
     <string name="e_alertMessageTrueString">Would you like to unsave this event</string>
     <string name="e_alertTitleFalseString">Save?</string>
+    <string name="e_savedButtonString">Saved</string>
 
 
 </resources>

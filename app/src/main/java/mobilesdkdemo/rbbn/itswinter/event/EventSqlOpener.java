@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class EventSqlOpener extends SQLiteOpenHelper {
 
     protected final static String DATABASE_NAME = "EventsSavedDb";
-    protected final static int VERSION_NUM = 1;
+    protected final static int VERSION_NUM = 2;
     public final static String EVENT_TABLE_NAME = "EVENTS";
     public final static String EVENT_COL_NAME = "NAME";
     public final static String EVENT_COL_START_DATE = "START_DATE";

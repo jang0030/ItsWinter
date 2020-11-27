@@ -66,7 +66,7 @@ public class EventResults extends AppCompatActivity {
         String city = searchTerms.getStringExtra("city").toLowerCase();
         search(city,searchTerms.getStringExtra("radius"));
 
-        eventList.clear();
+
 
         resultList.setOnItemClickListener((p,b,pos,id)->{
             Bundle dataToPass = new Bundle();
@@ -120,6 +120,7 @@ public class EventResults extends AppCompatActivity {
         Double max = event.getPriceMax();
         String url = event.getTkUrl();
         String promoImage = event.getPromoImage();
+        String apiId = event.getApiId();
 
         ContentValues cValues = new ContentValues();
         cValues.put(EventSqlOpener.EVENT_COL_NAME, name );
@@ -129,6 +130,7 @@ public class EventResults extends AppCompatActivity {
         cValues.put(EventSqlOpener.EVENT_COL_TKURL, url);
         cValues.put(EventSqlOpener.EVENT_COL_PROMO_IMAGE, promoImage);
         cValues.put(EventSqlOpener.EVENT_COL_SAVED, true);
+        cValues.put(EventSqlOpener.EVENT_COL_APIID, apiId);
         Long id = db.insert(EVENT_TABLE_NAME,null, cValues);
         event.setId(id);
     }
@@ -169,13 +171,25 @@ public class EventResults extends AppCompatActivity {
         int savedColumn = results.getColumnIndex(EventSqlOpener.EVENT_COL_SAVED);
 
         while(results.moveToNext()){
+            String a = results.getString(apiIdColumn);
+            System.out.println(a);
             if(results.getString(apiIdColumn).equals(apiId)){
                 return results.getInt(savedColumn) > 0;
             }
         }
-
         return false;
     }
+
+//    checks to see if the event is already in the list
+    private boolean checkIfInList(String apiId){
+        for(int i = 0;i > eventList.size(); i++){
+            if(eventList.get(i).getApiId().equals(apiId)){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     private class EventQuery extends AsyncTask<String,Integer,String> {
 
@@ -248,7 +262,10 @@ public class EventResults extends AppCompatActivity {
 //                      checks if its in the db already and returns if it's saved
                     Boolean saved = checkIfInDb(apiId);
 
-                    eventList.add(new Event(name,startDate,tkUrl,minPrice,maxPrice,promoImageUrl,saved, apiId));
+//                    will only add to the list if not already in it
+                    if(checkIfInList(apiId)) {
+                        eventList.add(new Event(name, startDate, tkUrl, minPrice, maxPrice, promoImageUrl, saved, apiId));
+                    }
                 }//end of loop through events
 
 

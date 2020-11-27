@@ -39,6 +39,8 @@ public class EventHomeActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         Button searchButton = findViewById(R.id.e_searchButton);
+        Button savedButton = findViewById(R.id.e_savedButton);
+
         city = findViewById(R.id.e_citySearch);
         radius = findViewById(R.id.e_radiusSearch);
         prefs = getSharedPreferences("e_searchPrefs", Context.MODE_PRIVATE);
@@ -57,8 +59,11 @@ public class EventHomeActivity extends AppCompatActivity {
                 goToResultsScreen.putExtra("radius",radiusString);
                 EventHomeActivity.this.startActivity(goToResultsScreen);
             }
+        });
 
-
+        savedButton.setOnClickListener(x->{
+            Intent goToSavedScreen = new Intent(EventHomeActivity.this, SavedEvents.class);
+            EventHomeActivity.this.startActivity(goToSavedScreen);
         });
     }
 

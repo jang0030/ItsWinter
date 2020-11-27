@@ -26,12 +26,15 @@ public class SavedEvents extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_events);
 
-        savedEvents = EventResults.e_getSavedEvents();
         savedList = findViewById(R.id.e_savedList);
         savedList.setAdapter(eventAdapter = new EventListAdapter());
+        savedEvents = EventResults.e_getSavedEvents();
+
+        eventAdapter.notifyDataSetChanged();
 
 
     }
+
 
     //    handles adding the name of the event to the ListView
     private class EventListAdapter extends BaseAdapter {
