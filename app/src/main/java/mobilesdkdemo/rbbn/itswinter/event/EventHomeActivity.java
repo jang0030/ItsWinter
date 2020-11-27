@@ -18,8 +18,6 @@ import mobilesdkdemo.rbbn.itswinter.R;
 public class EventHomeActivity extends AppCompatActivity {
 
 //    TODO: be able to click event link, take to browser (alert dialog)
-//    TODO: add favorites screen
-//    TODO: add favorite feature for event (save to database)
 //    TODO: add favorites remove (snackbar with revert option)
 //    TODO: fragment functionality
 //    TODO: add no results notification
