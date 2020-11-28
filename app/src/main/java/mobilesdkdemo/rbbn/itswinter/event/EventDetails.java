@@ -2,6 +2,7 @@ package mobilesdkdemo.rbbn.itswinter.event;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,8 +66,16 @@ public class EventDetails extends AppCompatActivity {
 
 
         eventGoToSiteBtn.setOnClickListener((a)->{
-            //TODO: alert dialogue
-            //TODO: open browser with link
+
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+            alertBuilder.setTitle(getString(R.string.e_goToSiteAlertTitle))
+                    .setMessage(getString(R.string.e_goToSiteAlertMessage))
+                    .setPositiveButton(getString(R.string.e_yesString),(click, args)->{
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(dataToPass.getString("url")));
+                        startActivity(browserIntent);
+                    })
+                    .setNegativeButton(getString(R.string.e_noString),(click,args)->{return;})
+                    .create().show();
         });
     }
 

@@ -70,11 +70,6 @@ public class EventResults extends AppCompatActivity {
         String city = searchTerms.getStringExtra("city").toLowerCase();
         search(city,searchTerms.getStringExtra("radius"));
 
-        if(eventList.size() == 0){
-            Toast.makeText(this, this.getString(R.string.e_searchErrorString), Toast.LENGTH_LONG).show();
-        }
-
-
         resultList.setOnItemClickListener((p,b,pos,id)->{
             Bundle dataToPass = new Bundle();
             dataToPass.putString("name",eventList.get(pos).getName());
@@ -118,6 +113,12 @@ public class EventResults extends AppCompatActivity {
             return true;
         });
 
+    }
+
+    private void showErrorToast(){
+        if(eventList.size() == 0){
+            Toast.makeText(this, this.getString(R.string.e_searchErrorString), Toast.LENGTH_LONG).show();
+        }
     }
 
     private void saveToDb(Event event){
@@ -291,6 +292,7 @@ public class EventResults extends AppCompatActivity {
         protected void onPostExecute(String s){
             progressBar.setVisibility(View.INVISIBLE);
             eventAdapter.notifyDataSetChanged();
+            showErrorToast();
         }
     }
 

@@ -52,6 +52,8 @@
     <string name="e_alertTitleFalseString">Save?</string>
     <string name="e_savedButtonString">Saved</string>
     <string name="e_searchErrorString">There has been an error, please try again</string>
+    <string name="e_goToSiteAlertTitle">Open Browser?</string>
+    <string name="e_goToSiteAlertMessage">Would you like to open Ticket Master.com?</string>
 
 
 </resources>

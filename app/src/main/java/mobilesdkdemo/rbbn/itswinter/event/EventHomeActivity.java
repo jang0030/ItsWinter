@@ -20,9 +20,6 @@ public class EventHomeActivity extends AppCompatActivity {
 //    TODO: be able to click event link, take to browser (alert dialog)
 //    TODO: snackbar
 //    TODO: fragment functionality
-//    TODO: add no results notification (toast)
-
-
 
     private SharedPreferences prefs;
     private EditText city;
