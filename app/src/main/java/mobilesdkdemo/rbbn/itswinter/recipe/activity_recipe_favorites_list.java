@@ -1,6 +1,7 @@
 package mobilesdkdemo.rbbn.itswinter.recipe;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -41,39 +43,47 @@ public class activity_recipe_favorites_list extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_favorites_list);
 
-        ActionBar actionBar=getSupportActionBar();
-        String favoritesTitle = getString(R.string.favoritesTitle);
-        actionBar.setTitle(favoritesTitle);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Saved Favorites");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        ListView favoritesListView=findViewById(R.id.favorites_list_view);
+        ListView favoritesListView = findViewById(R.id.favorites_list_view);
 
         //we use favorites_list_adapter to connect recipe list to ListView
-        FavoriteListAdapter favoriteListAdapter=new FavoriteListAdapter();
+        FavoriteListAdapter favoriteListAdapter = new FavoriteListAdapter();
         favoritesListView.setAdapter(favoriteListAdapter);
 
         // use JSON to get favorites
-        SharedPreferences prefs=getSharedPreferences("FavoriteFile", Context.MODE_PRIVATE);;
+        SharedPreferences prefs = getSharedPreferences("FavoriteFile", Context.MODE_PRIVATE);
+        ;
         SharedPreferences.Editor editor = prefs.edit();
         Gson gson = new Gson();
 
         String json = prefs.getString("FAVORITES", "");
-        Type type = new TypeToken<ArrayList<RecipeHomeActivity.Recipe>>(){}.getType();
+        Type type = new TypeToken<ArrayList<RecipeHomeActivity.Recipe>>() {}.getType();
         favoriteListAdapter.favorites = gson.fromJson(json, type);
         favoriteListAdapter.notifyDataSetChanged();
 
         // open detail page when clicking on favorite
-        favoritesListView.setOnItemClickListener(( parent, view, position,id) -> {
-            Intent nextPage=new Intent(activity_recipe_favorites_list.this, activity_recipe_page.class);
+        favoritesListView.setOnItemClickListener((parent, view, position, id) -> {
+            Intent nextPage = new Intent(activity_recipe_favorites_list.this, activity_recipe_page.class);
             nextPage.putExtra("recipe_name", favoriteListAdapter.favorites.get(position).getRecipe_title());
-            nextPage.putExtra("ingredients",favoriteListAdapter.favorites.get(position).getRecipe_ingredients() );
+            nextPage.putExtra("ingredients", favoriteListAdapter.favorites.get(position).getRecipe_ingredients());
             nextPage.putExtra("url", favoriteListAdapter.favorites.get(position).getRecipe_url());
             startActivity(nextPage);
         });
-    }
 
+        //Help button
+        Button help1 = findViewById(R.id.recipe_help2);
+        help1.setOnClickListener(bt -> {            //show alert
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Help");
+            alertDialogBuilder.setMessage("This is a list of your favorite recipes.");
+            alertDialogBuilder.create().show();
+        });
+    }
     /**
-     * This method connects the ListView to the Java code using the BaseAdapter class
+     * This class connects the ListView to the Java code using the BaseAdapter class
      */
     class FavoriteListAdapter extends BaseAdapter {
         ArrayList<RecipeHomeActivity.Recipe> favorites = new ArrayList<RecipeHomeActivity.Recipe>();
