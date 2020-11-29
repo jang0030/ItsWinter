@@ -28,6 +28,7 @@ public class EventHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_home);
+
         ActionBar actionBar=getSupportActionBar();
         actionBar.setTitle("Event Schedule");
         actionBar.setDisplayHomeAsUpEnabled(true);
