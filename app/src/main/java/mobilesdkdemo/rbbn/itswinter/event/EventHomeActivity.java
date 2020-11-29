@@ -33,6 +33,8 @@ public class EventHomeActivity extends AppCompatActivity {
         actionBar.setTitle("Event Schedule");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        boolean isTablet = findViewById(R.id.e_fragFrame) != null;
+
         Button searchButton = findViewById(R.id.e_searchButton);
         Button savedButton = findViewById(R.id.e_savedButton);
 
@@ -45,14 +47,26 @@ public class EventHomeActivity extends AppCompatActivity {
 
         searchButton.setOnClickListener(x->{
             String radiusString = radius.getText().toString();
+            Bundle dataToPass = new Bundle();
+
+            dataToPass.putString("city", city.getText().toString());
+            dataToPass.putString("radius", radiusString);
 
             if(Integer.parseInt(radiusString) < 100){
                 Toast.makeText(this,this.getString(R.string.e_radiusErrorString),Toast.LENGTH_LONG).show();
             }else{
-                Intent goToResultsScreen = new Intent(EventHomeActivity.this, EventResults.class);
-                goToResultsScreen.putExtra("city",city.getText().toString());
-                goToResultsScreen.putExtra("radius",radiusString);
-                EventHomeActivity.this.startActivity(goToResultsScreen);
+//                if(isTablet){
+//                    EventResultsFragment eventResultsFragment = new EventResultsFragment();
+//                    eventResultsFragment.setArguments(dataToPass);
+//                    getSupportFragmentManager()
+//                            .beginTransaction()
+//                            .replace(R.id.e_fragFrame, eventResultsFragment)
+//                            .commit();
+//                }else {
+                    Intent goToResultsScreen = new Intent(EventHomeActivity.this, EventResults.class);
+                    goToResultsScreen.putExtras(dataToPass);
+                    EventHomeActivity.this.startActivity(goToResultsScreen);
+//                }
             }
         });
 

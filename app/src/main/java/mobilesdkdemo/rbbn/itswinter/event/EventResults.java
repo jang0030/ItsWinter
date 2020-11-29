@@ -63,6 +63,7 @@ public class EventResults extends AppCompatActivity {
         actionBar.setTitle("Event Schedule");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        
         dbOpener = new EventSqlOpener(this);
         db = dbOpener.getWritableDatabase();
 
@@ -72,10 +73,11 @@ public class EventResults extends AppCompatActivity {
         eventList.clear();
         eventAdapter.notifyDataSetChanged();
 
-        Intent searchTerms = getIntent();
 
-        String city = searchTerms.getStringExtra("city").toLowerCase();
-        search(city,searchTerms.getStringExtra("radius"));
+        Bundle searchTerms = getIntent().getExtras();
+
+        String city = searchTerms.getString("city").toLowerCase();
+        search(city,searchTerms.getString("radius"));
 
         resultList.setOnItemClickListener((p,b,pos,id)->{
             Bundle dataToPass = new Bundle();
