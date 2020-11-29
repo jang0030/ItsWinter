@@ -17,7 +17,7 @@ import mobilesdkdemo.rbbn.itswinter.R;
 
 public class EventHomeActivity extends AppCompatActivity {
 
-//    TODO: snackbar
+
 //    TODO: fragment functionality
 
     private SharedPreferences prefs;

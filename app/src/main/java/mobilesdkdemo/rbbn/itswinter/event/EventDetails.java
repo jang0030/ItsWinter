@@ -20,6 +20,8 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.FileOutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -34,6 +36,7 @@ public class EventDetails extends AppCompatActivity {
     private ImageView eventPromoImage;
     private CheckBox eventSaveCb;
     private boolean saved;
+    private String apiId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,15 +75,20 @@ public class EventDetails extends AppCompatActivity {
         setCheckBox();
 
         eventSaveCb.setOnCheckedChangeListener((a,args)->{
-            String apiId = dataToPass.getString("apiId");
+            apiId = dataToPass.getString("apiId");
             System.out.println(apiId);
+
             if(saved){
                 EventResults.e_removeFav(apiId);
+                Snackbar.make(eventSaveCb, getString(R.string.e_snackBarTrueString), Snackbar.LENGTH_SHORT).show();
             }else{
                 EventResults.e_addFav(apiId);
+                Snackbar.make(eventSaveCb, getString(R.string.e_snackBarFalseString), Snackbar.LENGTH_SHORT).show();
             }
             saved = !saved;
+
             setCheckBox();
+
         });
 
 

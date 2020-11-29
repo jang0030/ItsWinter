@@ -1,5 +1,7 @@
 package mobilesdkdemo.rbbn.itswinter.event;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -33,6 +36,10 @@ public class SavedEvents extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_events);
+
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setTitle("Event Schedule");
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         savedList = findViewById(R.id.e_savedList);
         savedList.setAdapter(eventAdapter = new EventListAdapter());
@@ -146,5 +153,17 @@ public class SavedEvents extends AppCompatActivity {
             }
             return newView;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                SavedEvents.this.finish();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -57,6 +57,9 @@
     <string name="e_goToTicketMasterWebsiteString">Go to Ticket Master.com</string>
     <string name="e_saveCbHintTrue">Unsave</string>
     <string name="e_saveCbHintFalse">Save</string>
+    <string name="e_undoString">Undo</string>
+    <string name="e_snackBarTrueString">This event has been unsaved</string>
+    <string name="e_snackBarFalseString">This event has been saved</string>
 
 
 </resources>
