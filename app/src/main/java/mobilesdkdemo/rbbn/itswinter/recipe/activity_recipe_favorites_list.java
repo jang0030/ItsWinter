@@ -44,7 +44,7 @@ public class activity_recipe_favorites_list extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_favorites_list);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Saved Favorites");
+        actionBar.setTitle(R.string.r_title2);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         ListView favoritesListView = findViewById(R.id.favorites_list_view);
@@ -77,8 +77,8 @@ public class activity_recipe_favorites_list extends AppCompatActivity {
         Button help1 = findViewById(R.id.recipe_help2);
         help1.setOnClickListener(bt -> {            //show alert
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle("Help");
-            alertDialogBuilder.setMessage("This is a list of your favorite recipes.");
+            alertDialogBuilder.setTitle(R.string.help);
+            alertDialogBuilder.setMessage(R.string.r_help_message2);
             alertDialogBuilder.create().show();
         });
     }

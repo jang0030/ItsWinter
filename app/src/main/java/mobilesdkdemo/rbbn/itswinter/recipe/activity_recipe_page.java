@@ -41,7 +41,7 @@ public class activity_recipe_page extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_page);
 
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("Recipe Detail Page");
+        actionBar.setTitle(R.string.r_title1);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         TextView recipe_name_page=findViewById(R.id.recipe_name_page);
@@ -81,8 +81,8 @@ public class activity_recipe_page extends AppCompatActivity {
 
             //show alert
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle("Recipe");
-            alertDialogBuilder.setMessage("Favorite Saved");
+            alertDialogBuilder.setTitle(R.string.r_alert1);
+            alertDialogBuilder.setMessage(R.string.r_alert_message1);
             alertDialogBuilder.create().show();
         });
 
@@ -105,7 +105,7 @@ public class activity_recipe_page extends AppCompatActivity {
             editor.putString("FAVORITES", json);
             editor.commit();
 
-            Toast toast = Toast.makeText(getApplicationContext(), "Recipe deleted from Favorites.", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), R.string.r_delete_message1, Toast.LENGTH_SHORT);
             toast.show();
         });
 
@@ -113,8 +113,8 @@ public class activity_recipe_page extends AppCompatActivity {
         Button help=findViewById(R.id.recipe_help3);
         help.setOnClickListener(bt -> {            //show alert
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle("Help");
-            alertDialogBuilder.setMessage("Click on Save to Favorites to add to the Saved Favorites list and Delete from Favorites to remove.");
+            alertDialogBuilder.setTitle(R.string.help);
+            alertDialogBuilder.setMessage(R.string.r_help_message1);
             alertDialogBuilder.create().show();
         });
     }
