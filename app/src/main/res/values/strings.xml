@@ -81,5 +81,13 @@
     <string name="r_save_to_favorites">SAVE TO FAVORITES</string>
     <string name="r_textview">TextView</string>
     <string name="r_delete_from_favorites">Delete from Favorites</string>
+    <string name="r_title1">Recipe Detail Page</string>
+    <string name="r_help_message1">Click on Save to Favorites to add to the Saved Favorites list and Delete from Favorites to remove.</string>
+    <string name="r_title2">Saved Favorites</string>
+    <string name="r_help_message2">This is a list of your favorite recipes.</string>
+    <string name="r_alert1">Recipe</string>
+    <string name="r_alert_message1">Favorite Saved</string>
+    <string name="r_delete_message1">Recipe deleted from Favorites.</string>
+    <string name="r_help_message3">Click search button to search a recipe and Star to look at your favorite recipes.</string>
 
 </resources>

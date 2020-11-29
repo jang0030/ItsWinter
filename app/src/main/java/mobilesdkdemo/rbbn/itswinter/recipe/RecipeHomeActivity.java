@@ -159,8 +159,8 @@ public class RecipeHomeActivity extends AppCompatActivity {
         Button help1=findViewById(R.id.recipe_help1);
         help1.setOnClickListener(bt -> {            //show alert
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle("Help");
-            alertDialogBuilder.setMessage("Click search button to search a recipe and Star to look at your favorite recipes.");
+            alertDialogBuilder.setTitle(R.string.help);
+            alertDialogBuilder.setMessage(R.string.r_help_message3);
             alertDialogBuilder.create().show();
         });
     }

@@ -81,7 +81,7 @@ public class DetailFragment extends Fragment {
             editor.putString("FAVORITES", json);
             editor.commit();
 
-            Toast toast = Toast.makeText(getContext().getApplicationContext(), "Recipe deleted from Favorites.", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getContext().getApplicationContext(), R.string.r_delete_message1, Toast.LENGTH_SHORT);
             toast.show();
         });
 
@@ -105,8 +105,8 @@ public class DetailFragment extends Fragment {
 
             //show alert
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-            alertDialogBuilder.setTitle("Recipe");
-            alertDialogBuilder.setMessage("Favorite Saved");
+            alertDialogBuilder.setTitle(R.string.alert1);
+            alertDialogBuilder.setMessage(R.string.r_alert_message1);
             alertDialogBuilder.create().show();
         });
 
