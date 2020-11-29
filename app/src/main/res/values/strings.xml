@@ -75,5 +75,11 @@
     <string name="alert1">Recipe</string>
     <string name="alert2">Favorite Saved</string>
     <string name="favoritesTitle">Saved Favorites</string>
+    <string name="r_favorites_list">Favorites List</string>
+    <string name="r_enter_recipe_keyword">Enter recipe keyword</string>
+    <string name="r_search">Search</string>
+    <string name="r_save_to_favorites">SAVE TO FAVORITES</string>
+    <string name="r_textview">TextView</string>
+    <string name="r_delete_from_favorites">Delete from Favorites</string>
 
 </resources>

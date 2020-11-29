@@ -47,6 +47,8 @@ public class RecipeHomeActivity extends AppCompatActivity {
     // we store the recipes here in this list
     public static ArrayList<Recipe> recipe_list = new ArrayList<Recipe>();
 
+    //we use recipe_list_adapter to connect recipe list to ListView
+    Recipe_List_Adapter recipe_list_adapter= new Recipe_List_Adapter();
     /**
      * Creates the main recipe home activity
      * @param savedInstanceState
@@ -67,9 +69,8 @@ public class RecipeHomeActivity extends AppCompatActivity {
         ListView recipe_ListView = findViewById(R.id.recipe_ListView);
         ProgressBar progressBar=findViewById(R.id.recipe_ProgressBar);
         progressBar.setVisibility(View.VISIBLE);
+        boolean isTablet = findViewById(R.id.recipe_frame) != null; //check if the FrameLayout is loaded
 
-        //we use recipe_list_adapter to connect recipe list to ListView
-        Recipe_List_Adapter recipe_list_adapter= new Recipe_List_Adapter();
         recipe_ListView.setAdapter(recipe_list_adapter);
         // refresh the listview
         recipe_list_adapter.notifyDataSetChanged();
@@ -84,19 +85,11 @@ public class RecipeHomeActivity extends AppCompatActivity {
             recipe_list.clear();
             // do the search in the background and the results go into recipe_list
             req.execute("http://www.recipepuppy.com/api/?q="+recipe_EditText.getText().toString()+"&p=3&format=xml");
-            // wait a second until the search is done
-            try {
-                Thread.sleep(1000); // wait 1000 milliseconds
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            recipe_list_adapter.notifyDataSetChanged(); //refresh the ListView results
         }
 
         // when you click the recipe search button, do the recipe search
         recipe_Button.setOnClickListener((View v) -> {
             RecipeQuery req= new RecipeQuery();
-
             String toast1 = getString(R.string.toast1);
 
             // if the search string is empty, show a Toast message
@@ -106,7 +99,7 @@ public class RecipeHomeActivity extends AppCompatActivity {
             } else {    //do the search
                 recipe_list.clear();
                 // do the search in the background and the results go into recipe_list
-                req.execute("http://www.recipepuppy.com/api/?q="+recipe_EditText.getText().toString()+"&p=3&format=xml");
+                req.execute("http://www.recipepuppy.com/api/?q=" + recipe_EditText.getText().toString() + "&p=3&format=xml");
 
                 // wait a couple of seconds until the search is done, while updating the progress bar
                 try {
@@ -121,10 +114,10 @@ public class RecipeHomeActivity extends AppCompatActivity {
                 recipe_list_adapter.notifyDataSetChanged(); //refresh the ListView results
 
                 String snackbar1 = getString(R.string.snackbar1);
-                
+
                 // if there are no results, show Snackbar message
-                if (recipe_list.size()==0) {
-                    Snackbar snackbar = Snackbar.make(v,snackbar1,Snackbar.LENGTH_SHORT);
+                if (recipe_list.size() == 0) {
+                    Snackbar snackbar = Snackbar.make(v, snackbar1, Snackbar.LENGTH_SHORT);
                     snackbar.show();
                 }
             }
@@ -132,11 +125,27 @@ public class RecipeHomeActivity extends AppCompatActivity {
 
         // When we click on a recipe name, show the recipe contents on activity_recipe_page
         recipe_ListView.setOnItemClickListener(( parent, view, position,id) -> {
-            Intent nextPage=new Intent(RecipeHomeActivity.this, activity_recipe_page.class);
-            nextPage.putExtra("recipe_name", recipe_list.get(position).getRecipe_title());
-            nextPage.putExtra("ingredients",recipe_list.get(position).getRecipe_ingredients() );
-            nextPage.putExtra("url", recipe_list.get(position).getRecipe_url());
-            startActivity(nextPage);
+            Log.i("LAB-G", String.valueOf(isTablet));
+
+            if (isTablet) {
+                DetailFragment aFragment = new DetailFragment(  );
+                Bundle b = new Bundle();
+                b.putString("recipe_name", recipe_list.get(position).getRecipe_title());
+                b.putString("ingredients", recipe_list.get(position).getRecipe_ingredients());
+                b.putString("url", recipe_list.get(position).getRecipe_url());
+                aFragment.setArguments(b);
+
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.recipe_frame, aFragment)
+                        . commit();
+            } else {
+                Intent nextPage = new Intent(RecipeHomeActivity.this, activity_recipe_page.class);
+                nextPage.putExtra("recipe_name", recipe_list.get(position).getRecipe_title());
+                nextPage.putExtra("ingredients", recipe_list.get(position).getRecipe_ingredients());
+                nextPage.putExtra("url", recipe_list.get(position).getRecipe_url());
+                startActivity(nextPage);
+            }
         });
 
         // Favorites button opens activity_recipe_favorites_list
@@ -144,6 +153,15 @@ public class RecipeHomeActivity extends AppCompatActivity {
         favoritesListButton.setOnClickListener(bt -> {
             Intent nextPage=new Intent(RecipeHomeActivity.this, activity_recipe_favorites_list.class);
             startActivity(nextPage);
+        });
+
+        //Help button
+        Button help1=findViewById(R.id.recipe_help1);
+        help1.setOnClickListener(bt -> {            //show alert
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Help");
+            alertDialogBuilder.setMessage("Click search button to search a recipe and Star to look at your favorite recipes.");
+            alertDialogBuilder.create().show();
         });
     }
 
@@ -227,6 +245,11 @@ public class RecipeHomeActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             return "";
+        }
+
+        public void onPostExecute(String s)
+        {
+            recipe_list_adapter.notifyDataSetChanged();
         }
     }
 
@@ -333,4 +356,5 @@ public class RecipeHomeActivity extends AppCompatActivity {
         }
     }
 }
+
 

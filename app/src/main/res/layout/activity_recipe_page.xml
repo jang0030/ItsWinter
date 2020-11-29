@@ -17,25 +17,37 @@
             android:id="@+id/recipe_name_page"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/textview" />
+            android:text="TextView" />
 
         <TextView
             android:id="@+id/recipe_ingredients_page"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/textview" />
+            android:text="TextView" />
 
         <TextView
             android:id="@+id/recipe_url_page"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/textview" />
+            android:text="TextView" />
 
         <Button
             android:id="@+id/favorite_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/save_to_favorites" />
+            android:text="SAVE TO FAVORITES" />
+
+        <Button
+            android:id="@+id/recipe_delete_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete from Favorites" />
+
+        <Button
+            android:id="@+id/recipe_help3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/help" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
