@@ -32,6 +32,8 @@ public class EventDetails extends AppCompatActivity {
     private Bundle dataToPass;
     private Bitmap promoImage;
     private ImageView eventPromoImage;
+    private CheckBox eventSaveCb;
+    private boolean saved;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,8 @@ public class EventDetails extends AppCompatActivity {
 
         Button eventGoToSiteBtn = findViewById(R.id.e_goToSiteBtn);
 
+        eventSaveCb = findViewById(R.id.e_saveCheckBox);
+
         eventPromoImage = findViewById(R.id.e_promoImage);
 
 
@@ -58,11 +62,26 @@ public class EventDetails extends AppCompatActivity {
         eventStartDate.setText(dataToPass.getString("startDate"));
         eventMinPrice.setText("Min price: "+String.valueOf(dataToPass.getDouble("priceMin")));
         eventMaxPrice.setText("Max price: "+String.valueOf(dataToPass.getDouble("priceMax")));
-        eventGoToSiteBtn.setText(dataToPass.getString("url"));
+        eventGoToSiteBtn.setText(getString(R.string.e_goToTicketMasterWebsiteString));
 
         ImageQuery query = new ImageQuery();
         query.execute(dataToPass.getString("promoImage"));
 
+        saved = dataToPass.getBoolean("saved");
+
+        setCheckBox();
+
+        eventSaveCb.setOnCheckedChangeListener((a,args)->{
+            String apiId = dataToPass.getString("apiId");
+            System.out.println(apiId);
+            if(saved){
+                EventResults.e_removeFav(apiId);
+            }else{
+                EventResults.e_addFav(apiId);
+            }
+            saved = !saved;
+            setCheckBox();
+        });
 
 
         eventGoToSiteBtn.setOnClickListener((a)->{
@@ -78,6 +97,18 @@ public class EventDetails extends AppCompatActivity {
                     .create().show();
         });
     }
+
+    private void setCheckBox(){
+        if(saved){
+            eventSaveCb.setChecked(true);
+            eventSaveCb.setHint(R.string.e_saveCbHintTrue);
+        }else{
+            eventSaveCb.setChecked(false);
+            eventSaveCb.setHint(R.string.e_saveCbHintFalse);
+        }
+    }
+
+
 
     private class ImageQuery extends AsyncTask<String,Integer,String> {
 

@@ -17,7 +17,6 @@ import mobilesdkdemo.rbbn.itswinter.R;
 
 public class EventHomeActivity extends AppCompatActivity {
 
-//    TODO: be able to click event link, take to browser (alert dialog)
 //    TODO: snackbar
 //    TODO: fragment functionality
 
@@ -85,6 +84,4 @@ public class EventHomeActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }

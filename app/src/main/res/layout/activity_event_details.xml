@@ -44,4 +44,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/e_goToSiteBtn"
         android:hint="@string/e_goToSiteBtnHint"/>
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/e_saveCheckBox"/>
 </LinearLayout>

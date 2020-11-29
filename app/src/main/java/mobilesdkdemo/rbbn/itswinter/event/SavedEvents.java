@@ -24,7 +24,7 @@ import static mobilesdkdemo.rbbn.itswinter.event.EventSqlOpener.EVENT_TABLE_NAME
 
 public class SavedEvents extends AppCompatActivity {
 
-    ArrayList<Event> savedEvents = new ArrayList<>();
+    private ArrayList<Event> savedEvents = new ArrayList<>();
     private ListView savedList;
     private EventListAdapter eventAdapter;
     private SQLiteDatabase db;
@@ -52,10 +52,14 @@ public class SavedEvents extends AppCompatActivity {
             dataToPass.putString("promoImage", String.valueOf(savedEvents.get(pos).getPromoImage()));
             dataToPass.putBoolean("saved",savedEvents.get(pos).isSaved());
             dataToPass.putLong("dbId",savedEvents.get(pos).getId());
+            dataToPass.putString("apiId",savedEvents.get(pos).getApiId());
 
             Intent goToDetailsPage = new Intent(SavedEvents.this, EventDetails.class);
             goToDetailsPage.putExtras(dataToPass);
             startActivity(goToDetailsPage);
+
+            savedEvents.clear();
+            eventAdapter.notifyDataSetChanged();
         });
 
         savedList.setOnItemLongClickListener((p,b,pos,id)->{
@@ -67,7 +71,7 @@ public class SavedEvents extends AppCompatActivity {
                         .setMessage(getString(R.string.e_alertMessageTrueString))
                         .setPositiveButton(getString(R.string.e_yesString), (click, args) -> {
                             event.setSaved(false);
-                            EventResults.e_removeFav(event);
+                            EventResults.e_removeFav(event.getApiId());
                             removeFromDb(event);
                             savedEvents.remove(event);
                             eventAdapter.notifyDataSetChanged();
@@ -89,6 +93,7 @@ public class SavedEvents extends AppCompatActivity {
         String [] columns = {EventSqlOpener.EVENT_COL_NAME,EventSqlOpener.EVENT_COL_START_DATE,EventSqlOpener.EVENT_COL_TKURL,
                 EventSqlOpener.EVENT_COL_PRICE_MIN,EventSqlOpener.EVENT_COL_PRICE_MAX,EventSqlOpener.EVENT_COL_PROMO_IMAGE,EventSqlOpener.EVENT_COL_SAVED,
                 EventSqlOpener.EVENT_COL_APIID, EventSqlOpener.EVENT_COL_ID};
+
         Cursor results = db.query(false, EventSqlOpener.EVENT_TABLE_NAME, columns, null, null, null, null, null, null);
 
         int nameColumn = results.getColumnIndex(EventSqlOpener.EVENT_COL_NAME);
@@ -102,7 +107,6 @@ public class SavedEvents extends AppCompatActivity {
         int dbIdColumn = results.getColumnIndex(EventSqlOpener.EVENT_COL_ID);
 
         while(results.moveToNext()){
-//            TODO: GRAB ALL THE DB INFOR AND ADD IT TO THE LIST
             String name = results.getString(nameColumn);
             String date = results.getString(dateColumn);
             String tkUrl = results.getString(tkUrlColumn);

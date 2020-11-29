@@ -48,7 +48,7 @@ public class EventResults extends AppCompatActivity {
     private EventListAdapter eventAdapter;
     private ProgressBar progressBar;
 
-    private SQLiteDatabase db;
+    private static SQLiteDatabase db;
     private EventSqlOpener dbOpener;
 
     @Override
@@ -80,6 +80,7 @@ public class EventResults extends AppCompatActivity {
             dataToPass.putString("promoImage", String.valueOf(eventList.get(pos).getPromoImage()));
             dataToPass.putBoolean("saved",eventList.get(pos).isSaved());
             dataToPass.putLong("dbId",eventList.get(pos).getId());
+            dataToPass.putString("apiId",eventList.get(pos).getApiId());
 
             Intent goToDetailsPage = new Intent(EventResults.this, EventDetails.class);
             goToDetailsPage.putExtras(dataToPass);
@@ -95,7 +96,6 @@ public class EventResults extends AppCompatActivity {
                         .setMessage(getString(R.string.e_alertMessageTrueString))
                         .setPositiveButton(getString(R.string.e_yesString), (click, args) -> {
                             event.setSaved(false);
-                            System.out.println("click"+event.getId());
                             removeFromDb(event);
                         })
                         .setNegativeButton(getString(R.string.e_noString), (click, args)->{ return; })
@@ -121,7 +121,7 @@ public class EventResults extends AppCompatActivity {
         }
     }
 
-    private void saveToDb(Event event){
+    private static void saveToDb(Event event){
 
         String name = event.getName();
         String date = event.getStartDate();
@@ -141,17 +141,37 @@ public class EventResults extends AppCompatActivity {
         cValues.put(EventSqlOpener.EVENT_COL_SAVED, true);
         cValues.put(EventSqlOpener.EVENT_COL_APIID, apiId);
         Long id = db.insert(EVENT_TABLE_NAME,null, cValues);
+        System.out.println(id);
         event.setId(id);
     }
 
-    private void removeFromDb(Event event){
+    private static void removeFromDb(Event event){
+        System.out.println(event.getId());
         db.delete(EVENT_TABLE_NAME,EVENT_COL_ID+"=?",new String[]{Long.toString(event.getId())});
     }
 
-    public static void e_removeFav(Event event){
-        for(int i = 0; i > eventList.size(); i++){
-            if(event.getApiId().equals(eventList.get(i).getApiId())){
+//    These two methods are for removing and adding favorites from other screens
+    public static void e_removeFav(String event){
+
+        for(int i = 0; i < eventList.size(); i++){
+            System.out.println(i);
+            System.out.println(event);
+            System.out.println(eventList.get(i).getApiId());
+
+            if(event.equals(eventList.get(i).getApiId())){
                 eventList.get(i).setSaved(false);
+                removeFromDb(eventList.get(i));
+                return;
+            }
+        }
+    }
+
+    public static void e_addFav(String event){
+        for(int i = 0; i < eventList.size(); i++){
+            if(event.equals(eventList.get(i).getApiId())){
+                eventList.get(i).setSaved(true);
+                saveToDb(eventList.get(i));
+                return;
             }
         }
     }
@@ -188,7 +208,7 @@ public class EventResults extends AppCompatActivity {
 
 //    checks to see if the event is already in the list
     private boolean checkIfInList(String apiId){
-        for(int i = 0;i > eventList.size(); i++){
+        for(int i = 0;i < eventList.size(); i++){
             if(eventList.get(i).getApiId().equals(apiId)){
                 return false;
             }
