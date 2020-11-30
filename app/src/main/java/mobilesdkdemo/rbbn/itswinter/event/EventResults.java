@@ -17,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -366,9 +367,21 @@ public class EventResults extends AppCompatActivity {
             case android.R.id.home:
                 EventResults.this.finish();
                 break;
+            case R.id.e_eventHomeMenu:
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                alertDialog.setTitle(getString(R.string.e_homeHelpMessageTitle))
+                        .setMessage(getString(R.string.e_ResultsHelpMessageBody))
+                        .setPositiveButton((R.string.e_yesString),(click,args)->{})
+                        .create().show();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_event_home_menu, menu);
+        return true;
     }
 }

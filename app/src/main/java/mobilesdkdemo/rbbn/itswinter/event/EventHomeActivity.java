@@ -2,18 +2,21 @@ package mobilesdkdemo.rbbn.itswinter.event;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import mobilesdkdemo.rbbn.itswinter.R;
+import mobilesdkdemo.rbbn.itswinter.covid.CovidHomeActivity;
 
 public class EventHomeActivity extends AppCompatActivity {
     /**EventHomeActivity.java
@@ -41,8 +44,6 @@ public class EventHomeActivity extends AppCompatActivity {
         actionBar.setTitle("Event Schedule");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        boolean isTablet = findViewById(R.id.e_fragFrame) != null;
-
 //        gets reference to elements in the view
         Button searchButton = findViewById(R.id.e_searchButton);
         Button savedButton = findViewById(R.id.e_savedButton);
@@ -65,14 +66,6 @@ public class EventHomeActivity extends AppCompatActivity {
             if(Integer.parseInt(radiusString) < 100){
                 Toast.makeText(this,this.getString(R.string.e_radiusErrorString),Toast.LENGTH_LONG).show();
             }else{
-//                if(isTablet){
-//                    EventResultsFragment eventResultsFragment = new EventResultsFragment();
-//                    eventResultsFragment.setArguments(dataToPass);
-//                    getSupportFragmentManager()
-//                            .beginTransaction()
-//                            .replace(R.id.e_fragFrame, eventResultsFragment)
-//                            .commit();
-//                }else {
                     Intent goToResultsScreen = new Intent(EventHomeActivity.this, EventResults.class);
                     goToResultsScreen.putExtras(dataToPass);
                     EventHomeActivity.this.startActivity(goToResultsScreen);
@@ -106,9 +99,23 @@ public class EventHomeActivity extends AppCompatActivity {
             case android.R.id.home:
                 EventHomeActivity.this.finish();
                 break;
+
+            case R.id.e_eventHomeMenu:
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                alertDialog.setTitle(getString(R.string.e_homeHelpMessageTitle))
+                        .setMessage(getString(R.string.e_homeHelpMessageBody))
+                        .setPositiveButton((R.string.e_yesString),(click,args)->{})
+                        .create().show();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_event_home_menu, menu);
+        return true;
     }
 }

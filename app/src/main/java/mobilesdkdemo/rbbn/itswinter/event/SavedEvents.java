@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -172,9 +173,22 @@ public class SavedEvents extends AppCompatActivity {
             case android.R.id.home:
                 SavedEvents.this.finish();
                 break;
+            case R.id.e_eventHomeMenu:
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                alertDialog.setTitle(getString(R.string.e_homeHelpMessageTitle))
+                        .setMessage(getString(R.string.e_ResultsHelpMessageBody))
+                        .setPositiveButton((R.string.e_yesString),(click,args)->{})
+                        .create().show();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_event_home_menu, menu);
+        return true;
     }
 }

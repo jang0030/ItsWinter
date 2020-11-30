@@ -60,6 +60,11 @@
     <string name="e_undoString">Undo</string>
     <string name="e_snackBarTrueString">This event has been unsaved</string>
     <string name="e_snackBarFalseString">This event has been saved</string>
+    <string name="e_homeHelpMessageTitle">Help</string>
+    <string name="e_homeHelpMessageBody">Enter the city and radius of you would like to search in the first two boxes. Press the search button to search, saved button to see events you have saved.</string>
+    <string name="e_eventHomeString">Help</string>
+    <string name="e_DetailsHelpMessageBody">Thiis screen shows event details. Click the button to go to Ticket Master.ca</string>
+    <string name="e_ResultsHelpMessageBody">Click an event to see more details</string>
 
 
 </resources>
