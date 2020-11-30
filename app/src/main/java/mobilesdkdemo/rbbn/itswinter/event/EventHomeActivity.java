@@ -99,11 +99,17 @@ public class EventHomeActivity extends AppCompatActivity {
             case android.R.id.home:
                 EventHomeActivity.this.finish();
                 break;
-
             case R.id.e_eventHomeMenu:
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-                alertDialog.setTitle(getString(R.string.e_homeHelpMessageTitle))
+                AlertDialog.Builder alertDialogHelp = new AlertDialog.Builder(this);
+                alertDialogHelp.setTitle(getString(R.string.e_homeHelpMessageTitle))
                         .setMessage(getString(R.string.e_homeHelpMessageBody))
+                        .setPositiveButton((R.string.e_yesString),(click,args)->{})
+                        .create().show();
+                break;
+            case R.id.e_developerInfoMenu:
+                AlertDialog.Builder alertDialogInfo = new AlertDialog.Builder(this);
+                alertDialogInfo.setTitle(getString(R.string.e_developerInfo))
+                        .setMessage("EventHomeActivity.java \nVersion Number: 1.0 \nAuthor: Zackery Brennan")
                         .setPositiveButton((R.string.e_yesString),(click,args)->{})
                         .create().show();
                 break;

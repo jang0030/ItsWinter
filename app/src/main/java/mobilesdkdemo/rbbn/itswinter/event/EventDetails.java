@@ -167,6 +167,13 @@ public class EventDetails extends AppCompatActivity {
                         .setPositiveButton((R.string.e_yesString),(click,args)->{})
                         .create().show();
                 break;
+            case R.id.e_developerInfoMenu:
+                AlertDialog.Builder alertDialogInfo = new AlertDialog.Builder(this);
+                alertDialogInfo.setTitle(getString(R.string.e_developerInfo))
+                        .setMessage("EventDetails.java \nVersion Number: 1.0 \nAuthor: Zackery Brennan")
+                        .setPositiveButton((R.string.e_yesString),(click,args)->{})
+                        .create().show();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
