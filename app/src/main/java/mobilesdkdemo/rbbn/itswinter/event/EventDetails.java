@@ -30,6 +30,13 @@ import mobilesdkdemo.rbbn.itswinter.R;
 
 public class EventDetails extends AppCompatActivity {
 
+    /**EventDetails.java
+     * Zackery Brennan
+     * 040952243
+     *
+     * This activity will show all the event details, and allow the user to save/unsave the event
+     * and go to the Ticket Master website
+     * */
 
     private Bundle dataToPass;
     private Bitmap promoImage;
@@ -47,37 +54,34 @@ public class EventDetails extends AppCompatActivity {
         actionBar.setTitle("Event Schedule");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-
+//        gets reference to elements in the view
         TextView eventName = findViewById(R.id.e_eventName);
         TextView eventStartDate = findViewById(R.id.e_eventStartDate);
         TextView eventMinPrice = findViewById(R.id.e_eventMinPrice);
         TextView eventMaxPrice = findViewById(R.id.e_eventMaxPrice);
-
         Button eventGoToSiteBtn = findViewById(R.id.e_goToSiteBtn);
-
         eventSaveCb = findViewById(R.id.e_saveCheckBox);
-
         eventPromoImage = findViewById(R.id.e_promoImage);
 
-
+//        gets the data sent from EventDetails.java and sets the elements to the correct values
         dataToPass = getIntent().getExtras();
         eventName.setText(dataToPass.getString("name"));
         eventStartDate.setText(dataToPass.getString("startDate"));
         eventMinPrice.setText("Min price: "+String.valueOf(dataToPass.getDouble("priceMin")));
         eventMaxPrice.setText("Max price: "+String.valueOf(dataToPass.getDouble("priceMax")));
         eventGoToSiteBtn.setText(getString(R.string.e_goToTicketMasterWebsiteString));
-
+//        calls for the promo image of the event to be retrieved and set
         ImageQuery query = new ImageQuery();
         query.execute(dataToPass.getString("promoImage"));
-
         saved = dataToPass.getBoolean("saved");
 
         setCheckBox();
 
+
+//        used to save/unsave the event
         eventSaveCb.setOnCheckedChangeListener((a,args)->{
             apiId = dataToPass.getString("apiId");
-            System.out.println(apiId);
-
+//            checks if the event is saved and changes it depending on the switch state
             if(saved){
                 EventResults.e_removeFav(apiId);
                 Snackbar.make(eventSaveCb, getString(R.string.e_snackBarTrueString), Snackbar.LENGTH_SHORT).show();
@@ -86,14 +90,11 @@ public class EventDetails extends AppCompatActivity {
                 Snackbar.make(eventSaveCb, getString(R.string.e_snackBarFalseString), Snackbar.LENGTH_SHORT).show();
             }
             saved = !saved;
-
             setCheckBox();
-
         });
 
-
+//        will create an alert and ask to open the browser, taking the user to the Ticket Master page for this event
         eventGoToSiteBtn.setOnClickListener((a)->{
-
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
             alertBuilder.setTitle(getString(R.string.e_goToSiteAlertTitle))
                     .setMessage(getString(R.string.e_goToSiteAlertMessage))
@@ -122,6 +123,7 @@ public class EventDetails extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... args) {
+//            gets the promo image
             try {
                 URL url = new URL(args[0]);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -140,7 +142,7 @@ public class EventDetails extends AppCompatActivity {
                     outputStream.close();
 
             }catch(Exception e){
-                Log.e("API: Error caught:", String.valueOf(e));
+
             }
             return "Done";
         }

@@ -6,6 +6,16 @@ import java.io.Serializable;
 import java.net.URL;
 
 public class Event {
+
+
+    /**EventDetails.java
+     * Zackery Brennan
+     * 040952243
+     *
+     * Used to temporally store events in ArrayLists
+     * */
+
+
     private String name,startDate,tkUrl;
     private double priceMin, priceMax;
     private String promoImage;

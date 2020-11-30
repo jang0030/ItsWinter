@@ -6,6 +6,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class EventSqlOpener extends SQLiteOpenHelper {
 
+    /**EventDetails.java
+     * Zackery Brennan
+     * 040952243
+     *
+     * Used to create the database
+     * */
+
+
     protected final static String DATABASE_NAME = "EventsSavedDb";
     protected final static int VERSION_NUM = 2;
     public final static String EVENT_TABLE_NAME = "EVENTS";

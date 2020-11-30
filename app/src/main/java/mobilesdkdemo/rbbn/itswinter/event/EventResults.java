@@ -44,6 +44,14 @@ import static mobilesdkdemo.rbbn.itswinter.event.EventSqlOpener.EVENT_TABLE_NAME
 
 public class EventResults extends AppCompatActivity {
 
+    /**EventResults.java
+     * Zackery Brennan
+     * 040952243
+     *
+     * This activity will get all the data of the events, store them, and display them in a list
+     * to access EventDetails.java
+     * */
+
     private static ArrayList<Event> eventList = new ArrayList();
     private String name,startDate,tkUrl;
     private double minPrice,maxPrice;
@@ -70,15 +78,16 @@ public class EventResults extends AppCompatActivity {
         resultList = findViewById(R.id.e_searchReturns);
         resultList.setAdapter(eventAdapter = new EventListAdapter());
 
+//        this is used to force the list to update to ensure no duplicate entries/irrelevant entries
         eventList.clear();
         eventAdapter.notifyDataSetChanged();
 
-
+//        gets search terms from EventHomeActivity.java and starts the search
         Bundle searchTerms = getIntent().getExtras();
-
         String city = searchTerms.getString("city").toLowerCase();
         search(city,searchTerms.getString("radius"));
 
+//        adds all the Event data to a bundle and send to EventDetails.java
         resultList.setOnItemClickListener((p,b,pos,id)->{
             Bundle dataToPass = new Bundle();
             dataToPass.putString("name",eventList.get(pos).getName());
@@ -96,9 +105,10 @@ public class EventResults extends AppCompatActivity {
             startActivity(goToDetailsPage);
         });
 
+
+//        allows the user to save/unsave events from the list by holding the element
         resultList.setOnItemLongClickListener((p,b,pos,id)->{
             Event event = eventList.get(pos);
-
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
             if(event.isSaved()) {
                 alertBuilder.setTitle(getString(R.string.e_alertTitleTrueString))
@@ -121,17 +131,17 @@ public class EventResults extends AppCompatActivity {
             }
             return true;
         });
-
     }
 
+//    this didn't like being in EventQuery directly
     private void showErrorToast(){
         if(eventList.size() == 0){
             Toast.makeText(this, this.getString(R.string.e_searchErrorString), Toast.LENGTH_LONG).show();
         }
     }
 
+//    adds all the event data to the Database and sets the id to the ArrayList
     private static void saveToDb(Event event){
-
         String name = event.getName();
         String date = event.getStartDate();
         Double min = event.getPriceMin();
@@ -150,23 +160,23 @@ public class EventResults extends AppCompatActivity {
         cValues.put(EventSqlOpener.EVENT_COL_SAVED, true);
         cValues.put(EventSqlOpener.EVENT_COL_APIID, apiId);
         Long id = db.insert(EVENT_TABLE_NAME,null, cValues);
-        System.out.println(id);
         event.setId(id);
     }
 
+
+//    removes the Event from the Database
     private static void removeFromDb(Event event){
-        System.out.println(event.getId());
         db.delete(EVENT_TABLE_NAME,EVENT_COL_ID+"=?",new String[]{Long.toString(event.getId())});
     }
 
-//    These two methods are for removing and adding favorites from other screens
+
+    /**
+     * I know I could send the object itself around, but I was having issues with the next two methods
+     * was my solution
+     * */
+//    used for removing an event from the Database from other activates
     public static void e_removeFav(String event){
-
         for(int i = 0; i < eventList.size(); i++){
-            System.out.println(i);
-            System.out.println(event);
-            System.out.println(eventList.get(i).getApiId());
-
             if(event.equals(eventList.get(i).getApiId())){
                 eventList.get(i).setSaved(false);
                 removeFromDb(eventList.get(i));
@@ -175,6 +185,7 @@ public class EventResults extends AppCompatActivity {
         }
     }
 
+//    used for adding an event from the Database from other activates
     public static void e_addFav(String event){
         for(int i = 0; i < eventList.size(); i++){
             if(event.equals(eventList.get(i).getApiId())){
@@ -185,18 +196,17 @@ public class EventResults extends AppCompatActivity {
         }
     }
 
-    //    launches EventQuery
+//    used to start EventQuery
     private void search(String citySearchTerm, String radiusSearchTerm){
         EventQuery query = new EventQuery();
         String apiKey = "KiOshiJsVO1WxmGWXYxpwy4Yxd7Cu6r1";
-        /*test link
+        /*testing link
             https://app.ticketmaster.com/discovery/v2/events.json?apikey=KiOshiJsVO1WxmGWXYxpwy4Yxd7Cu6r1&city=ottawa&radius=100
         */
-
         query.execute("https://app.ticketmaster.com/discovery/v2/events.json?apikey="+apiKey+"&city="+citySearchTerm+"&"+radiusSearchTerm+"");
     }
 
-
+//    checks if the Event is in the database using the unique event id given by the api
     private boolean checkIfInDb(String apiId){
         EventSqlOpener dbOpener = new EventSqlOpener(this);
         db = dbOpener.getReadableDatabase();
@@ -225,16 +235,17 @@ public class EventResults extends AppCompatActivity {
         return true;
     }
 
-    private class EventQuery extends AsyncTask<String,Integer,String> {
 
+    private class EventQuery extends AsyncTask<String,Integer,String> {
         protected String doInBackground(String...args) {
             try{
+//                opens api connection
                 publishProgress(10);
                 URL url = new URL(args[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 InputStream response = urlConnection.getInputStream();
 
-                //Build the entire string response:
+//                Build the entire string response:
                 BufferedReader reader = new BufferedReader(new InputStreamReader(response, "UTF-8"), 8);
                 StringBuilder sb = new StringBuilder();
                 publishProgress(25);
@@ -245,7 +256,7 @@ public class EventResults extends AppCompatActivity {
                 }
                 String result = sb.toString(); //result is the whole string
 
-                // convert string to JSON: Look at slide 27:
+//                converts string to JSON: Look at slide 27:
                 JSONObject events = new JSONObject(result);
 
 //                loops through all events using the value from JSON file
@@ -266,6 +277,8 @@ public class EventResults extends AppCompatActivity {
                     maxPrice = 0;
                     minPrice = 0;
 
+                    publishProgress(50);
+
 //                    checks if there is more then one ticket type
                     if(priceArrayLength > 1){
                         double current;
@@ -285,8 +298,7 @@ public class EventResults extends AppCompatActivity {
                     }
 
 
-
-//                    gets promo image string, actual image is grabbed when needed
+//                    gets promo image string, actual image is grabbed when needed in EventDetails.java
 //                    while there can be multiple promo images, only one is required
                     URL tempUrl = new URL(object.getJSONArray("images").getJSONObject(0).getString("url"));
                     String promoImageUrl = String.valueOf(tempUrl);
@@ -306,8 +318,6 @@ public class EventResults extends AppCompatActivity {
             }catch(Exception e){
                 Log.e("API: Error caught:", String.valueOf(e));
             }
-
-
             publishProgress(100);
             return "Done";
         }
@@ -324,8 +334,7 @@ public class EventResults extends AppCompatActivity {
             showErrorToast();
         }
     }
-
-    //    handles adding the name of the event to the ListView
+//    handles adding the name of the event to the ListView
     private class EventListAdapter extends BaseAdapter {
 
         @Override
@@ -350,6 +359,7 @@ public class EventResults extends AppCompatActivity {
             return newView;
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){

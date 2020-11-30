@@ -27,6 +27,14 @@ import static mobilesdkdemo.rbbn.itswinter.event.EventSqlOpener.EVENT_TABLE_NAME
 
 public class SavedEvents extends AppCompatActivity {
 
+    /**SavedEvents.java
+     * Zackery Brennan
+     * 040952243
+     *
+     * Creates a list of saved Events, when clicked sends to EventDetails.java
+     * */
+
+
     private ArrayList<Event> savedEvents = new ArrayList<>();
     private ListView savedList;
     private EventListAdapter eventAdapter;
@@ -49,6 +57,7 @@ public class SavedEvents extends AppCompatActivity {
 
         loadFromDb();
 
+//        adds all the Event data to a bundle and send to EventDetails.java
         savedList.setOnItemClickListener((p,b,pos,id)->{
             Bundle dataToPass = new Bundle();
             dataToPass.putString("name",savedEvents.get(pos).getName());
@@ -69,11 +78,10 @@ public class SavedEvents extends AppCompatActivity {
             eventAdapter.notifyDataSetChanged();
         });
 
+//        allows the user to unsave events from the list by holding the element
         savedList.setOnItemLongClickListener((p,b,pos,id)->{
             Event event = savedEvents.get(pos);
-
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-
                 alertBuilder.setTitle(getString(R.string.e_alertTitleTrueString))
                         .setMessage(getString(R.string.e_alertMessageTrueString))
                         .setPositiveButton(getString(R.string.e_yesString), (click, args) -> {
@@ -89,10 +97,13 @@ public class SavedEvents extends AppCompatActivity {
         });
     }
 
+//    removes the event from the database
     private void removeFromDb(Event event){
         db.delete(EVENT_TABLE_NAME,EVENT_COL_ID+"=?",new String[]{Long.toString(event.getId())});
     }
 
+
+//    goes through the database and adds events to the ArrayList
     private void loadFromDb() {
         EventSqlOpener dbOpener = new EventSqlOpener(this);
         db = dbOpener.getReadableDatabase();
