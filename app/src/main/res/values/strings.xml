@@ -40,6 +40,7 @@
     <string name="track_list">Track List</string>
     <string name="my_album_list">My Album List</string>
     <string name="require_keyword">Please enter your keyword</string>
+
     <string name="e_radiusErrorString">Radius must be at least 100km</string>
     <string name="e_saveEventString">Save this Event</string>
     <string name="e_revertString">Revert save?</string>
@@ -66,5 +67,55 @@
     <string name="e_ResultsHelpMessageBody">Click an event to see more details</string>
     <string name="e_developerInfo">Developer Info</string>
 
+    <string name="a_Undo">Undo</string>
+    <string name="go_main_home">Go Main Home</string>
+    <string name="audio_api">Audio API</string>
+    <string name="album_list">Album List</string>
+    <string name="main_title">It\'s Winter</string>
+
+
+    <string name="c_home_title">Covid-19 Case Data</string>
+    <string name="c_result_title">Covid Search Result</string>
+    <string name="c_country">Country</string>
+    <string name="c_country_hint">Type Country Name</string>
+    <string name="c_date_hint">Click to pick date</string>
+    <string name="c_date">Date</string>
+    <string name="c_search">Search</string>
+    <string name="c_country_empty">Country field can\'t be empty.</string>
+    <string name="c_date_empty">Date field can\'t be empty.</string>
+    <string name="c_home_help">Enter country name and date and click on the Search button.</string>
+    <string name="c_result_help">Turn on the switch to show the results by number of cases in ascending order.</string>
+    <string name="c_sort">Sort by number of cases</string>
+    <string name="c_sort_on">The sort is now on.</string>
+    <string name="c_sort_off">The sort is now off.</string>
+    <string name="enter_recipe_keyword">Enter recipe keyword</string>
+    <string name="searchRecipeButton">Search</string>
+    <string name="favorites_list">Favorites List</string>
+    <string name="recipe_title">Recipe Title</string>
+    <string name="textview">TextView</string>
+    <string name="textview2">TextView</string>
+    <string name="textview3">TextView</string>
+    <string name="save_to_favorites">SAVE TO FAVORITES</string>
+    <string name="recipe_title1">Recipe Search</string>
+    <string name="toast1">Please enter recipe keyword</string>
+    <string name="snackbar1">No Results</string>
+    <string name="detailPageTitle">Recipe Detail</string>
+    <string name="alert1">Recipe</string>
+    <string name="alert2">Favorite Saved</string>
+    <string name="favoritesTitle">Saved Favorites</string>
+    <string name="r_favorites_list">Favorites List</string>
+    <string name="r_enter_recipe_keyword">Enter recipe keyword</string>
+    <string name="r_search">Search</string>
+    <string name="r_save_to_favorites">SAVE TO FAVORITES</string>
+    <string name="r_textview">TextView</string>
+    <string name="r_delete_from_favorites">Delete from Favorites</string>
+    <string name="r_title1">Recipe Detail Page</string>
+    <string name="r_help_message1">Click on Save to Favorites to add to the Saved Favorites list and Delete from Favorites to remove.</string>
+    <string name="r_title2">Saved Favorites</string>
+    <string name="r_help_message2">This is a list of your favorite recipes.</string>
+    <string name="r_alert1">Recipe</string>
+    <string name="r_alert_message1">Favorite Saved</string>
+    <string name="r_delete_message1">Recipe deleted from Favorites.</string>
+    <string name="r_help_message3">Click search button to search a recipe and Star to look at your favorite recipes.</string>
 
 </resources>

@@ -10,12 +10,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import mobilesdkdemo.rbbn.itswinter.R;
+import mobilesdkdemo.rbbn.itswinter.audio.fragment.GenericListFrag;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Track;
 
-public class TrackAdapter extends  MyRecyclerAdapter<Track, TrackAdapter.ViewHolder> {
+/**
+ * This adapter is a concrete class that extends {@link GenericAdapter}
+ *  * <p>
+ *  TrackAdapter is used to be a myadapter field of {@link GenericListFrag}.
+ *  TrackAdapter has the context as the field of  this object.
+ *  the context is setted as the Acitivity as interface
+ *  This has one interface {@link TrackAdapter.TrackItemClicked}
+ *  The interface is used to control this adapter by the Activity.
+ *  </p>
+ *  @author kiwoong kim
+ *  @since 11152020
+ *  @version 1.0
+ */
+public class TrackAdapter extends GenericAdapter<Track, TrackAdapter.ViewHolder> {
 
 
 

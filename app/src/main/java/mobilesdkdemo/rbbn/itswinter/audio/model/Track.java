@@ -1,5 +1,14 @@
 package mobilesdkdemo.rbbn.itswinter.audio.model;
 
+import android.os.Parcelable;
+
+/**
+ * This Track is class for Track model and Track Table in {@link mobilesdkdemo.rbbn.itswinter.audio.data.AudioRepository}.
+ *  </p>
+ *  @author kiwoong kim
+ *  @since 11152020
+ *  @version 1.0
+ */
 public class Track {
     private int idTrack;
     private int idAlbum;
@@ -26,7 +35,7 @@ public class Track {
     private String strMusicVidScreen1;
     private int intTrackNumber;
     private int intLoved;
-    private int intScore;
+    private double intScore;
     private int intScoreVotes;
     private int intTotalListeners;
     private int intTotalPlays;
@@ -232,11 +241,11 @@ public class Track {
         this.intLoved = intLoved;
     }
 
-    public int getIntScore() {
+    public double getIntScore() {
         return intScore;
     }
 
-    public void setIntScore(int intScore) {
+    public void setIntScore(double intScore) {
         this.intScore = intScore;
     }
 

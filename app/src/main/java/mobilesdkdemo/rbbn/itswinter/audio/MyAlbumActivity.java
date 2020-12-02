@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -19,10 +20,20 @@ import java.util.ArrayList;
 import mobilesdkdemo.rbbn.itswinter.R;
 import mobilesdkdemo.rbbn.itswinter.audio.adapter.AlbumAdapter;
 import mobilesdkdemo.rbbn.itswinter.audio.db.WinterRepository;
-import mobilesdkdemo.rbbn.itswinter.audio.fragment.MyListFrag;
+import mobilesdkdemo.rbbn.itswinter.audio.fragment.GenericListFrag;
 import mobilesdkdemo.rbbn.itswinter.audio.model.Album;
 import mobilesdkdemo.rbbn.itswinter.utility.PreferenceManager;
 
+/**
+ * This MyAlbumActivity is for My Album page
+ *  * <p>
+ *  This MyAlbumActivity is extended {@link AppCompatActivity}
+ *  This MyAlbumActivity is implemented {@link AlbumAdapter.AlbumItemClicked}
+ *  </p>
+ *  @author kiwoong kim
+ *  @since 11152020
+ *  @version 1.0
+ */
 public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.AlbumItemClicked{
 
     //private MyAlbumFrag myAlbumFrag;
@@ -37,18 +48,18 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
     TextView tvHeader;
     private ArrayList<Album> list;
 
-    private MyListFrag listFra;
+    private GenericListFrag myListFrag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio_home);
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("Audio API");
+        actionBar.setTitle(getString(R.string.audio_api));
         actionBar.setDisplayHomeAsUpEnabled(true);
 //        albumsFrag= (AlbumListFrag) getSupportFragmentManager().findFragmentById(R.id.albumsFrag);
         repo=new WinterRepository(this);
         list=new ArrayList<>();
-        listFra= MyListFrag.newInstance(new AlbumAdapter(this, list),R.layout.fragment_album_list);
+        myListFrag = GenericListFrag.newInstance(new AlbumAdapter(this, list, true),R.layout.fragment_album_list);
         btnSearch=findViewById(R.id.btnSearch);
         etKeyword=findViewById(R.id.etKeyword);
         tvHeader=findViewById(R.id.tvHeader);
@@ -62,8 +73,16 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
         executeAlbumQuery("");
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragmentLocation, listFra) //Add the fragment in FrameLayout
+                .replace(R.id.fragmentLocation, myListFrag) //Add the fragment in FrameLayout
                 .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
+        etKeyword.setOnKeyListener((v, keyCode, event)->{
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                btnSearch.callOnClick();
+                return true;
+            }
+            return  false;
+        });
 
     }
 
@@ -75,9 +94,9 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
                 }
                 if(albums != null){
                     list.addAll(albums);
-                    tvHeader.setText(String.format("My Album List(%d)",albums.size()));
+                    tvHeader.setText(String.format("%s(%d)",getString(R.string.my_album_list),albums.size()));
                 }
-                listFra.notifyChanged();
+                myListFrag.notifyChanged();
             });
         }else{
             repo.getList_Album_filter(filtering).observe(this, albums -> {
@@ -86,9 +105,9 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
                 }
                 if(albums != null){
                     list.addAll(albums);
-                    tvHeader.setText(String.format("My Album List(%d)",albums.size()));
+                    tvHeader.setText(String.format("%s(%d)",getString(R.string.my_album_list),albums.size()));
                 }
-                listFra.notifyChanged();
+                myListFrag.notifyChanged();
             });
         }
 
@@ -110,7 +129,7 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
                 this.finish();
                 break;
             case (R.id.action_help):
-                new AlertDialog.Builder(this).setTitle("Help")
+                new AlertDialog.Builder(this).setTitle(getString(R.string.help))
                         .setMessage("This Page is your storage box for your albums.\n" +
                                 "When you click each item, you can access detail ablum infomations with its tracks.\n" +
                                 "When you click each item for more long time, you can delete to the item in your storage. ")
@@ -119,7 +138,7 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
                         } )
                         .create().show();
                 break;
-            case (R.id.action_home):
+            case (R.id.action_main):
                 startActivity(new Intent(MyAlbumActivity.this, AudioHomeActivity.class));
                 break;
         }
@@ -134,26 +153,28 @@ public class MyAlbumActivity extends AppCompatActivity implements AlbumAdapter.A
 
     }
 
-    @Override
     public void onAlbumItemLongClicked(Album item) {
-        //selectedItem=item;
-        //AlertDialog dialog=Utility.createAndShowDialog(this,"Delete Album", "Do you want to delete this album?");
+
         new AlertDialog.Builder(this).setTitle("Delete").setMessage("Do you want to delete this album?")
                 .setPositiveButton(R.string.yes,(click, arg) -> {
-                    removeAlbumItem(item);
+                    //removeAlbumItem(item);
+                    try {
+                        repo.delete_Album(item); //list is setted livedata
+                    }catch (Exception e){
+                        Toast.makeText(MyAlbumActivity.this, "There is some issue", Toast.LENGTH_SHORT).show();
+                    }
                 } )
                 .setNegativeButton("No", (click, arg) -> {  })
                 .create().show();
 
-    }
-    public void removeAlbumItem(Album item){
-        try {
-            repo.delete_Album(item); //list is setted livedata
-            Toast.makeText(MyAlbumActivity.this, "It was deleted", Toast.LENGTH_SHORT).show();
-        }catch (Exception e){
-            Toast.makeText(MyAlbumActivity.this, "It was not deleted", Toast.LENGTH_SHORT).show();
-        }
 
     }
+
+    @Override
+    public void onAlbumItemAddClicked(Album item) {
+        onAlbumItemLongClicked(item);
+    }
+
+
 
 }

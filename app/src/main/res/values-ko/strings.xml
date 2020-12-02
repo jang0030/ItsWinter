@@ -20,6 +20,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="welcome_to_our_app">환영합니다</string>
     <string name="help">도움말</string>
+
     <string name="enter_album_name">Enter Album name</string>
     <string name="search">Search</string>
     <string name="title_activity_track">TrackActivity</string>
@@ -63,4 +64,75 @@
     <string name="e_DetailsHelpMessageBody">이 화면에는 이벤트 세부 정보가 표시됩니다. 버튼을 클릭하면 Ticket Master.ca로 이동합니다.</string>
     <string name="e_ResultsHelpMessageBody">자세한 내용을 보려면 이벤트를 클릭하세요.</string>
     <string name="e_developerInfo">개발자 정보</string>
+
+    <string name="enter_album_name">앨범의 이름을 입력해주세요</string>
+    <string name="search">검색</string>
+    <string name="title_activity_track">트랙 리스트</string>
+    <string name="yes">예</string>
+    <string name="no">아니오</string>
+    <string name="please_enter_your_memo">너의 메모를 입력해주세요</string>
+    <string name="ok">예</string>
+    <string name="my_memo">나의 메모</string>
+    <string name="track_list">트랙 리스트</string>
+    <string name="my_album_list">나의 앨범 리스트</string>
+    <string name="album">앨범</string>
+    <string name="require_keyword">너의 검색어를 넣어주세요</string>
+    <string name="a_Undo">되돌리기</string>
+    <string name="e_searchButtonString">검색</string>
+    <string name="e_searchBarHint">검색어를 입력해주세요</string>
+    <string name="e_welcomeText">환영합니다.</string>
+    <string name="e_citySearchBarHint">도시를 입력해주세요</string>
+    <string name="e_radiusSearchBarHint">반경을 입력해주세요</string>
+    <string name="e_goToSiteBtnHint">사이트로 이동</string>
+    <string name="go_main_home">첫페이지로 이동</string>
+    <string name="audio_api">오디오 API</string>
+    <string name="album_list">앨범 리스트</string>
+    <string name="main_title">겨울이다</string>
+
+    <string name="c_home_title">코로나-19 발생 현황</string>
+    <string name="c_result_title">코로나 검색 결과</string>
+    <string name="c_country">국가</string>
+    <string name="c_country_hint">국가 이름을 입력하세요</string>
+    <string name="c_date_hint">클릭해서 날짜를 선택하세요</string>
+    <string name="c_date">날짜</string>
+    <string name="c_search">검색</string>
+    <string name="c_country_empty">국가 이름을 입력하지 않았습니다.</string>
+    <string name="c_date_empty">날짜를 입력하지 않았습니다.</string>
+    <string name="c_home_help">국가 이름과 날짜를 입력하고 검색 버튼을 클릭해주세요.</string>
+    <string name="c_result_help">스위치를 키면 케이스 수별로 결과를 오름차순으로 표시해줍니다.</string>
+    <string name="c_sort">케이스 수로 정렬</string>
+    <string name="c_sort_on">정렬이 되었습니다.</string>
+    <string name="c_sort_off">정렬이 해제되었습니다.</string>
+
+    <string name="enter_recipe_keyword">레시피 키워드를 입력하세요</string>
+    <string name="searchRecipeButton">검색</string>
+    <string name="favorites_list">좋아하는 레시피 리스트</string>
+    <string name="recipe_title">레시피 이름</string>
+    <string name="textview">텍스트 뷰</string>
+    <string name="textview2">텍스트 뷰</string>
+    <string name="textview3">텍스트 뷰</string>
+    <string name="save_to_favorites">레시피 저장하기</string>
+    <string name="recipe_title1">레시피 검색하기</string>
+    <string name="toast1">레시피 키워드를 입력하세요</string>
+    <string name="snackbar1">검색 결과 없음</string>
+    <string name="detailPageTitle">레시피 정보</string>
+    <string name="alert1">레시피</string>
+    <string name="alert2">좋아하는 레시피가 저장됐어요</string>
+    <string name="favoritesTitle">내가 좋아하는 레시피</string>
+    <string name="r_favorites_list">좋아하는 레시피 리스트</string>
+    <string name="r_enter_recipe_keyword">레시피 키워드를 입력하세요</string>
+    <string name="r_search">찾아보기</string>
+    <string name="r_save_to_favorites">좋아하는 레시피 저장</string>
+    <string name="r_textview">텍스트뷰</string>
+    <string name="r_delete_from_favorites">삭제</string>
+    <string name="r_title1">레시피 상세 페이지</string>
+    <string name="r_help_message1">저장하기 버튼을 클릭하여 좋아하는 레시피 리스트에 추가하고 삭제하기 버튼을 클릭하여 좋아하는 리스트에서 삭제할 수 있습니다.</string>
+    <string name="r_title2">좋아하는 레시피</string>
+    <string name="r_help_message2">좋아하는 레시피 리스트 입니다.</string>
+    <string name="r_alert1">레시피</string>
+    <string name="r_alert_message1">좋아하는 레시피에 저장됨</string>
+    <string name="r_delete_message1">좋아하는 레시피에서 삭제됨</string>
+    <string name="r_help_message3">찾아보기 버튼을 클릭하여 원하는 레시피를 찾고 좋아하는 레시피 리스트를 볼 수 있습니다.</string>
+
+
 </resources>

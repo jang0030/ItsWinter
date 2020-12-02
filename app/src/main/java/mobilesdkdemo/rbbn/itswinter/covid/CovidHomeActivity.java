@@ -2,12 +2,16 @@ package mobilesdkdemo.rbbn.itswinter.covid;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -18,7 +22,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import mobilesdkdemo.rbbn.itswinter.MainActivity;
 import mobilesdkdemo.rbbn.itswinter.R;
+import mobilesdkdemo.rbbn.itswinter.audio.AudioHomeActivity;
+import mobilesdkdemo.rbbn.itswinter.audio.MyAlbumActivity;
 
 /**
  * This class is the main page of Covid-19 Case Data
@@ -27,6 +34,31 @@ import mobilesdkdemo.rbbn.itswinter.R;
  */
 
 public class CovidHomeActivity extends AppCompatActivity {
+    /**
+     * Shared Preferences file name
+     */
+    public static final String C_PREFS = "C_PREFS";
+
+    /**
+     * Shared Preference Key for Country Name
+     */
+    public static final String COUNTRY = "Country";
+
+    /**
+     * Shared Preference Key for FROM Date
+     */
+    public static final String FROM_DATE = "FromDate";
+
+    /**
+     * Shared Preference Key for FROM Date
+     */
+    public static final String TO_DATE = "ToDate";
+
+    /**
+     * shared preferences variable
+     */
+    SharedPreferences sharedPref;
+
     /**
      * Text Field: Country
      */
@@ -48,16 +80,25 @@ public class CovidHomeActivity extends AppCompatActivity {
      */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPref = getSharedPreferences(C_PREFS, Context.MODE_PRIVATE);
+
+        String lastCountrySearched = sharedPref.getString(COUNTRY, "");
+        String lastDateSearched = sharedPref.getString(FROM_DATE, "");
+        toDate = sharedPref.getString(TO_DATE, "");
+
         setContentView(R.layout.activity_covid_home);
 
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle("Covid-19 Case Data");
+        actionBar.setTitle(getResources().getString(R.string.c_home_title));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         countryEditText = findViewById(R.id.c_country_editTxt);
+        countryEditText.setText(lastCountrySearched);
+
         dateEditText = findViewById(R.id.c_date_editTxt);
 
         dateEditText.setInputType(InputType.TYPE_NULL);
+        dateEditText.setText(lastDateSearched);
 
         DatePickerDialog.OnDateSetListener datepickerListener = new DatePickerDialog.OnDateSetListener() {
 
@@ -103,15 +144,18 @@ public class CovidHomeActivity extends AppCompatActivity {
 
             if (country.equalsIgnoreCase("")) {
                 // show message country field can't be empty
-                Toast.makeText(CovidHomeActivity.this, "Country field can't be empty.", Toast.LENGTH_LONG).show();
+                Toast.makeText(CovidHomeActivity.this, getResources().getString(R.string.c_country_empty), Toast.LENGTH_LONG).show();
             }
             else if (fromDate.equalsIgnoreCase("")) {
                 // show message country field can't be empty
-                Toast.makeText(CovidHomeActivity.this, "Date field can't be empty.", Toast.LENGTH_LONG).show();
+                Toast.makeText(CovidHomeActivity.this, getResources().getString(R.string.c_date_empty), Toast.LENGTH_LONG).show();
             }
             else {
-                final Calendar cal = Calendar.getInstance();
-                final Date today = cal.getTime();
+                SharedPreferences.Editor prefWriter = sharedPref.edit();
+                prefWriter.putString(COUNTRY, country);
+                prefWriter.putString(FROM_DATE, fromDate);
+                prefWriter.putString(TO_DATE, toDate);
+                prefWriter.commit();
 
                 // Call the web page, get information, and show it in ListView in new Activity
                 // New Activity has progress bar
@@ -134,9 +178,29 @@ public class CovidHomeActivity extends AppCompatActivity {
             case android.R.id.home:
                 CovidHomeActivity.this.finish();
                 break;
+            case R.id.covid_home_help:
+                String msg = getResources().getString(R.string.c_home_help);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setTitle(getResources().getString(R.string.help))
+                        .setMessage(msg)
+                        .setPositiveButton("OK",(click,arg)->{})
+                        .create().show();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Add covid home menu for Help
+     * @param menu menu where menu item is to be added
+     * @returns boolean true
+     */
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.covid_home, menu);
+        return true;
+    }
+
 }
