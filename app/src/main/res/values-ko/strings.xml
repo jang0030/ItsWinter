@@ -65,25 +65,7 @@
     <string name="e_ResultsHelpMessageBody">자세한 내용을 보려면 이벤트를 클릭하세요.</string>
     <string name="e_developerInfo">개발자 정보</string>
 
-    <string name="enter_album_name">앨범의 이름을 입력해주세요</string>
-    <string name="search">검색</string>
-    <string name="title_activity_track">트랙 리스트</string>
-    <string name="yes">예</string>
-    <string name="no">아니오</string>
-    <string name="please_enter_your_memo">너의 메모를 입력해주세요</string>
-    <string name="ok">예</string>
-    <string name="my_memo">나의 메모</string>
-    <string name="track_list">트랙 리스트</string>
-    <string name="my_album_list">나의 앨범 리스트</string>
-    <string name="album">앨범</string>
-    <string name="require_keyword">너의 검색어를 넣어주세요</string>
-    <string name="a_Undo">되돌리기</string>
-    <string name="e_searchButtonString">검색</string>
-    <string name="e_searchBarHint">검색어를 입력해주세요</string>
-    <string name="e_welcomeText">환영합니다.</string>
-    <string name="e_citySearchBarHint">도시를 입력해주세요</string>
-    <string name="e_radiusSearchBarHint">반경을 입력해주세요</string>
-    <string name="e_goToSiteBtnHint">사이트로 이동</string>
+
     <string name="go_main_home">첫페이지로 이동</string>
     <string name="audio_api">오디오 API</string>
     <string name="album_list">앨범 리스트</string>
