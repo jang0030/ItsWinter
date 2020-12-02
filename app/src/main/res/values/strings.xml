@@ -40,11 +40,39 @@
     <string name="track_list">Track List</string>
     <string name="my_album_list">My Album List</string>
     <string name="require_keyword">Please enter your keyword</string>
+
+    <string name="e_radiusErrorString">Radius must be at least 100km</string>
+    <string name="e_saveEventString">Save this Event</string>
+    <string name="e_revertString">Revert save?</string>
+    <string name="e_removeString">Revert</string>
+    <string name="e_alertTitleTrueString">Unsave?</string>
+    <string name="e_alertMessageFalseString">Would you like to save this event?</string>
+    <string name="e_yesString">Yes</string>
+    <string name="e_noString">No</string>
+    <string name="e_alertMessageTrueString">Would you like to unsave this event</string>
+    <string name="e_alertTitleFalseString">Save?</string>
+    <string name="e_savedButtonString">Saved</string>
+    <string name="e_searchErrorString">There has been an error, please try again</string>
+    <string name="e_goToSiteAlertTitle">Open Browser?</string>
+    <string name="e_goToSiteAlertMessage">Would you like to open Ticket Master.ca?</string>
+    <string name="e_goToTicketMasterWebsiteString">Go to Ticket Master.ca</string>
+    <string name="e_saveCbHintTrue">Unsave</string>
+    <string name="e_saveCbHintFalse">Save</string>
+    <string name="e_undoString">Undo</string>
+    <string name="e_snackBarTrueString">This event has been unsaved</string>
+    <string name="e_snackBarFalseString">This event has been saved</string>
+    <string name="e_homeHelpMessageTitle">Help</string>
+    <string name="e_homeHelpMessageBody">Enter the city and radius of you would like to search in the first two boxes. Press the search button to search, saved button to see events you have saved.</string>
+    <string name="e_DetailsHelpMessageBody">Thiis screen shows event details. Click the button to go to Ticket Master.ca</string>
+    <string name="e_ResultsHelpMessageBody">Click an event to see more details</string>
+    <string name="e_developerInfo">Developer Info</string>
+
     <string name="a_Undo">Undo</string>
     <string name="go_main_home">Go Main Home</string>
     <string name="audio_api">Audio API</string>
     <string name="album_list">Album List</string>
     <string name="main_title">It\'s Winter</string>
+
 
     <string name="c_home_title">Covid-19 Case Data</string>
     <string name="c_result_title">Covid Search Result</string>

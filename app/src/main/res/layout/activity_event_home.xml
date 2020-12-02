@@ -32,4 +32,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/e_searchButton"
         android:text="@string/e_searchButtonString"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/e_savedButton"
+        android:text="@string/e_savedButtonString"/>
+
 </LinearLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/e_eventHomeMenu"
+        android:title="@string/e_homeHelpMessageTitle"/>
+    <item android:id="@+id/e_developerInfoMenu"
+        android:title="@string/e_developerInfo"/>
+</menu>

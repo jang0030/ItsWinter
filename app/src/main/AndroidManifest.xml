@@ -16,9 +16,23 @@
         <activity android:name=".covid.CovidEmptyActivity" />
         <activity android:name=".recipe.activity_recipe_favorites_list" />
         <activity android:name=".recipe.activity_recipe_page" />
+
+
+        <activity android:name=".event.SavedEvents" />
+        <activity android:name=".event.EventDetails" />
+        <activity android:name=".event.EventResults" />
+
+        <activity android:name=".event.eventDetails"></activity>
+        <activity android:name=".eventResults" />
+        <!-- <activity android:name=".EventListViewLayout" /> -->
+        <activity android:name=".HelpActivity" />
+
+
+
         <activity android:name=".event.eventDetails" />
         <activity android:name=".eventResults" /> <!-- <activity android:name=".EventListViewLayout" /> -->
         <activity android:name=".HelpActivity" />
+
         <activity android:name=".covid.CovidResultActivity" />
         <activity android:name=".audio.MyAlbumActivity" />
         <activity android:name=".audio.AlbumDetailActivity" />
