@@ -8,6 +8,29 @@
     tools:context=".covid.CovidHomeActivity">
 
     <TextView
+        android:id="@+id/c_activity_title"
+        android:layout_marginTop="10pt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="@string/c_home_title"/>
+
+    <TextView
+        android:id="@+id/c_author_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="@string/c_author"/>
+
+    <TextView
+        android:id="@+id/c_version_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginBottom="10pt"
+        android:text="@string/c_version_number"/>
+
+    <TextView
         android:id="@+id/c_country_txtView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

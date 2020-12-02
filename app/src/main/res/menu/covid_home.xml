@@ -4,4 +4,7 @@
         android:id="@+id/covid_home_help"
         android:title="@string/help"/>
 
+    <item
+        android:id="@+id/covid_home_load"
+        android:title="@string/c_load_data"/>
 </menu>
