@@ -3,4 +3,10 @@
     <item
         android:id="@+id/covid_result_help"
         android:title="@string/help"/>
+    <item
+        android:id="@+id/covid_result_save"
+        android:title="@string/c_save_data"/>
+    <item
+        android:id="@+id/covid_result_load"
+        android:title="@string/c_load_data"/>
 </menu>

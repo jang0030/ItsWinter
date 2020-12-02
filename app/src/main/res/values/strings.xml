@@ -118,4 +118,13 @@
     <string name="r_delete_message1">Recipe deleted from Favorites.</string>
     <string name="r_help_message3">Click search button to search a recipe and Star to look at your favorite recipes.</string>
 
+    <string name="c_details">Details</string>
+    <string name="c_OK">OK</string>
+    <string name="c_author">Hyun Ju Jang</string>
+    <string name="c_version_number">Version 1.0</string>
+    <string name="c_save_data">Save</string>
+    <string name="c_load_data">Load</string>
+    <string name="c_saved_result">Saved Result</string>
+    <string name="c_saved_list">Saved List</string>
+
 </resources>

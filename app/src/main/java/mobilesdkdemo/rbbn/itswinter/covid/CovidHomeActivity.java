@@ -187,10 +187,18 @@ public class CovidHomeActivity extends AppCompatActivity {
                         .setPositiveButton("OK",(click,arg)->{})
                         .create().show();
                 break;
+            case R.id.covid_home_load:
+                loadData();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void loadData() {
+        Intent covidLoadData = new Intent(CovidHomeActivity.this, CovidLoadDataActivity.class);
+        startActivityForResult(covidLoadData,77);
     }
 
     /**
