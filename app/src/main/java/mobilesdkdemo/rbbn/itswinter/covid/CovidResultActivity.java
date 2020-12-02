@@ -1,6 +1,7 @@
 package mobilesdkdemo.rbbn.itswinter.covid;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -36,6 +37,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +52,17 @@ public class CovidResultActivity extends AppCompatActivity {
     int counter = 0;
     CovidQuery req = null;
     String result = null;
+
+    /**
+     * Date to save in DB
+     */
+    String countryToSave;
+    String dateToSave;
+
+    /**
+     * Key for sending data to another activity
+     */
+    public static final String ITEM_DETAILS = "DETAILS";
 
     /**
      * Progress Bar
@@ -122,6 +135,9 @@ public class CovidResultActivity extends AppCompatActivity {
         String fromDate = fromMain.getStringExtra("FromDate");
         String toDate = fromMain.getStringExtra("ToDate");
 
+        countryToSave = country;
+        dateToSave = fromDate;
+
         fromDate = fromDate + "T00:00:00Z";
         toDate = toDate + "T23:59:59Z";
 
@@ -138,6 +154,19 @@ public class CovidResultActivity extends AppCompatActivity {
                     .setPositiveButton("OK",(click,arg)->{})
                     .create().show();
             return true;
+        });
+
+        myList.setOnItemClickListener((list, view, pos, id)->{
+            Integer mID = elements.get(pos).getId();
+            String detail = detailElements.get(mID);
+
+            //Create a bundle to pass data to the new fragment
+            Bundle dataToPass = new Bundle();
+            dataToPass.putString(ITEM_DETAILS, detail);
+
+            Intent nextActivity = new Intent(CovidResultActivity.this, CovidEmptyActivity.class);
+            nextActivity.putExtras(dataToPass); //send data to next activity
+            startActivity(nextActivity); //make the transition
         });
 
         progress = findViewById(R.id.c_progressBar);
@@ -162,7 +191,7 @@ public class CovidResultActivity extends AppCompatActivity {
          * connects to web page, gets results, and saves them to elements
          * and detailElements
          * @param args URL string
-         * @returns confirmation
+         * @return confirmation
          */
         protected String doInBackground(String... args) {
             HttpURLConnection urlConnection = null;
@@ -470,10 +499,53 @@ public class CovidResultActivity extends AppCompatActivity {
                         .setPositiveButton("OK",(click,arg)->{})
                         .create().show();
                 break;
+            case R.id.covid_result_save:
+                saveData();
+                break;
+            case R.id.covid_result_load:
+                loadData();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Saves the search displayed on screen
+     */
+    public void saveData() {
+
+        if (elements.size() > 0) {
+            SQLiteDatabase covidDB = openOrCreateDatabase("CovidDB", MODE_PRIVATE, null);
+
+            covidDB.execSQL("CREATE TABLE IF NOT EXISTS COVIDCASE(" +
+                    "ID INTEGER PRIMARY KEY AUTOINCREMENT, COUNTRY VARCHAR(50), DATE VARCHAR(50), " +
+                    "PROVICE VARCHAR(50), CASES INT, SAVEID VARCHAR(50));");
+
+            String saveID = "" + new Date().getTime();
+
+
+            for (int i = 0; i < elements.size(); i++) {
+                Message message = elements.get(i);
+
+                String province = message.getProvince();
+                int cases = message.getCases();
+
+                covidDB.execSQL("INSERT INTO COVIDCASE (COUNTRY, DATE, PROVICE, CASES, SAVEID) VALUES('"
+                        + countryToSave + "','"
+                        + dateToSave + "','"
+                        + province +"'," + cases + ",'" + saveID + "');");
+            }
+        }
+    }
+
+    /**
+     * Starts CovidLoadDataActivity to list saved data
+     */
+    public void loadData() {
+        Intent covidLoadData = new Intent(CovidResultActivity.this, CovidLoadDataActivity.class);
+        startActivityForResult(covidLoadData,77);
     }
 
     /**
