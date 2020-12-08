@@ -95,7 +95,7 @@
     <string name="textview2">텍스트 뷰</string>
     <string name="textview3">텍스트 뷰</string>
     <string name="save_to_favorites">레시피 저장하기</string>
-    <string name="recipe_title1">레시피 검색하기</string>
+    <string name="recipe_title1">레시피 검색하기 버전.1 Jiyeon Choi</string>
     <string name="toast1">레시피 키워드를 입력하세요</string>
     <string name="snackbar1">검색 결과 없음</string>
     <string name="detailPageTitle">레시피 정보</string>
