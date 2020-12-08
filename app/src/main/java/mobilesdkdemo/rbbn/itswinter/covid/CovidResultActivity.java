@@ -144,18 +144,6 @@ public class CovidResultActivity extends AppCompatActivity {
         ListView myList = findViewById(R.id.c_ListView);
         myList.setAdapter( myAdapter = new MyListAdapter());
 
-        myList.setOnItemLongClickListener((parent,view,pos,id)->{
-            Integer mID = elements.get(pos).getId();
-            String detail = detailElements.get(mID);
-
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle("Details")
-                    .setMessage(detail)
-                    .setPositiveButton("OK",(click,arg)->{})
-                    .create().show();
-            return true;
-        });
-
         myList.setOnItemClickListener((list, view, pos, id)->{
             Integer mID = elements.get(pos).getId();
             String detail = detailElements.get(mID);

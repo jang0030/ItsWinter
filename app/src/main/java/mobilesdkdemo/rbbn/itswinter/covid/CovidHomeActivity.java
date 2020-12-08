@@ -105,18 +105,37 @@ public class CovidHomeActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 final Calendar cal = Calendar.getInstance();
-
-                final Date today = cal.getTime();
+                final Calendar today = Calendar.getInstance();
 
                 cal.set(Calendar.YEAR, year);
                 cal.set(Calendar.MONTH, month);
                 cal.set(Calendar.DAY_OF_MONTH, day);
 
-                Date date = cal.getTime();
-                SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+                if (  (cal.get(Calendar.YEAR) > today.get(Calendar.YEAR)) ||
 
-                toDate = format1.format(date);
-                dateEditText.setText( toDate );
+                      (cal.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
+                       cal.get(Calendar.MONTH) > today.get(Calendar.MONTH)) ||
+
+                      (cal.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
+                       cal.get(Calendar.MONTH) == today.get(Calendar.MONTH) &&
+                       cal.get(Calendar.DAY_OF_MONTH) >= today.get(Calendar.DAY_OF_MONTH))
+                   ) {
+
+                    String lastDateSearched = sharedPref.getString(FROM_DATE, "");
+                    toDate = sharedPref.getString(TO_DATE, "");
+                    dateEditText.setText(lastDateSearched);
+
+                    Toast.makeText(CovidHomeActivity.this, getResources().getString(R.string.c_invalid_date),
+                                           Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Date date = cal.getTime();
+
+                    SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+
+                    toDate = format1.format(date);
+                    dateEditText.setText(toDate);
+                }
             }
         };
 

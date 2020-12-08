@@ -126,5 +126,11 @@
     <string name="c_load_data">Load</string>
     <string name="c_saved_result">Saved Result</string>
     <string name="c_saved_list">Saved List</string>
+    <string name="c_delete_title">Do you want to delete?</string>
+    <string name="c_delete_msg">The selected row is:</string>
+    <string name="c_delete_yes">Yes</string>
+    <string name="c_delete_no">No</string>
+    <string name="c_invalid_date">Select day before today.</string>
+
 
 </resources>
