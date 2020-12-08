@@ -1,6 +1,7 @@
 package mobilesdkdemo.rbbn.itswinter.covid;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -77,6 +78,23 @@ public class CovidLoadDataActivity extends AppCompatActivity {
             myAdapter.notifyDataSetChanged();
         }
 
+        myList.setOnItemLongClickListener((parent,view,pos,id)-> {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle(getResources().getString(R.string.c_delete_title))
+                    .setMessage(getResources().getString(R.string.c_delete_msg) + " " + pos)
+                    .setPositiveButton(getResources().getString(R.string.c_delete_yes),(click,arg)->{
+                        // before deleting from elements, delete message from database
+                        SavedData savedData = savedDatas.get(pos);
+                        deleteSavedData(savedData);
+
+                        savedDatas.remove(pos);
+                        myAdapter.notifyDataSetChanged();
+                    })
+                    .setNegativeButton(getResources().getString(R.string.c_delete_no),(click,arg)->{})
+                    .create().show();
+            return true;
+        });
+
         myList.setOnItemClickListener((list, view, pos, id)->{
             SavedData savedData = savedDatas.get(pos);
 
@@ -89,6 +107,19 @@ public class CovidLoadDataActivity extends AppCompatActivity {
             startActivity(nextActivity); //make the transition
         });
     }
+
+    /**
+     * Deletes the selected saved data
+     * @param savedData
+     */
+
+    public void deleteSavedData(SavedData savedData) {
+        SQLiteDatabase covidDB = openOrCreateDatabase("CovidDB", MODE_PRIVATE, null);
+
+        String param[] = new String[] {savedData.getSavedID()};
+        covidDB.execSQL("DELETE FROM COVIDCASE WHERE SAVEID = ?", param);
+    }
+
 
     /**
      * This class is for data shown in the item in the list

@@ -66,6 +66,7 @@
     <string name="e_developerInfo">개발자 정보</string>
 
 
+    <string name="a_Undo">되돌리기</string>
     <string name="go_main_home">첫페이지로 이동</string>
     <string name="audio_api">오디오 API</string>
     <string name="album_list">앨범 리스트</string>
@@ -125,6 +126,10 @@
     <string name="c_load_data">로딩</string>
     <string name="c_saved_result">저장된 결과</string>
     <string name="c_saved_list">저장 목록</string>
-
+    <string name="c_delete_title">삭제를 하겠습니까?</string>
+    <string name="c_delete_msg">선택한 줄 번호:</string>
+    <string name="c_delete_yes">예</string>
+    <string name="c_delete_no">아니오</string>
+    <string name="c_invalid_date">오늘보다 이전 날짜를 선택해 주세요</string>
 
 </resources>
