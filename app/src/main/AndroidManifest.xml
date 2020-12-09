@@ -22,16 +22,8 @@
         <activity android:name=".event.EventDetails" />
         <activity android:name=".event.EventResults" />
 
-        <activity android:name=".event.eventDetails"></activity>
-        <activity android:name=".eventResults" />
-        <!-- <activity android:name=".EventListViewLayout" /> -->
         <activity android:name=".HelpActivity" />
 
-
-
-        <activity android:name=".event.eventDetails" />
-        <activity android:name=".eventResults" /> <!-- <activity android:name=".EventListViewLayout" /> -->
-        <activity android:name=".HelpActivity" />
 
         <activity android:name=".covid.CovidResultActivity" />
         <activity android:name=".audio.MyAlbumActivity" />
