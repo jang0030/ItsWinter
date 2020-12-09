@@ -102,7 +102,7 @@ public class RecipeHomeActivity extends AppCompatActivity {
                 req.execute("http://www.recipepuppy.com/api/?q=" + recipe_EditText.getText().toString() + "&p=3&format=xml");
 
                 // wait a couple of seconds until the search is done, while updating the progress bar
-                try {
+               try {
                     Thread.sleep(1000); // wait 1000 milliseconds
                     progressBar.setMax(100);
                     progressBar.setProgress(50);
@@ -110,12 +110,12 @@ public class RecipeHomeActivity extends AppCompatActivity {
                     progressBar.setProgress(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
-                recipe_list_adapter.notifyDataSetChanged(); //refresh the ListView results
+               }
+   //             recipe_list_adapter.notifyDataSetChanged(); //refresh the ListView results
 
                 String snackbar1 = getString(R.string.snackbar1);
 
-                // if there are no results, show Snackbar message
+                // wait, and if there are no results, show Snackbar message
                 if (recipe_list.size() == 0) {
                     Snackbar snackbar = Snackbar.make(v, snackbar1, Snackbar.LENGTH_SHORT);
                     snackbar.show();

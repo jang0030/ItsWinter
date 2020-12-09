@@ -110,6 +110,15 @@ public class DetailFragment extends Fragment {
             alertDialogBuilder.create().show();
         });
 
+        //Help button
+        Button help=inflatedView.findViewById(R.id.recipe_help3);
+        help.setOnClickListener(btn -> {            //show alert
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+            alertDialogBuilder.setTitle(R.string.help);
+            alertDialogBuilder.setMessage(R.string.r_help_message1);
+            alertDialogBuilder.create().show();
+        });
+
         return inflatedView;
     }
 
